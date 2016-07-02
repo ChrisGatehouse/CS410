@@ -75,6 +75,10 @@ namespace CS410Project
             {
                 results.Add(reader.ReadLine());
             }
+
+            //Done with the reader and response, so we are closing them now
+            reader.Close();
+            response.Close();
             return results;
         }
         //TODO: add definitions to virtual functions in base class
