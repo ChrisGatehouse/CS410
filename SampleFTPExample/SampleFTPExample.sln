@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleFTPExample", "SampleFTPExample\SampleFTPExample.csproj", "{EFA252EB-5949-49C7-B601-5205D85C8E3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS410Project", "CS410Project\CS410Project.csproj", "{1240E474-9F01-42C0-87F9-BE9B43B13EDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EFA252EB-5949-49C7-B601-5205D85C8E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFA252EB-5949-49C7-B601-5205D85C8E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFA252EB-5949-49C7-B601-5205D85C8E3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1240E474-9F01-42C0-87F9-BE9B43B13EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1240E474-9F01-42C0-87F9-BE9B43B13EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1240E474-9F01-42C0-87F9-BE9B43B13EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1240E474-9F01-42C0-87F9-BE9B43B13EDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
