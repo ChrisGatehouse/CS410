@@ -34,16 +34,19 @@ namespace CS410Project
         public override bool establishConnection()
         {
             request = (FtpWebRequest)WebRequest.Create(destination);
+            //Request is going to stay alive, until a timeout, or a logout
+            request.KeepAlive = true;
+            //Set the timeout to only be 5000ms
+            request.Timeout = 5000;
+            //Use password and username to access FTP
             request.Credentials = new NetworkCredential(username, password);
             //Perform any action just to test to see if it failed
             //In this case we are just using List Directory to see if the directory exist
             request.Method = WebRequestMethods.Ftp.ListDirectory;
-            //Request is going to stay alive, until a timeout, or a logout
-            request.KeepAlive = true;
             try
             {
                 //Test the connection
-                WebResponse testResponse = request.GetResponse();
+                testResponse = request.GetResponse();
             }
             catch(WebException err) 
             {
@@ -53,6 +56,7 @@ namespace CS410Project
                 return false;
             }
             //Connection is valid, return true
+            testResponse.Close();
             return true;
         }
         //This function creates a list of the files/folders in the current directory
@@ -61,12 +65,11 @@ namespace CS410Project
             List<string> results = new List<string>();
             request = (FtpWebRequest)WebRequest.Create(destination + currDirectory);
             //Request is going to stay alive, until a timeout, or a logout
-            request.KeepAlive = true;
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
             {
                 //Check if the file exist on the server
-                WebResponse testResponse = request.GetResponse();
+                testResponse = request.GetResponse();
             }
             catch (WebException err)
             {
@@ -74,7 +77,7 @@ namespace CS410Project
                 Console.WriteLine(err.ToString());
                 return null;
             }
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            response = (FtpWebResponse)request.GetResponse();
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
 
@@ -88,8 +91,17 @@ namespace CS410Project
             response.Close();
             return results;
         }
-        //TODO: add definitions to virtual functions in base class
+
+        //TODO: Add more functionality for the FTP client here
+        //Also include the function prototype as an abstract type in the Client base class
+
+        /*The request object stores credentials and performs the methods to
+        *to interact with the FTP server*/
         private FtpWebRequest request;
+        //This response is used for when testing if the connection is valid
+        private WebResponse testResponse;
+        //This reponse is used to pull data from the FTP server
+        private FtpWebResponse response;
 
     }
 }
