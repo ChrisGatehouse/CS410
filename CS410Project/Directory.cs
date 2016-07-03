@@ -14,7 +14,7 @@ namespace CS410Project
      * directories are stored in an actual FTP
      */
 
-    class Directory
+    public class Directory
     {
         //Default Constructor
         public Directory()
@@ -39,7 +39,7 @@ namespace CS410Project
                 directory= client.getCurrDirectory();
                 if (directory == null)
                 {
-                    Console.WriteLine("ERROR: In invalid directory");
+                    Console.WriteLine("ERROR: invalid directory");
                     return;
                 }
 
@@ -48,18 +48,18 @@ namespace CS410Project
                 //Figure out which files are folders/files
                 for (int i = 0;i < directory.Count;i++)
                 {
-                    client.currDirectory = directory[i] + "/";
+                    client.currDirectory = "/" + directory[i] + "/";
                     result = client.getCurrDirectory();
                     /*If result is null, then the FTP gave an error
                     *when it was treated like a folder
                     *So we know its a file.*/
                     if (result == null)
                     {
-                        workingDir.directory.Add(new File(directory[i]));
+                        workingDir.subdirectory.Add(new File(directory[i]));
                     }
                     else
                     {
-                        workingDir.directory.Add(new Folder(directory[i],workingDir));
+                        workingDir.subdirectory.Add(new Folder(directory[i],workingDir));
                     }
                 }
                 //Restore original current directory
@@ -106,14 +106,16 @@ namespace CS410Project
         {
             public Folder(string name): base(name)
             {
+                subdirectory = new List<File>();
                 this.parentDir = new Folder("");
             }
             public Folder(string name,Folder parentDir):base(name)
             {
+                subdirectory = new List<File>();
                 this.parentDir = parentDir;
             }
 
-            public List<File> directory;
+            public List<File> subdirectory;
             //Folders need to remember their parents ;_;
             //By default its the root directory
             public Folder parentDir {set; get;}
