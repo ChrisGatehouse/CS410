@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Windows.Forms;
 
 namespace CS410Project
 {
@@ -34,17 +35,21 @@ namespace CS410Project
         {
             request = (FtpWebRequest)WebRequest.Create(destination);
             request.Credentials = new NetworkCredential(username, password);
+            //Perform any action just to test to see if it failed
+            //In this case we are just using List Directory to see if the directory exist
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
             //Request is going to stay alive, until a timeout, or a logout
             request.KeepAlive = true;
             try
             {
                 //Test the connection
-                WebResponse response = request.GetResponse();
+                WebResponse testResponse = request.GetResponse();
             }
             catch(WebException err) 
             {
-                //Problem connecting, output error to console ad return false
-                Console.WriteLine(err.ToString());
+                //Problem connecting, output error to console and return false
+                Console.WriteLine(err.Status.ToString());
+                MessageBox.Show("Cannot connect to FTP server", "Uh-Oh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             //Connection is valid, return true
@@ -55,6 +60,9 @@ namespace CS410Project
         {
             List<string> results = new List<string>();
             request = (FtpWebRequest)WebRequest.Create(destination + currDirectory);
+            //Request is going to stay alive, until a timeout, or a logout
+            request.KeepAlive = true;
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
             {
                 //Check if the file exist on the server
@@ -66,7 +74,6 @@ namespace CS410Project
                 Console.WriteLine(err.ToString());
                 return null;
             }
-            request.Method = WebRequestMethods.Ftp.ListDirectory;
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
