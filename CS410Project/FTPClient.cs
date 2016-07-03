@@ -62,9 +62,9 @@ namespace CS410Project
             }
             catch (WebException err)
             {
-                //Not a valid file, so returning an empty list
+                //Not a valid target, so returning an empty list
                 Console.WriteLine(err.ToString());
-                return results;
+                return null;
             }
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
