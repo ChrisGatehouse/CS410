@@ -63,7 +63,14 @@ namespace CS410Project
         public override List<string> getCurrDirectory()
         {
             List<string> results = new List<string>();
-            request = (FtpWebRequest)WebRequest.Create(destination + currDirectory);
+            string target = destination + currDirectory;
+            /*attaches a / to the end of the link if it doesn't end with one
+            *This eliminates an ambiguity that causes a bug*/
+            if(!target.EndsWith("/"))
+            {
+                target += "/";
+            }
+            request = (FtpWebRequest)WebRequest.Create(target);
             //Request is going to stay alive, until a timeout, or a logout
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
@@ -90,6 +97,34 @@ namespace CS410Project
             reader.Close();
             response.Close();
             return results;
+        }
+        public override bool isFile()
+        {
+            List<string> results = new List<string>();
+            string target = destination + currDirectory;
+            /*attaches a / to the end of the link if it doesn't end with one
+            *This eliminates an ambiguity that causes a bug*/
+            if (!target.EndsWith("/"))
+            {
+                target += "/";
+            }
+            request = (FtpWebRequest)WebRequest.Create(target);
+            //Request is going to stay alive, until a timeout, or a logout
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
+            try
+            {
+                //Check if the file exist on the server
+                testResponse = request.GetResponse();
+            }
+            catch (WebException err)
+            {
+                //Target is a file, not a folder, returning false
+                Console.WriteLine(err.ToString());
+                return false;
+            }
+            //Done with the response, so we are closing them now
+            testResponse.Close();
+            return true;
         }
 
         //TODO: Add more functionality for the FTP client here
