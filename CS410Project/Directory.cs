@@ -44,16 +44,15 @@ namespace CS410Project
                 }
 
                 //Hold result of the subdirectory
-                List<string> result = new List<string>();
+                bool result;
                 //Figure out which files are folders/files
                 for (int i = 0;i < directory.Count;i++)
                 {
-                    client.currDirectory = "/" + directory[i] + "/";
-                    result = client.getCurrDirectory();
-                    /*If result is null, then the FTP gave an error
-                    *when it was treated like a folder
-                    *So we know its a file.*/
-                    if (result == null)
+                    client.currDirectory += "/" + directory[i] + "/";
+                    result = client.isFile();
+                    /*If result is false, then the FTP gave an error
+                    *when it was treated like a folder so we know its a file.*/
+                    if (!result)
                     {
                         workingDir.subdirectory.Add(new File(directory[i]));
                     }
@@ -61,28 +60,55 @@ namespace CS410Project
                     {
                         workingDir.subdirectory.Add(new Folder(directory[i],workingDir));
                     }
+                    //Restore original current directory
+                    client.currDirectory = currDir;
                 }
-                //Restore original current directory
-                client.currDirectory = currDir;
             }
         }
 
 
         public List<string> getDirectoryStructure()
         {
-           //TODO:output list structure that follows the data structures design
-            return null;
+            List<string> output = new List<string>();
+            for (int i =0; i < workingDir.subdirectory.Count;i++)
+            {
+                output.Add(workingDir.subdirectory[i].name);
+            }
+            return output;
         }
 
 
         //This function changes the currDirectory of the Client
         //To a new one, and initializes new folders to be created
-        public void changeToDirectory(Client client,Folder destination)
+        public void changeToDirectory(Client client,string destination)
         {
+            //Save old name incase of problems
+            string oldDirectory = client.currDirectory;
             //Append new directory name
-            client.currDirectory += "/" + destination.name;
-            //Get new folder information
-            initializeDirectory(client);
+            client.currDirectory += "/" + destination + "/";
+            File newWorkingDir = workingDir.subdirectory.Find(x => x.name == destination);
+
+            if (newWorkingDir == null)
+            {
+                //Get new folder information if the folder has not been added to the structure yet
+                initializeDirectory(client);
+            }else
+            {
+                if (client.isFile())
+                {
+                    //Just move the working directory over to the new one
+                    workingDir = (Folder)newWorkingDir;
+                    //TODO: add check so it doesn't have to keep rebuilding the structure if it was already built
+                    initializeDirectory(client);
+                }
+                else
+                {
+                    //Selected object is not a file
+                    //As of right now, do nothing but just restore old name
+                    //However we could return something so it decides to download the file or whatever
+                    client.currDirectory = oldDirectory;
+                }
+            }
         }
         //This function changes the currDirectory of the Client 
         //To the parent directory, (if it exist)
@@ -91,7 +117,8 @@ namespace CS410Project
             if (workingDir.parentDir != null)
             {
                 //Remove the directory from the currDirectory string
-                client.currDirectory.Remove(client.currDirectory.Length - workingDir.name.Length, workingDir.name.Length);
+                //The length +2 is to account for the starting '/' and ending '/'
+                client.currDirectory = client.currDirectory.Remove(client.currDirectory.Length - (workingDir.name.Length + 2), (workingDir.name.Length + 2));
                 workingDir = workingDir.parentDir;
             }
             else
@@ -130,7 +157,7 @@ namespace CS410Project
         //The current working directory
         public Folder workingDir;
         //The root of the tree keeps track of the top
-        public Folder head;
+        private Folder head;
        
     }
 }
