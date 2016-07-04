@@ -47,6 +47,8 @@ namespace CS410Project
             if (checkValidURI(destination))
             {
                 client = new FTPClient(username, password, destination);
+                directory.initializeDirectory(client);
+                populateDirectoryBox(directory.getDirectoryStructure());
             }
             else
             {
@@ -54,7 +56,20 @@ namespace CS410Project
                 MessageBox.Show("Destination is not a valid FTP", "You fucked up", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        private void ParentButton_Click(object sender, EventArgs e)
+        {
+            directory.changeToParentDirectory(client);
+            populateDirectoryBox(directory.getDirectoryStructure());
+        }
+        private void WorkingDirectory_DoubleClick(object sender, EventArgs e)
+        {
+            if (WorkingDirectory.SelectedItem != null)
+            {
+                string index = WorkingDirectory.SelectedItem.ToString();
+                directory.changeToDirectory(client, index);
+                populateDirectoryBox(directory.getDirectoryStructure());
+            }
+        }
         private bool checkValidURI(string target)
         {
             Uri uriTest;
@@ -62,10 +77,24 @@ namespace CS410Project
             bool testResult = Uri.TryCreate(target, UriKind.Absolute, out uriTest) && (uriTest.Scheme == Uri.UriSchemeFtp);
             return testResult;
         }
+        //This method populates the listbox to contain the current working directory of the FTP server
+        private void populateDirectoryBox(List<string> input)
+        {
+            //Wipe out the box before adding items
+            WorkingDirectory.Items.Clear();
+            //Add items one by one from the directory's structure
+            for (int i = 0;i < input.Count;i++)
+            {
+                WorkingDirectory.Items.Add(input[i]);
+            }
+        }
 
+
+        public Directory directory = new Directory();
         public Client client;
         public string username = "";
         public string password = "";
         public string destination = "";
+
     }
 }

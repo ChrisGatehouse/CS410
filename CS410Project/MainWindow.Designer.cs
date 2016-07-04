@@ -34,6 +34,7 @@
             this.PasswordTextbox = new System.Windows.Forms.TextBox();
             this.DestinationTextbox = new System.Windows.Forms.TextBox();
             this.WorkingDirectory = new System.Windows.Forms.ListBox();
+            this.ParentButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -86,16 +87,31 @@
             // WorkingDirectory
             // 
             this.WorkingDirectory.FormattingEnabled = true;
+            this.WorkingDirectory.Items.AddRange(new object[] {
+            "testing",
+            ""});
             this.WorkingDirectory.Location = new System.Drawing.Point(279, 36);
             this.WorkingDirectory.Name = "WorkingDirectory";
             this.WorkingDirectory.Size = new System.Drawing.Size(284, 134);
             this.WorkingDirectory.TabIndex = 5;
+            this.WorkingDirectory.DoubleClick += new System.EventHandler(this.WorkingDirectory_DoubleClick);
+            // 
+            // ParentButton
+            // 
+            this.ParentButton.Location = new System.Drawing.Point(279, 12);
+            this.ParentButton.Name = "ParentButton";
+            this.ParentButton.Size = new System.Drawing.Size(92, 23);
+            this.ParentButton.TabIndex = 6;
+            this.ParentButton.Text = "Parent Directory";
+            this.ParentButton.UseVisualStyleBackColor = true;
+            this.ParentButton.Click += new System.EventHandler(this.ParentButton_Click);
             // 
             // Main_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(595, 386);
+            this.Controls.Add(this.ParentButton);
             this.Controls.Add(this.WorkingDirectory);
             this.Controls.Add(this.DestinationTextbox);
             this.Controls.Add(this.PasswordTextbox);
@@ -117,6 +133,7 @@
         private System.Windows.Forms.TextBox PasswordTextbox;
         private System.Windows.Forms.TextBox DestinationTextbox;
         private System.Windows.Forms.ListBox WorkingDirectory;
+        private System.Windows.Forms.Button ParentButton;
     }
 }
 
