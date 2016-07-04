@@ -71,7 +71,6 @@ namespace CS410Project
                 target += "/";
             }
             request = (FtpWebRequest)WebRequest.Create(target);
-            //Request is going to stay alive, until a timeout, or a logout
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
             {
@@ -98,10 +97,10 @@ namespace CS410Project
             response.Close();
             return results;
         }
-        public override bool isFile()
+        public override bool isFile(string targetDirectory)
         {
             List<string> results = new List<string>();
-            string target = destination + currDirectory;
+            string target = destination + currDirectory + "/" + targetDirectory + "/";
             /*attaches a / to the end of the link if it doesn't end with one
             *This eliminates an ambiguity that causes a bug*/
             if (!target.EndsWith("/"))
@@ -109,7 +108,6 @@ namespace CS410Project
                 target += "/";
             }
             request = (FtpWebRequest)WebRequest.Create(target);
-            //Request is going to stay alive, until a timeout, or a logout
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
             {

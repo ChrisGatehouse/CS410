@@ -31,7 +31,7 @@ namespace CS410Project
         //TODO:list directory, login, logoff etc as virtual functions to add definitions to in FTPClient
         public abstract bool establishConnection(); //performs the initial/test connection
         public abstract List<string> getCurrDirectory(); //returns a list with the current directory's files
-        public abstract bool isFile(); //Checks if working dir is a file or not
+        public abstract bool isFile(string targetDirectory); //Checks if working dir is a file or not
 
         protected string username;
         protected string password;
