@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.ExitButton = new System.Windows.Forms.Button();
+            this.LoginButton = new System.Windows.Forms.Button();
             this.UsernameTextbox = new System.Windows.Forms.TextBox();
             this.PasswordTextbox = new System.Windows.Forms.TextBox();
             this.DestinationTextbox = new System.Windows.Forms.TextBox();
@@ -39,23 +39,23 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(58, 351);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(101, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Time to Bounce";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Exit_Button_Click);
+            this.ExitButton.Location = new System.Drawing.Point(58, 351);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(101, 23);
+            this.ExitButton.TabIndex = 0;
+            this.ExitButton.Text = "Time to Bounce";
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.Exit_Button_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(70, 114);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Log in";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.Login_Click);
+            this.LoginButton.Location = new System.Drawing.Point(70, 114);
+            this.LoginButton.Name = "LoginButton";
+            this.LoginButton.Size = new System.Drawing.Size(75, 23);
+            this.LoginButton.TabIndex = 1;
+            this.LoginButton.Text = "Log in";
+            this.LoginButton.UseVisualStyleBackColor = true;
+            this.LoginButton.Click += new System.EventHandler(this.Login_Click);
             // 
             // UsernameTextbox
             // 
@@ -116,8 +116,8 @@
             this.Controls.Add(this.DestinationTextbox);
             this.Controls.Add(this.PasswordTextbox);
             this.Controls.Add(this.UsernameTextbox);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.LoginButton);
+            this.Controls.Add(this.ExitButton);
             this.Name = "Main_Window";
             this.Text = "The best FTP client ever made";
             this.ResumeLayout(false);
@@ -127,8 +127,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.Button LoginButton;
         private System.Windows.Forms.TextBox UsernameTextbox;
         private System.Windows.Forms.TextBox PasswordTextbox;
         private System.Windows.Forms.TextBox DestinationTextbox;
