@@ -1,2 +1,0 @@
-c:\users\user\documents\visual studio 2013\Projects\SampleFTPExample\SampleFTPExample\bin\Debug\SampleFTPExample.exe.config
-C:\Users\User\Desktop\CS410\SampleFTPExample\SampleFTPExample\bin\Debug\SampleFTPExample.exe.config
