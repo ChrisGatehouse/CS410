@@ -1,1 +1,10 @@
 C:\Users\User\Desktop\CS410\CS410Project\bin\Debug\CS410Project.exe.config
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\bin\Debug\CS410Project.exe.config
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\bin\Debug\CS410Project.exe
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\bin\Debug\CS410Project.pdb
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\obj\Debug\CS410Project.csprojResolveAssemblyReference.cache
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\obj\Debug\CS410Project.Main_Window.resources
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\obj\Debug\CS410Project.Properties.Resources.resources
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\obj\Debug\CS410Project.csproj.GenerateResource.Cache
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\obj\Debug\CS410Project.exe
+C:\Users\lawrenb\Source\Repos\CS410\CS410Project\obj\Debug\CS410Project.pdb
