@@ -15,10 +15,11 @@ namespace CS410Project
      */
     class FTPClient : Client
     {
-        public FTPClient(string username, string password, string destination) :base()
+        public FTPClient(string username, string password, string destination)
+            : base()
         {
-            this.username    = username;
-            this.password    = password;
+            this.username = username;
+            this.password = password;
             this.destination = destination;
             //At the start the current working directory nothing
             this.currDirectory = "";
@@ -26,7 +27,8 @@ namespace CS410Project
             establishConnection();
         }
         //Copy Constructor
-        public FTPClient(Client toCopy):base (toCopy)
+        public FTPClient(Client toCopy)
+            : base(toCopy)
         {
             establishConnection();
         }
@@ -48,7 +50,7 @@ namespace CS410Project
                 //Test the connection
                 testResponse = request.GetResponse();
             }
-            catch(WebException err) 
+            catch (WebException err)
             {
                 //Problem connecting, output error to console and return false
                 Console.WriteLine(err.Status.ToString());
@@ -60,13 +62,14 @@ namespace CS410Project
             return true;
         }
         //This function creates a list of the files/folders in the current directory
+        //THIS IS NOW OBSOLETE, USE getCurrDetailedDirectory()
         public override List<string> getCurrDirectory()
         {
             List<string> results = new List<string>();
             string target = destination + currDirectory;
             /*attaches a / to the end of the link if it doesn't end with one
             *This eliminates an ambiguity that causes a bug*/
-            if(!target.EndsWith("/"))
+            if (!target.EndsWith("/"))
             {
                 target += "/";
             }
@@ -97,16 +100,50 @@ namespace CS410Project
             response.Close();
             return results;
         }
-        public override bool isFile(string targetDirectory)
+        /*This function creates a list of the files/folders in the current directory 
+         * with extra details such as permissions, size, etc */
+        public override List<string> getCurrDetailedDirectory()
         {
             List<string> results = new List<string>();
-            string target = destination + currDirectory + "/" + targetDirectory + "/";
+            string target = destination + currDirectory;
             /*attaches a / to the end of the link if it doesn't end with one
             *This eliminates an ambiguity that causes a bug*/
             if (!target.EndsWith("/"))
             {
                 target += "/";
             }
+            request = (FtpWebRequest)WebRequest.Create(target);
+            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            try
+            {
+                //Check if the file exist on the server
+                testResponse = request.GetResponse();
+            }
+            catch (WebException err)
+            {
+                //Not a valid target, so returning an empty list
+                Console.WriteLine(err.ToString());
+                return null;
+            }
+            response = (FtpWebResponse)request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(responseStream);
+
+            while (!reader.EndOfStream)
+            {
+                results.Add(reader.ReadLine());
+            }
+
+            //Done with the reader and response, so we are closing them now
+            reader.Close();
+            response.Close();
+            return results;
+        }
+        //Checks if working dir is a file or not (VERY SLOW, USE WITH CAUTION)
+        public override bool isFile(string targetDirectory)
+        {
+            List<string> results = new List<string>();
+            string target = destination + currDirectory + "/" + targetDirectory + "/";
             request = (FtpWebRequest)WebRequest.Create(target);
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
