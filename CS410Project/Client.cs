@@ -32,7 +32,7 @@ namespace CS410Project
         public abstract bool establishConnection(); //performs the initial/test connection
         public abstract List<string> getCurrDirectory(); //returns a list with the current directory's files
         public abstract bool isFile(string targetDirectory); //Checks if working dir is a file or not
-
+        public abstract void putFile(string fullPathFilename);
         protected string username;
         protected string password;
         //Destination of the FTP server
@@ -41,5 +41,6 @@ namespace CS410Project
          *provide the full path of the "destination" this allows us to keep destination 
          *as the root directory*/
         public string currDirectory {get;set;}
+        
     }
 }
