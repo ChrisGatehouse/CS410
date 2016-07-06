@@ -65,8 +65,6 @@ namespace CS410Project
         //Separates the base link from the directory listing and returns a string of the directory listing
         private void parseDestination(string target)
         {
-            if (!checkValidURI(destination))
-                return;
             //Conventional ftp link is "ftp://whatever.what/"
             //So we need to parse through 3 '/' to get base link, then everything else is the currDirectory
             char[] delimiterchars = { '/', '\\' }; //chars to use with parsing
@@ -98,6 +96,8 @@ namespace CS410Project
         //This function also passes destination and currDirectory information to Client
         public bool Login(Client client)
         {
+            if (!checkValidURI(destination))
+                return false;
             if (client.establishConnection(username, password, destination, currDirectory))
             {
                 loggedin = true; //we are now logged on
