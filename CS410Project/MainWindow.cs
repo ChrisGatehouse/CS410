@@ -117,9 +117,9 @@ namespace CS410Project
             {
                 if (WorkingDirectory.SelectedItem != null)
                 {
-                    List<string> toGet = new List<string>(1);
-                    toGet.Add(WorkingDirectory.SelectedItem.ToString());
-                    getFile temp = new getFile(toGet, "");
+                    //this implementation assumes a single selected item; change to list later
+                    //in the case of multiple selected items.
+                    getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
                     temp.saveFiles((FTPClient)client);                       
                 }
             }

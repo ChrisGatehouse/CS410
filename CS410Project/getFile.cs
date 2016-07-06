@@ -11,6 +11,16 @@ namespace CS410Project
         private string savePath;
         private List<string> targetFiles;
 
+        public getFile(string targetfile, string savepath)
+        {
+            savePath = savepath;
+            targetFiles = new List<string>(1);
+            targetFiles.Add(targetfile);
+
+            if (savePath == "")
+                setSavePathToDesktop();
+        }
+
         public getFile(List<string> targetfiles, string savepath)
         {
             savePath = savepath;
@@ -42,6 +52,22 @@ namespace CS410Project
         public void setSavePathToDesktop()
         {
             savePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        }
+
+        public void setSavePath(String toset)
+        {
+            savePath = toset;
+        }
+
+        public void setTargetFiles(string toset)
+        {
+            targetFiles = new List<string>(1);
+            targetFiles.Add(toset);
+        }
+
+        public void setTargetFiles(List<string> toset)
+        {
+            targetFiles = toset;
         }
     }
 
