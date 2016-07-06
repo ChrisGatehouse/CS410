@@ -70,7 +70,7 @@ namespace CS410Project
             }
             else
             {
-                if (client.isFile(destination))
+                if (newWorkingDir.fileinfo.directory)
                 {
                     //Just move the working directory over to the new one
                     workingDir = (Folder)newWorkingDir;
@@ -208,6 +208,7 @@ namespace CS410Project
             public Folder(string permissions, string owner, string group, uint size, string dateCreated, string name, Folder parentDir)
                 : base(permissions, owner, group, size, dateCreated, name)
             {
+                fileinfo.directory = true;
                 subdirectory = new List<File>();
                 this.parentDir = parentDir;
             }
@@ -276,6 +277,7 @@ namespace CS410Project
             public File(string permissions, string owner, string group, uint size, string dateCreated, string name)
             {
                 fileinfo.permissions = permissions;
+                fileinfo.directory = false;
                 fileinfo.owner = owner;
                 fileinfo.group = group;
                 fileinfo.size = size;
