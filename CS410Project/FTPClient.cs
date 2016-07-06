@@ -16,31 +16,24 @@ namespace CS410Project
      */
     class FTPClient : Client
     {
-        public FTPClient(string username, string password, string destination)
+        public FTPClient()
             : base()
         {
-            this.username = username;
-            this.password = password;
-            this.destination = destination;
-            if (!this.destination.EndsWith("/"))
-            {
-                this.destination += '/';
-            }
-            //At the start the current working directory nothing
+            this.destination = "";
             this.currDirectory = "";
-            //Establish initial connection to the FTP
-            establishConnection();
         }
         //Copy Constructor
         public FTPClient(Client toCopy)
             : base(toCopy)
         {
-            establishConnection();
+
         }
         //Logs on to the FTP, returns true if success, returns false if error
-        public override bool establishConnection()
+        public override bool establishConnection(string username, string password,string destination, string currDirectory)
         {
-            request = (FtpWebRequest)WebRequest.Create(destination);
+            this.destination = destination;
+            this.currDirectory = currDirectory;
+            request = (FtpWebRequest)WebRequest.Create(this.destination + this.currDirectory);
             //Request is going to stay alive, until a timeout, or a logout
             request.KeepAlive = true;
             //Set the timeout to only be 5000ms
@@ -66,18 +59,33 @@ namespace CS410Project
             testResponse.Close();
             return true;
         }
+        //Gets rid of connection
+        public override bool eliminateConnection()
+        {
+            request.KeepAlive = false;
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
+            try
+            {
+                testResponse = request.GetResponse();
+            }
+            catch (WebException err)
+            {
+                //Problem connecting, output error to console and return false
+                Console.WriteLine(err.Status.ToString());
+                MessageBox.Show("Cannot log off from FTP server", "Uh-Oh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+            //Connection is valid, return true
+            testResponse.Close();
+            return true;
+        }
+
         //This function creates a list of the files/folders in the current directory
         //THIS IS NOW OBSOLETE, USE getCurrDetailedDirectory()
         public override List<string> getCurrDirectory()
         {
             List<string> results = new List<string>();
             string target = destination + currDirectory;
-            /*attaches a / to the end of the link if it doesn't end with one
-            *This eliminates an ambiguity that causes a bug*/
-            if (!target.EndsWith("/"))
-            {
-                target += "/";
-            }
             request = (FtpWebRequest)WebRequest.Create(target);
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
@@ -111,12 +119,6 @@ namespace CS410Project
         {
             List<string> results = new List<string>();
             string target = destination + currDirectory;
-            /*attaches a / to the end of the link if it doesn't end with one
-            *This eliminates an ambiguity that causes a bug*/
-            if (!target.EndsWith("/"))
-            {
-                target += "/";
-            }
             request = (FtpWebRequest)WebRequest.Create(target);
             request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
             try
@@ -130,6 +132,7 @@ namespace CS410Project
                 Console.WriteLine(err.ToString());
                 return null;
             }
+
             response = (FtpWebResponse)request.GetResponse();
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
@@ -172,11 +175,6 @@ namespace CS410Project
         {
             string target = destination + currDirectory + targetFile;
             request = (FtpWebRequest)WebRequest.Create(target);
-            request.KeepAlive = true;
-            //Set the timeout to only be 5000ms
-            request.Timeout = 5000;
-            //Use password and username to access FTP
-            request.Credentials = new NetworkCredential(username, password);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             try
             {

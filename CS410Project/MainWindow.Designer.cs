@@ -35,16 +35,15 @@
             this.DestinationTextbox = new System.Windows.Forms.TextBox();
             this.WorkingDirectory = new System.Windows.Forms.ListBox();
             this.ParentButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.GetFile = new System.Windows.Forms.Button();
+            this.AutoFill = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ExitButton
             // 
-            this.ExitButton.Location = new System.Drawing.Point(87, 540);
-            this.ExitButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ExitButton.Location = new System.Drawing.Point(58, 351);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(152, 35);
+            this.ExitButton.Size = new System.Drawing.Size(101, 23);
             this.ExitButton.TabIndex = 0;
             this.ExitButton.Text = "Time to Bounce";
             this.ExitButton.UseVisualStyleBackColor = true;
@@ -52,10 +51,9 @@
             // 
             // LoginButton
             // 
-            this.LoginButton.Location = new System.Drawing.Point(105, 175);
-            this.LoginButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.LoginButton.Location = new System.Drawing.Point(70, 114);
             this.LoginButton.Name = "LoginButton";
-            this.LoginButton.Size = new System.Drawing.Size(112, 35);
+            this.LoginButton.Size = new System.Drawing.Size(75, 23);
             this.LoginButton.TabIndex = 1;
             this.LoginButton.Text = "Log in";
             this.LoginButton.UseVisualStyleBackColor = true;
@@ -63,30 +61,27 @@
             // 
             // UsernameTextbox
             // 
-            this.UsernameTextbox.Location = new System.Drawing.Point(87, 55);
-            this.UsernameTextbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.UsernameTextbox.Location = new System.Drawing.Point(58, 36);
             this.UsernameTextbox.Name = "UsernameTextbox";
-            this.UsernameTextbox.Size = new System.Drawing.Size(148, 26);
+            this.UsernameTextbox.Size = new System.Drawing.Size(100, 20);
             this.UsernameTextbox.TabIndex = 2;
             this.UsernameTextbox.Text = "Username";
             this.UsernameTextbox.TextChanged += new System.EventHandler(this.Username_TextChanged);
             // 
             // PasswordTextbox
             // 
-            this.PasswordTextbox.Location = new System.Drawing.Point(88, 95);
-            this.PasswordTextbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.PasswordTextbox.Location = new System.Drawing.Point(59, 62);
             this.PasswordTextbox.Name = "PasswordTextbox";
-            this.PasswordTextbox.Size = new System.Drawing.Size(148, 26);
+            this.PasswordTextbox.Size = new System.Drawing.Size(100, 20);
             this.PasswordTextbox.TabIndex = 3;
             this.PasswordTextbox.Text = "Password";
             this.PasswordTextbox.TextChanged += new System.EventHandler(this.Password_TextChanged);
             // 
             // DestinationTextbox
             // 
-            this.DestinationTextbox.Location = new System.Drawing.Point(87, 135);
-            this.DestinationTextbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DestinationTextbox.Location = new System.Drawing.Point(58, 88);
             this.DestinationTextbox.Name = "DestinationTextbox";
-            this.DestinationTextbox.Size = new System.Drawing.Size(148, 26);
+            this.DestinationTextbox.Size = new System.Drawing.Size(100, 20);
             this.DestinationTextbox.TabIndex = 4;
             this.DestinationTextbox.Text = "Destination";
             this.DestinationTextbox.TextChanged += new System.EventHandler(this.Destination_TextChanged);
@@ -94,57 +89,49 @@
             // WorkingDirectory
             // 
             this.WorkingDirectory.FormattingEnabled = true;
-            this.WorkingDirectory.ItemHeight = 20;
-            this.WorkingDirectory.Items.AddRange(new object[] {
-            "testing",
-            ""});
-            this.WorkingDirectory.Location = new System.Drawing.Point(418, 55);
-            this.WorkingDirectory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.WorkingDirectory.Location = new System.Drawing.Point(279, 36);
             this.WorkingDirectory.Name = "WorkingDirectory";
-            this.WorkingDirectory.Size = new System.Drawing.Size(424, 204);
+            this.WorkingDirectory.Size = new System.Drawing.Size(284, 134);
             this.WorkingDirectory.TabIndex = 5;
             this.WorkingDirectory.DoubleClick += new System.EventHandler(this.WorkingDirectory_DoubleClick);
             // 
             // ParentButton
             // 
-            this.ParentButton.Location = new System.Drawing.Point(418, 18);
-            this.ParentButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ParentButton.Location = new System.Drawing.Point(279, 12);
             this.ParentButton.Name = "ParentButton";
-            this.ParentButton.Size = new System.Drawing.Size(138, 35);
+            this.ParentButton.Size = new System.Drawing.Size(92, 23);
             this.ParentButton.TabIndex = 6;
             this.ParentButton.Text = "Parent Directory";
             this.ParentButton.UseVisualStyleBackColor = true;
             this.ParentButton.Click += new System.EventHandler(this.ParentButton_Click);
             // 
-            // button1
+            // GetFile
             // 
-            this.button1.Location = new System.Drawing.Point(105, 224);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 35);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Get File";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.getFile_Click);
+            this.GetFile.Location = new System.Drawing.Point(70, 146);
+            this.GetFile.Name = "GetFile";
+            this.GetFile.Size = new System.Drawing.Size(75, 23);
+            this.GetFile.TabIndex = 7;
+            this.GetFile.Text = "Get File";
+            this.GetFile.UseVisualStyleBackColor = true;
+            this.GetFile.Click += new System.EventHandler(this.getFile_Click);
             // 
-            // button2
+            // AutoFill
             // 
-            this.button2.Location = new System.Drawing.Point(105, 269);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 35);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Autofill Form";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.populateLoginFields);
+            this.AutoFill.Location = new System.Drawing.Point(70, 175);
+            this.AutoFill.Name = "AutoFill";
+            this.AutoFill.Size = new System.Drawing.Size(75, 23);
+            this.AutoFill.TabIndex = 8;
+            this.AutoFill.Text = "Autofill Form";
+            this.AutoFill.UseVisualStyleBackColor = true;
+            this.AutoFill.Click += new System.EventHandler(this.populateLoginFields);
             // 
             // Main_Window
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(892, 594);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(595, 386);
+            this.Controls.Add(this.AutoFill);
+            this.Controls.Add(this.GetFile);
             this.Controls.Add(this.ParentButton);
             this.Controls.Add(this.WorkingDirectory);
             this.Controls.Add(this.DestinationTextbox);
@@ -152,10 +139,8 @@
             this.Controls.Add(this.UsernameTextbox);
             this.Controls.Add(this.LoginButton);
             this.Controls.Add(this.ExitButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Main_Window";
             this.Text = "The best FTP client ever made";
-            this.Load += new System.EventHandler(this.Main_Window_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,8 +155,8 @@
         private System.Windows.Forms.TextBox DestinationTextbox;
         private System.Windows.Forms.ListBox WorkingDirectory;
         private System.Windows.Forms.Button ParentButton;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button GetFile;
+        private System.Windows.Forms.Button AutoFill;
     }
 }
 

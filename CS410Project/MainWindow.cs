@@ -13,7 +13,7 @@ namespace CS410Project
 {
     public partial class Main_Window : Form
     {
-
+        public Loginout loginManager = new Loginout();
         public Directory directory = new Directory();
         public Client client;
         public string username = "";
@@ -48,47 +48,53 @@ namespace CS410Project
             destination = DestinationTextbox.Text;
         }
 
+        private void Timeout_Event(object sender, EventArgs e)
+        {
+            loginManager.Timeout();
+            MessageBox.Show("Automatic timeout has triggered", "Timed out", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private void Login_Click(object sender, EventArgs e)
         {
-            //For now by default we will just log on using FTP
-            if (checkValidURI(destination))
+            client = new FTPClient();
+            loginManager = new Loginout(username, password, destination);
+            if (loginManager.Login(client))
             {
-                client = new FTPClient(username, password, destination);
+                loginManager.EnableTimeoutTimer(Timeout_Event,360);
                 directory = new Directory();
                 directory.initializeDirectory(client);
                 populateDirectoryBox(directory.getDirectoryStructure());
-            }
+            } 
             else
             {
-                //Not a valid FTP link, display error message
+                //Can't log on, error!
                 MessageBox.Show("Destination is not a valid FTP", "You goofed up", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ParentButton_Click(object sender, EventArgs e)
         {
-            directory.changeToParentDirectory(client);
-            populateDirectoryBox(directory.getDirectoryStructure());
-        }
-        private void WorkingDirectory_DoubleClick(object sender, EventArgs e)
-        {
-            if (WorkingDirectory.SelectedItem != null)
+            if (loginManager.LoggedIn)
             {
-                string index = WorkingDirectory.SelectedItem.ToString();
-                if(!directory.changeToDirectory(client, index))
-                {
-                    //It's a file, not a directory, so just download it
-                    getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
-                    temp.saveFiles(client);    
-                }
+                directory.changeToParentDirectory(client);
                 populateDirectoryBox(directory.getDirectoryStructure());
             }
         }
-        private bool checkValidURI(string target)
+        private void WorkingDirectory_DoubleClick(object sender, EventArgs e)
         {
-            Uri uriTest;
-            //Checks to see if provided destination is a valid URI for an FTP
-            bool testResult = Uri.TryCreate(target, UriKind.Absolute, out uriTest) && (uriTest.Scheme == Uri.UriSchemeFtp);
-            return testResult;
+            if (loginManager.LoggedIn)
+            {
+                if (WorkingDirectory.SelectedItem != null)
+                {
+                    string index = WorkingDirectory.SelectedItem.ToString();
+                    if (!directory.changeToDirectory(client, index))
+                    {
+                        //It's a file, not a directory, so just download it
+                        getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
+                        temp.saveFiles(client);
+                    }
+                    populateDirectoryBox(directory.getDirectoryStructure());
+                }
+            }
         }
         //This method populates the listbox to contain the current working directory of the FTP server
         private void populateDirectoryBox(List<string> input)
@@ -100,11 +106,6 @@ namespace CS410Project
             {
                 WorkingDirectory.Items.Add(input[i]);
             }
-        }
-
-        private void Main_Window_Load(object sender, EventArgs e)
-        {
-
         }
 
         //This method populates the login fields with valid login information to the end of expediting testing.
@@ -120,7 +121,7 @@ namespace CS410Project
 
         private void getFile_Click(object sender, EventArgs e)
         {
-            if (client != null)
+            if (loginManager.LoggedIn)
             {
                 if (WorkingDirectory.SelectedItem != null)
                 {
