@@ -131,6 +131,7 @@ namespace CS410Project
             {
                 //unsuccessful log off, though we can assume we have lost connection to the server so set loggedinout to false
                 loggedin = false;
+                timeout.Stop();   //Stop the timer
                 return false; 
             }
         }
