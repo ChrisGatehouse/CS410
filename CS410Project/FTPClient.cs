@@ -1,4 +1,5 @@
 ﻿//Main Contributor: Mohammed Inoue
+//Secondary Contributer: Miles Sanguinetti
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -162,6 +163,38 @@ namespace CS410Project
             return true;
         }
 
+        //attempts to get a file from the FTP server. returned boolean denotes success or failure.
+        public override bool getFile(string targetFile, string savePath)
+        {
+            string target = destination + currDirectory + targetFile;
+            request = (FtpWebRequest)WebRequest.Create(target);
+            request.KeepAlive = true;
+            //Set the timeout to only be 5000ms
+            request.Timeout = 5000;
+            //Use password and username to access FTP
+            request.Credentials = new NetworkCredential(username, password);
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+            try
+            {
+                //Check if the target file exists on the server
+                response = (FtpWebResponse)request.GetResponse();
+                Stream responseDownloadStream = response.GetResponseStream();
+               
+                //Console.WriteLine(savePath);
+                var fileStream = File.Create(savePath + "\\" + targetFile);
+                //responseDownloadStream.Seek(0, SeekOrigin.Begin);
+                responseDownloadStream.CopyTo(fileStream);
+                fileStream.Close();
+            }
+            catch (WebException e)
+            {
+                //Target file and/or destination are erroneous
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+            return true;
+        }
+
         //TODO: Add more functionality for the FTP client here
         //Also include the function prototype as an abstract type in the Client base class
 
@@ -172,6 +205,5 @@ namespace CS410Project
         private WebResponse testResponse;
         //This reponse is used to pull data from the FTP server
         private FtpWebResponse response;
-
     }
 }

@@ -17,7 +17,7 @@ namespace CS410Project
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main_Window());
-
+            
         }
     }
 }

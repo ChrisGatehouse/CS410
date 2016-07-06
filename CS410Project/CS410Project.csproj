@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="Directory.cs" />
+    <Compile Include="getFile.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
