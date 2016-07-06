@@ -99,6 +99,13 @@ namespace CS410Project
         public void updateConsistency(Client client)
         {
             List<string> currConsistency = client.getCurrDetailedDirectory();
+            //If the directory we are going to is empty, we don't need to do anything, except clear.
+            if (currConsistency.Count == 0)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
+
             List<File.FileInfo> fileData = File.parseFileInfo(currConsistency);
             //Sort the two list before performing the algorithm
             fileData.Sort((x, y) => x.name.CompareTo(y.name));
@@ -214,6 +221,10 @@ namespace CS410Project
             {
                 //Hold result of the subdirectory
                 bool result;
+                if (newFiles.Count == 0)
+                {
+                    return;
+                }
                 List<FileInfo> fileData = parseFileInfo(newFiles);
                 //Figure out which files are folders/files
                 for (int i = 0; i < fileData.Count; i++)
@@ -235,6 +246,10 @@ namespace CS410Project
             {
                 //Hold result of the subdirectory
                 bool result;
+                if (newFile == null)
+                {
+                    return;
+                }
                 FileInfo fileData = parseFileInfo(newFile);
                 result = fileData.directory;
                 /*If result is false, then the FTP gave an error
