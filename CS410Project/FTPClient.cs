@@ -179,7 +179,7 @@ namespace CS410Project
                 response = (FtpWebResponse)request.GetResponse();
                 Stream responseDownloadStream = response.GetResponseStream();
                 String savePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                //TEST
+              
                 //Console.WriteLine(savePath);
                 var fileStream = File.Create(savePath + "\\" + targetFile);
                 //responseDownloadStream.Seek(0, SeekOrigin.Begin);
