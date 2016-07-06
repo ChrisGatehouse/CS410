@@ -54,13 +54,14 @@ namespace CS410Project
             if (checkValidURI(destination))
             {
                 client = new FTPClient(username, password, destination);
+                directory = new Directory();
                 directory.initializeDirectory(client);
                 populateDirectoryBox(directory.getDirectoryStructure());
             }
             else
             {
                 //Not a valid FTP link, display error message
-                MessageBox.Show("Destination is not a valid FTP", "You fucked up", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Destination is not a valid FTP", "You goofed up", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ParentButton_Click(object sender, EventArgs e)

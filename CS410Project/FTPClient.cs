@@ -22,6 +22,10 @@ namespace CS410Project
             this.username = username;
             this.password = password;
             this.destination = destination;
+            if (!this.destination.EndsWith("/"))
+            {
+                this.destination += '/';
+            }
             //At the start the current working directory nothing
             this.currDirectory = "";
             //Establish initial connection to the FTP
