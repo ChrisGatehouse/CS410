@@ -89,12 +89,42 @@ namespace CS410Project
             }
         }
 
-
         public Directory directory = new Directory();
         public Client client;
         public string username = "";
         public string password = "";
         public string destination = "";
 
+        private void Main_Window_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //This method populates the login fields with valid login information to the end of expediting testing.
+        private void populateLoginFields(object sender, EventArgs e)
+        {
+            username = "anonymous";
+            UsernameTextbox.Text = username;
+            password = "";
+            PasswordTextbox.Text = password;
+            destination = "ftp://speedtest.tele2.net/";
+            DestinationTextbox.Text = destination;
+        }
+
+        private void getFile_Click(object sender, EventArgs e)
+        {
+            if (client != null)
+            {
+                if (WorkingDirectory.SelectedItem != null)
+                {
+                    //TEST
+                    //Console.WriteLine(destination + client.currDirectory + WorkingDirectory.SelectedItem.ToString());
+                    if (((FTPClient)client).getFile(WorkingDirectory.SelectedItem.ToString()))
+                        Console.WriteLine("SUCCESS.");
+                    else
+                        Console.WriteLine("FAILURE.");
+                }
+            }
+        }
     }
 }

@@ -1,2 +1,8 @@
 c:\users\user\documents\visual studio 2013\Projects\SampleFTPExample\SampleFTPExample\bin\Debug\SampleFTPExample.exe.config
 C:\Users\User\Desktop\CS410\SampleFTPExample\SampleFTPExample\bin\Debug\SampleFTPExample.exe.config
+C:\Users\Spaghetti\Source\Repos\CS410\SampleFTPExample\SampleFTPExample\bin\Debug\SampleFTPExample.exe.config
+C:\Users\Spaghetti\Source\Repos\CS410\SampleFTPExample\SampleFTPExample\obj\Debug\SampleFTPExample.pdb
+C:\Users\Spaghetti\Source\Repos\CS410\SampleFTPExample\SampleFTPExample\bin\Debug\SampleFTPExample.exe
+C:\Users\Spaghetti\Source\Repos\CS410\SampleFTPExample\SampleFTPExample\bin\Debug\SampleFTPExample.pdb
+C:\Users\Spaghetti\Source\Repos\CS410\SampleFTPExample\SampleFTPExample\obj\Debug\SampleFTPExample.csprojResolveAssemblyReference.cache
+C:\Users\Spaghetti\Source\Repos\CS410\SampleFTPExample\SampleFTPExample\obj\Debug\SampleFTPExample.exe
