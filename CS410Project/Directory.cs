@@ -59,7 +59,7 @@ namespace CS410Project
 
         //This function changes the currDirectory of the Client
         //To a new one, and initializes new folders to be created
-        public void changeToDirectory(Client client, string destination)
+        public bool changeToDirectory(Client client, string destination)
         {
             File newWorkingDir = workingDir.subdirectory.Find(x => x.fileinfo.name == destination);
 
@@ -67,6 +67,7 @@ namespace CS410Project
             {
                 //Get new folder information if the folder has not been added to the structure yet
                 initializeDirectory(client);
+                return true;
             }
             else
             {
@@ -82,12 +83,14 @@ namespace CS410Project
                     client.currDirectory += destination;
                     //checks existing structure so it doesn't have to keep rebuilding the structure from scratch if it was already built
                     updateConsistency(client);
+                    return true;
                 }
                 else
                 {
                     //Selected object is not a file
                     //As of right now, do nothing
                     //However we could return something so it decides to download the file or whatever
+                    return false;
                 }
             }
         }

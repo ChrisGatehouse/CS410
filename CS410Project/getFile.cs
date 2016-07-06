@@ -30,7 +30,7 @@ namespace CS410Project
                 setSavePathToDesktop();
         }
 
-        public void saveFiles(FTPClient toUse)
+        public void saveFiles(Client toUse)
         {
             int failed = 0;
             int succeeded = 0;

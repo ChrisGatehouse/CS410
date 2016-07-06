@@ -13,6 +13,13 @@ namespace CS410Project
 {
     public partial class Main_Window : Form
     {
+
+        public Directory directory = new Directory();
+        public Client client;
+        public string username = "";
+        public string password = "";
+        public string destination = "";
+
         public Main_Window()
         {
             InitializeComponent();
@@ -66,7 +73,12 @@ namespace CS410Project
             if (WorkingDirectory.SelectedItem != null)
             {
                 string index = WorkingDirectory.SelectedItem.ToString();
-                directory.changeToDirectory(client, index);
+                if(!directory.changeToDirectory(client, index))
+                {
+                    //It's a file, not a directory, so just download it
+                    getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
+                    temp.saveFiles(client);    
+                }
                 populateDirectoryBox(directory.getDirectoryStructure());
             }
         }
@@ -88,12 +100,6 @@ namespace CS410Project
                 WorkingDirectory.Items.Add(input[i]);
             }
         }
-
-        public Directory directory = new Directory();
-        public Client client;
-        public string username = "";
-        public string password = "";
-        public string destination = "";
 
         private void Main_Window_Load(object sender, EventArgs e)
         {
@@ -120,7 +126,7 @@ namespace CS410Project
                     //this implementation assumes a single selected item; change to list later
                     //in the case of multiple selected items.
                     getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
-                    temp.saveFiles((FTPClient)client);                       
+                    temp.saveFiles(client);                       
                 }
             }
         }
