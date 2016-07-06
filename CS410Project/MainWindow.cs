@@ -117,12 +117,10 @@ namespace CS410Project
             {
                 if (WorkingDirectory.SelectedItem != null)
                 {
-                    //TEST
-                    //Console.WriteLine(destination + client.currDirectory + WorkingDirectory.SelectedItem.ToString());
-                    if (((FTPClient)client).getFile(WorkingDirectory.SelectedItem.ToString()))
-                        Console.WriteLine("SUCCESS.");
-                    else
-                        Console.WriteLine("FAILURE.");
+                    List<string> toGet = new List<string>(1);
+                    toGet.Add(WorkingDirectory.SelectedItem.ToString());
+                    getFile temp = new getFile(toGet, "");
+                    temp.saveFiles((FTPClient)client);                       
                 }
             }
         }

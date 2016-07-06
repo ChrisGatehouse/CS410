@@ -1,4 +1,5 @@
 ﻿//Main Contributor: Mohammed Inoue
+//Secondary Contributer: Miles Sanguinetti
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -163,7 +164,7 @@ namespace CS410Project
         }
 
         //attempts to get a file from the FTP server. returned boolean denotes success or failure.
-        public override bool getFile(string targetFile)
+        public override bool getFile(string targetFile, string savePath)
         {
             string target = destination + currDirectory + targetFile;
             request = (FtpWebRequest)WebRequest.Create(target);
@@ -178,8 +179,7 @@ namespace CS410Project
                 //Check if the target file exists on the server
                 response = (FtpWebResponse)request.GetResponse();
                 Stream responseDownloadStream = response.GetResponseStream();
-                String savePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-              
+               
                 //Console.WriteLine(savePath);
                 var fileStream = File.Create(savePath + "\\" + targetFile);
                 //responseDownloadStream.Seek(0, SeekOrigin.Begin);
@@ -205,6 +205,5 @@ namespace CS410Project
         private WebResponse testResponse;
         //This reponse is used to pull data from the FTP server
         private FtpWebResponse response;
-
     }
 }
