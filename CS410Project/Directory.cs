@@ -28,21 +28,17 @@ namespace CS410Project
         //And creates file objects and folder objects when needed
         public void initializeDirectory(Client client)
         {
-            //Check if connection is valid
-            if (client.establishConnection())
+            List<string> directory = new List<string>();
+            //Grab the list of files in the current directory
+            directory = client.getCurrDetailedDirectory();
+            directory.Sort();
+            if (directory == null)
             {
-                List<string> directory = new List<string>();
-                //Grab the list of files in the current directory
-                directory = client.getCurrDetailedDirectory();
-                directory.Sort();
-                if (directory == null)
-                {
-                    Console.WriteLine("ERROR: invalid directory");
-                    return;
-                }
-                workingDir.AddToSubDirectory(client, directory);
-                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                Console.WriteLine("ERROR: invalid directory");
+                return;
             }
+            workingDir.AddToSubDirectory(client, directory);
+            workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
         }
 
 
@@ -76,11 +72,7 @@ namespace CS410Project
                     //Just move the working directory over to the new one
                     workingDir = (Folder)newWorkingDir;
                     //Append new directory name
-                    if (!client.currDirectory.EndsWith("/"))
-                    {
-                        client.currDirectory += "/";
-                    }
-                    client.currDirectory += destination;
+                    client.currDirectory += destination + "/";
                     //checks existing structure so it doesn't have to keep rebuilding the structure from scratch if it was already built
                     updateConsistency(client);
                     return true;
@@ -456,7 +448,7 @@ namespace CS410Project
         }
 
         //The current working directory
-        public Folder workingDir;
+        private Folder workingDir;
         //The root of the tree keeps track of the top
         private Folder head;
 
