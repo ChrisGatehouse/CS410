@@ -17,28 +17,30 @@ namespace CS410Project
     public abstract class Client
     {
         //Default constructor
-        public Client() { }
+        public Client(){}
         //Copy Constructor
         public Client(Client toCopy)
         {
+            this.username = toCopy.username;
+            this.password = toCopy.password;
             this.destination = toCopy.destination;
             this.currDirectory = toCopy.currDirectory;
         }
         //For each functionality, the FTP client needs a new method
         //Call the new object that performs that functionality
         //TODO:list directory, login, logoff etc as virtual functions to add definitions to in FTPClient
-        public abstract bool establishConnection(string username, string password, string destination, string currDirectory); //performs the initial/test connection
-        public abstract bool eliminateConnection();  //Disconnects from FTP server by setting keep alive off and then doing a dummy command
-        public abstract List<string> getCurrDirectory(); //returns a list with the current directory's files(OBSOLETE)
-        public abstract List<string> getCurrDetailedDirectory(); //returns a list with the current directory's files with extra details
-        public abstract bool isFile(string targetDirectory); //Checks if working dir is a file or not (VERY SLOW, USE WITH CAUTION)
-        public abstract bool getFile(string targetFile, string savePath); //attempts to get a file from the FTP server. returned boolean denotes success or failure.
+        public abstract bool establishConnection(); //performs the initial/test connection
+        public abstract List<string> getCurrDirectory(); //returns a list with the current directory's files
+        public abstract bool isFile(string targetDirectory); //Checks if working dir is a file or not
 
+        protected string username;
+        protected string password;
         //Destination of the FTP server
-        public string destination { get; set; }
+        public string destination {get;set;}
         /*CurrDirectory will function as what gets appended to the destination to
          *provide the full path of the "destination" this allows us to keep destination 
          *as the root directory*/
-        public string currDirectory { get; set; }
+        public string currDirectory {get;set;}
+        
     }
 }
