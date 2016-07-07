@@ -200,7 +200,7 @@ namespace CS410Project
                 subdirectory = new List<File>();
                 this.parentDir = new Folder("..");
             }
-            public Folder(string permissions, string owner, string group, uint size, string dateCreated, string name, Folder parentDir)
+            public Folder(string permissions, string owner, string group, UInt64 size, string dateCreated, string name, Folder parentDir)
                 : base(permissions, owner, group, size, dateCreated, name)
             {
                 fileinfo.directory = true;
@@ -269,7 +269,7 @@ namespace CS410Project
         {
             public File() { }
             public File(string name) { fileinfo.name = name; }
-            public File(string permissions, string owner, string group, uint size, string dateCreated, string name)
+            public File(string permissions, string owner, string group, UInt64 size, string dateCreated, string name)
             {
                 fileinfo.permissions = permissions;
                 fileinfo.directory = false;
@@ -293,12 +293,12 @@ namespace CS410Project
                 //owner of the file
                 public string owner { get; set; }
                 //The size of a file is saved in bytes
-                public uint size { get; set; }
+                public UInt64 size { get; set; }
                 //date the file was created
                 public string dateCreated { get; set; }
 
             };
-
+           
             /*Parses through a string of unix/windows style directory detail
             *Then returns the struct that will be given to a Folder's addToSubdirectory method
             * Which will pass on the information and use it to determine whether or not
@@ -354,7 +354,7 @@ namespace CS410Project
             {
                 List<FileInfo> output = new List<FileInfo>(new FileInfo[fileData.Count]);
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
-                uint sizeOutput; //used to store converted int value from string
+                UInt64 sizeOutput; //used to store converted int value from string
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
                 for (int i = 0; i < fileData.Count; i++)
@@ -373,7 +373,7 @@ namespace CS410Project
                     temp.permissions = parsed[0];
                     temp.owner = parsed[2];
                     temp.group = parsed[3];
-                    if (UInt32.TryParse(parsed[4], out sizeOutput))
+                    if (UInt64.TryParse(parsed[4], out sizeOutput))
                     {
                         temp.size = sizeOutput;
                     }
@@ -394,7 +394,7 @@ namespace CS410Project
             {
                 FileInfo output = new FileInfo();
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
-                uint sizeOutput; //used to store converted int value from string
+                UInt64 sizeOutput; //used to store converted int value from string
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
                 var temp = output;
@@ -411,7 +411,7 @@ namespace CS410Project
                 temp.permissions = parsed[0];
                 temp.owner = parsed[2];
                 temp.group = parsed[3];
-                if (UInt32.TryParse(parsed[4], out sizeOutput))
+                if (UInt64.TryParse(parsed[4], out sizeOutput))
                 {
                     temp.size = sizeOutput;
                 }
