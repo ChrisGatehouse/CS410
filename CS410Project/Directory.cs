@@ -28,21 +28,17 @@ namespace CS410Project
         //And creates file objects and folder objects when needed
         public void initializeDirectory(Client client)
         {
-            //Check if connection is valid
-            if (client.establishConnection())
+            List<string> directory = new List<string>();
+            //Grab the list of files in the current directory
+            directory = client.getCurrDetailedDirectory();
+            directory.Sort();
+            if (directory == null)
             {
-                List<string> directory = new List<string>();
-                //Grab the list of files in the current directory
-                directory = client.getCurrDetailedDirectory();
-                directory.Sort();
-                if (directory == null)
-                {
-                    Console.WriteLine("ERROR: invalid directory");
-                    return;
-                }
-                workingDir.AddToSubDirectory(client, directory);
-                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                Console.WriteLine("ERROR: invalid directory");
+                return;
             }
+            workingDir.AddToSubDirectory(client, directory);
+            workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
         }
 
 
@@ -59,7 +55,7 @@ namespace CS410Project
 
         //This function changes the currDirectory of the Client
         //To a new one, and initializes new folders to be created
-        public void changeToDirectory(Client client, string destination)
+        public bool changeToDirectory(Client client, string destination)
         {
             File newWorkingDir = workingDir.subdirectory.Find(x => x.fileinfo.name == destination);
 
@@ -67,27 +63,26 @@ namespace CS410Project
             {
                 //Get new folder information if the folder has not been added to the structure yet
                 initializeDirectory(client);
+                return true;
             }
             else
             {
-                if (client.isFile(destination))
+                if (newWorkingDir.fileinfo.directory)
                 {
                     //Just move the working directory over to the new one
                     workingDir = (Folder)newWorkingDir;
                     //Append new directory name
-                    if (!client.currDirectory.EndsWith("/"))
-                    {
-                        client.currDirectory += "/";
-                    }
-                    client.currDirectory += destination;
+                    client.currDirectory += destination + "/";
                     //checks existing structure so it doesn't have to keep rebuilding the structure from scratch if it was already built
                     updateConsistency(client);
+                    return true;
                 }
                 else
                 {
                     //Selected object is not a file
                     //As of right now, do nothing
                     //However we could return something so it decides to download the file or whatever
+                    return false;
                 }
             }
         }
@@ -99,6 +94,13 @@ namespace CS410Project
         public void updateConsistency(Client client)
         {
             List<string> currConsistency = client.getCurrDetailedDirectory();
+            //If the directory we are going to is empty, we don't need to do anything, except clear.
+            if (currConsistency.Count == 0)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
+
             List<File.FileInfo> fileData = File.parseFileInfo(currConsistency);
             //Sort the two list before performing the algorithm
             fileData.Sort((x, y) => x.name.CompareTo(y.name));
@@ -201,6 +203,7 @@ namespace CS410Project
             public Folder(string permissions, string owner, string group, uint size, string dateCreated, string name, Folder parentDir)
                 : base(permissions, owner, group, size, dateCreated, name)
             {
+                fileinfo.directory = true;
                 subdirectory = new List<File>();
                 this.parentDir = parentDir;
             }
@@ -214,6 +217,10 @@ namespace CS410Project
             {
                 //Hold result of the subdirectory
                 bool result;
+                if (newFiles.Count == 0)
+                {
+                    return;
+                }
                 List<FileInfo> fileData = parseFileInfo(newFiles);
                 //Figure out which files are folders/files
                 for (int i = 0; i < fileData.Count; i++)
@@ -235,6 +242,10 @@ namespace CS410Project
             {
                 //Hold result of the subdirectory
                 bool result;
+                if (newFile == null)
+                {
+                    return;
+                }
                 FileInfo fileData = parseFileInfo(newFile);
                 result = fileData.directory;
                 /*If result is false, then the FTP gave an error
@@ -261,6 +272,7 @@ namespace CS410Project
             public File(string permissions, string owner, string group, uint size, string dateCreated, string name)
             {
                 fileinfo.permissions = permissions;
+                fileinfo.directory = false;
                 fileinfo.owner = owner;
                 fileinfo.group = group;
                 fileinfo.size = size;
@@ -436,7 +448,7 @@ namespace CS410Project
         }
 
         //The current working directory
-        public Folder workingDir;
+        private Folder workingDir;
         //The root of the tree keeps track of the top
         private Folder head;
 
