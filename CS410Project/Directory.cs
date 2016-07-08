@@ -31,14 +31,18 @@ namespace CS410Project
             List<string> directory = new List<string>();
             //Grab the list of files in the current directory
             directory = client.getCurrDetailedDirectory();
-            directory.Sort();
+            //directory.Sort();
             if (directory == null)
             {
                 Console.WriteLine("ERROR: invalid directory");
                 return;
             }
-            workingDir.AddToSubDirectory(client, directory);
-            workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+            else
+            {
+                directory.Sort();
+                workingDir.AddToSubDirectory(client, directory);
+                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+            }
         }
 
 
