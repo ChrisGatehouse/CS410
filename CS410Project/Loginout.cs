@@ -107,11 +107,11 @@ namespace CS410Project
             this.username = username;
             this.password = password;
             this.destination = destination;
-            this.loggedin = false; //By default we are not logged into the system
-            parseDestination(destination);
-            if (!checkValidURI(destination))
+            parseDestination(this.destination);
+
+            if (!checkValidURI(this.destination))
                 return false;
-            if (client.establishConnection(username, password, destination, currDirectory))
+            if (client.establishConnection(username, password, this.destination, currDirectory))
             {
                 loggedin = true; //we are now logged on
                 return true; //Returns true when log in success and sets loggedinout to true
