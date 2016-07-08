@@ -58,8 +58,7 @@ namespace CS410Project
         private void Login_Click(object sender, EventArgs e)
         {
             client = new FTPClient();
-            loginManager = new Loginout(username, password, destination);
-            if (loginManager.Login(client))
+            if (loginManager.Login(client, username, password, destination))
             {
                 loginManager.EnableTimeoutTimer(Timeout_Event,360);
                 directory = new Directory();

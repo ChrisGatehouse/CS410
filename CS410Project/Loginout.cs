@@ -27,7 +27,7 @@ namespace CS410Project
         public bool LoggedIn { get { RestartTimer(); return loggedin; } set {/*This does nothing, because you shouldn't be able to set this outside of the object. */} }
         private Timer timeout = new Timer();
 
-        private List<SessionInfo> sessions = new List<SessionInfo>(); //The list of sessions that are loaded/saved for past connections
+        private List<SessionInfo> sessions; //The list of sessions that are loaded/saved for past connections
         private struct SessionInfo
         {
             public string name;
@@ -39,16 +39,8 @@ namespace CS410Project
 
         public Loginout()
         {
+            sessions = new List<SessionInfo>();
             loggedin = false;
-        }
-
-        public Loginout(string username, string password, string destination)
-        {
-            this.username = username;
-            this.password = password;
-            this.destination = destination;
-            this.loggedin = false; //By default we are not logged into the system
-            parseDestination(destination);
         }
         
         //Enable the Timeout Timer
@@ -76,6 +68,9 @@ namespace CS410Project
         //Separates the base link from the directory listing and returns a string of the directory listing
         private void parseDestination(string target)
         {
+            if (target == null)
+                return;
+
             //Conventional ftp link is "ftp://whatever.what/"
             //So we need to parse through 3 '/' to get base link, then everything else is the currDirectory
             char[] delimiterchars = { '/', '\\' }; //chars to use with parsing
@@ -107,8 +102,13 @@ namespace CS410Project
 
         //Logs into the the FTP server using client's establishConnection method
         //This function also passes destination and currDirectory information to Client
-        public bool Login(Client client)
+        public bool Login(Client client, string username, string password, string destination)
         {
+            this.username = username;
+            this.password = password;
+            this.destination = destination;
+            this.loggedin = false; //By default we are not logged into the system
+            parseDestination(destination);
             if (!checkValidURI(destination))
                 return false;
             if (client.establishConnection(username, password, destination, currDirectory))
