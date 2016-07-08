@@ -99,6 +99,11 @@ namespace CS410Project
         {
             List<string> currConsistency = client.getCurrDetailedDirectory();
             //If the directory we are going to is empty, we don't need to do anything, except clear.
+            if (currConsistency == null)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
             if (currConsistency.Count == 0)
             {
                 workingDir.subdirectory.Clear();
@@ -359,6 +364,7 @@ namespace CS410Project
                 List<FileInfo> output = new List<FileInfo>(new FileInfo[fileData.Count]);
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
                 UInt64 sizeOutput; //used to store converted int value from string
+                bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
                 for (int i = 0; i < fileData.Count; i++)
@@ -388,7 +394,13 @@ namespace CS410Project
                         Console.WriteLine("ERROR: Could not parse value of size");
                     }
                     temp.dateCreated = parsed[5] + " " + parsed[6] + " " + parsed[7];
-                    temp.name = parsed[8];
+                    foreach (string s in parsed.Skip(8))
+                    {
+                        if (!first)
+                            temp.name += " ";
+                        temp.name += s;
+                        first = false;
+                    }
                     output[i] = temp;
                 }
                 return output;
@@ -399,6 +411,7 @@ namespace CS410Project
                 FileInfo output = new FileInfo();
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
                 UInt64 sizeOutput; //used to store converted int value from string
+                bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
                 var temp = output;
@@ -426,7 +439,13 @@ namespace CS410Project
                     Console.WriteLine("ERROR: Could not parse value of size");
                 }
                 temp.dateCreated = parsed[5] + " " + parsed[6] + " " + parsed[7];
-                temp.name = parsed[8];
+                foreach (string s in parsed.Skip(8))
+                {
+                    if (!first)
+                        temp.name += " ";
+                    temp.name += s;
+                    first = false;
+                }
                 output = temp;
                 return output;
             }

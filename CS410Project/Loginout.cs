@@ -70,6 +70,8 @@ namespace CS410Project
             char[] delimiterchars = { '/', '\\' }; //chars to use with parsing
             string[] parsed = target.Split(delimiterchars, StringSplitOptions.RemoveEmptyEntries);
             int counter = 0;
+            //Set currDirectory to default as ""
+            currDirectory = "";
             foreach (string s in parsed)
             {
                 if (counter == 1)
