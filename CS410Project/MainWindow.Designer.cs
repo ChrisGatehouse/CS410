@@ -37,11 +37,15 @@
             this.ParentButton = new System.Windows.Forms.Button();
             this.GetFile = new System.Windows.Forms.Button();
             this.AutoFill = new System.Windows.Forms.Button();
+            this.SavedConnections = new System.Windows.Forms.ListBox();
+            this.SaveConnectionsButton = new System.Windows.Forms.Button();
+            this.NewConnectionTextbox = new System.Windows.Forms.TextBox();
+            this.Remove = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ExitButton
             // 
-            this.ExitButton.Location = new System.Drawing.Point(58, 351);
+            this.ExitButton.Location = new System.Drawing.Point(57, 351);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(101, 23);
             this.ExitButton.TabIndex = 0;
@@ -51,7 +55,7 @@
             // 
             // LoginButton
             // 
-            this.LoginButton.Location = new System.Drawing.Point(70, 114);
+            this.LoginButton.Location = new System.Drawing.Point(70, 93);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(75, 23);
             this.LoginButton.TabIndex = 1;
@@ -61,7 +65,7 @@
             // 
             // UsernameTextbox
             // 
-            this.UsernameTextbox.Location = new System.Drawing.Point(58, 36);
+            this.UsernameTextbox.Location = new System.Drawing.Point(57, 15);
             this.UsernameTextbox.Name = "UsernameTextbox";
             this.UsernameTextbox.Size = new System.Drawing.Size(100, 20);
             this.UsernameTextbox.TabIndex = 2;
@@ -70,8 +74,9 @@
             // 
             // PasswordTextbox
             // 
-            this.PasswordTextbox.Location = new System.Drawing.Point(59, 62);
+            this.PasswordTextbox.Location = new System.Drawing.Point(58, 41);
             this.PasswordTextbox.Name = "PasswordTextbox";
+            this.PasswordTextbox.PasswordChar = '*';
             this.PasswordTextbox.Size = new System.Drawing.Size(100, 20);
             this.PasswordTextbox.TabIndex = 3;
             this.PasswordTextbox.Text = "Password";
@@ -79,7 +84,7 @@
             // 
             // DestinationTextbox
             // 
-            this.DestinationTextbox.Location = new System.Drawing.Point(58, 88);
+            this.DestinationTextbox.Location = new System.Drawing.Point(57, 67);
             this.DestinationTextbox.Name = "DestinationTextbox";
             this.DestinationTextbox.Size = new System.Drawing.Size(100, 20);
             this.DestinationTextbox.TabIndex = 4;
@@ -107,7 +112,7 @@
             // 
             // GetFile
             // 
-            this.GetFile.Location = new System.Drawing.Point(70, 146);
+            this.GetFile.Location = new System.Drawing.Point(70, 122);
             this.GetFile.Name = "GetFile";
             this.GetFile.Size = new System.Drawing.Size(75, 23);
             this.GetFile.TabIndex = 7;
@@ -117,7 +122,7 @@
             // 
             // AutoFill
             // 
-            this.AutoFill.Location = new System.Drawing.Point(70, 175);
+            this.AutoFill.Location = new System.Drawing.Point(70, 151);
             this.AutoFill.Name = "AutoFill";
             this.AutoFill.Size = new System.Drawing.Size(75, 23);
             this.AutoFill.TabIndex = 8;
@@ -125,11 +130,53 @@
             this.AutoFill.UseVisualStyleBackColor = true;
             this.AutoFill.Click += new System.EventHandler(this.populateLoginFields);
             // 
+            // SavedConnections
+            // 
+            this.SavedConnections.FormattingEnabled = true;
+            this.SavedConnections.Location = new System.Drawing.Point(25, 180);
+            this.SavedConnections.Name = "SavedConnections";
+            this.SavedConnections.Size = new System.Drawing.Size(167, 95);
+            this.SavedConnections.TabIndex = 9;
+            this.SavedConnections.DoubleClick += new System.EventHandler(this.SavedConnections_DoubleClick);
+            // 
+            // SaveConnectionsButton
+            // 
+            this.SaveConnectionsButton.Location = new System.Drawing.Point(25, 281);
+            this.SaveConnectionsButton.Name = "SaveConnectionsButton";
+            this.SaveConnectionsButton.Size = new System.Drawing.Size(69, 23);
+            this.SaveConnectionsButton.TabIndex = 10;
+            this.SaveConnectionsButton.Text = "Save";
+            this.SaveConnectionsButton.UseVisualStyleBackColor = true;
+            this.SaveConnectionsButton.Click += new System.EventHandler(this.SaveConnectionsButton_Click);
+            // 
+            // NewConnectionTextbox
+            // 
+            this.NewConnectionTextbox.Location = new System.Drawing.Point(100, 284);
+            this.NewConnectionTextbox.Name = "NewConnectionTextbox";
+            this.NewConnectionTextbox.Size = new System.Drawing.Size(92, 20);
+            this.NewConnectionTextbox.TabIndex = 11;
+            this.NewConnectionTextbox.Text = "New Connection";
+            this.NewConnectionTextbox.TextChanged += new System.EventHandler(this.NewConnectionTextbox_TextChanged);
+            // 
+            // Remove
+            // 
+            this.Remove.Location = new System.Drawing.Point(25, 310);
+            this.Remove.Name = "Remove";
+            this.Remove.Size = new System.Drawing.Size(69, 23);
+            this.Remove.TabIndex = 12;
+            this.Remove.Text = "Remove";
+            this.Remove.UseVisualStyleBackColor = true;
+            this.Remove.Click += new System.EventHandler(this.Remove_Click);
+            // 
             // Main_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(595, 386);
+            this.Controls.Add(this.Remove);
+            this.Controls.Add(this.NewConnectionTextbox);
+            this.Controls.Add(this.SaveConnectionsButton);
+            this.Controls.Add(this.SavedConnections);
             this.Controls.Add(this.AutoFill);
             this.Controls.Add(this.GetFile);
             this.Controls.Add(this.ParentButton);
@@ -141,6 +188,7 @@
             this.Controls.Add(this.ExitButton);
             this.Name = "Main_Window";
             this.Text = "The best FTP client ever made";
+            this.Load += new System.EventHandler(this.Main_Window_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,6 +205,10 @@
         private System.Windows.Forms.Button ParentButton;
         private System.Windows.Forms.Button GetFile;
         private System.Windows.Forms.Button AutoFill;
+        private System.Windows.Forms.ListBox SavedConnections;
+        private System.Windows.Forms.Button SaveConnectionsButton;
+        private System.Windows.Forms.TextBox NewConnectionTextbox;
+        private System.Windows.Forms.Button Remove;
     }
 }
 
