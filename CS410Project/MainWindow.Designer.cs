@@ -41,6 +41,10 @@
             this.SaveConnectionsButton = new System.Windows.Forms.Button();
             this.NewConnectionTextbox = new System.Windows.Forms.TextBox();
             this.Remove = new System.Windows.Forms.Button();
+            this.PutFile = new System.Windows.Forms.Button();
+            this.CreateRemoteDir = new System.Windows.Forms.Button();
+            this.remoteDirText = new System.Windows.Forms.TextBox();
+            this.DeleteFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ExitButton
@@ -168,11 +172,52 @@
             this.Remove.UseVisualStyleBackColor = true;
             this.Remove.Click += new System.EventHandler(this.Remove_Click);
             // 
+            // PutFile
+            // 
+            this.PutFile.Location = new System.Drawing.Point(151, 122);
+            this.PutFile.Name = "PutFile";
+            this.PutFile.Size = new System.Drawing.Size(75, 23);
+            this.PutFile.TabIndex = 13;
+            this.PutFile.Text = "Put File";
+            this.PutFile.UseVisualStyleBackColor = true;
+            this.PutFile.Click += new System.EventHandler(this.PutFile_Click);
+            // 
+            // CreateRemoteDir
+            // 
+            this.CreateRemoteDir.Location = new System.Drawing.Point(279, 209);
+            this.CreateRemoteDir.Name = "CreateRemoteDir";
+            this.CreateRemoteDir.Size = new System.Drawing.Size(106, 23);
+            this.CreateRemoteDir.TabIndex = 15;
+            this.CreateRemoteDir.Text = "Create Remote Dir";
+            this.CreateRemoteDir.UseVisualStyleBackColor = true;
+            this.CreateRemoteDir.Click += new System.EventHandler(this.CreateRemoteDir_Click);
+            // 
+            // remoteDirText
+            // 
+            this.remoteDirText.Location = new System.Drawing.Point(391, 211);
+            this.remoteDirText.Name = "remoteDirText";
+            this.remoteDirText.Size = new System.Drawing.Size(172, 20);
+            this.remoteDirText.TabIndex = 16;
+            // 
+            // DeleteFile
+            // 
+            this.DeleteFile.Location = new System.Drawing.Point(377, 12);
+            this.DeleteFile.Name = "DeleteFile";
+            this.DeleteFile.Size = new System.Drawing.Size(75, 23);
+            this.DeleteFile.TabIndex = 17;
+            this.DeleteFile.Text = "Delete File";
+            this.DeleteFile.UseVisualStyleBackColor = true;
+            this.DeleteFile.Click += new System.EventHandler(this.DeleteFile_Click);
+            // 
             // Main_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(595, 386);
+            this.Controls.Add(this.DeleteFile);
+            this.Controls.Add(this.remoteDirText);
+            this.Controls.Add(this.CreateRemoteDir);
+            this.Controls.Add(this.PutFile);
             this.Controls.Add(this.Remove);
             this.Controls.Add(this.NewConnectionTextbox);
             this.Controls.Add(this.SaveConnectionsButton);
@@ -209,6 +254,10 @@
         private System.Windows.Forms.Button SaveConnectionsButton;
         private System.Windows.Forms.TextBox NewConnectionTextbox;
         private System.Windows.Forms.Button Remove;
+        private System.Windows.Forms.Button PutFile;
+        private System.Windows.Forms.Button CreateRemoteDir;
+        private System.Windows.Forms.TextBox remoteDirText;
+        private System.Windows.Forms.Button DeleteFile;
     }
 }
 
