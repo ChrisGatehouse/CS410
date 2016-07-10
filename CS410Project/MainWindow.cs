@@ -206,11 +206,15 @@ namespace CS410Project
         {
             //MessageBox.Show(remoteDirText.Text);
             client.createRemoteDir(remoteDirText.Text);
+            directory.refreshDirectory(client);//refresh remote directory
+            populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
         }
 
         private void DeleteFile_Click(object sender, EventArgs e)
         {
             client.deleteRemoteFile(WorkingDirectory.SelectedItem.ToString());
+            directory.refreshDirectory(client);//refresh remote directory
+            populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
         }
 
         //We can rename a file easily from within a file dialog
@@ -240,6 +244,7 @@ namespace CS410Project
                     renameFileSelected.Clear();
                     renameFileNewName.Clear();
                     MessageBox.Show("File renamed successfully");
+                    //TODO: when local directory is added, do a refresh here
                 }
                 else
                     MessageBox.Show("No name to rename file too, try again");
