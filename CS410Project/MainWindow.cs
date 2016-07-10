@@ -212,5 +212,38 @@ namespace CS410Project
         {
             client.deleteRemoteFile(WorkingDirectory.SelectedItem.ToString());
         }
+
+        //We can rename a file easily from within a file dialog
+        private void RenameFile_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+            //DialogResult result = folderBrowserDialog1.ShowDialog();
+            //can save the selected file/path here, if we want to use it later
+            string targetFile = openFileDialog1.FileName;
+            if (result == DialogResult.OK) { } //check result
+        }
+
+        private void RenameFile2_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+            string targetFile = openFileDialog1.FileName;
+            renameFileSelected.Text = targetFile;
+            string path = Path.GetDirectoryName(openFileDialog1.FileName);
+            string renamedPathFile = path + "\\" + renameFileNewName.Text;//.ToString();
+            if (result == DialogResult.OK)
+            {
+         
+                //Can clean this up, pop up an inputBox(deprecated) to get the name
+                if (!String.IsNullOrEmpty(renameFileNewName.Text))
+                {
+                    File.Move(targetFile, renamedPathFile);
+                    renameFileSelected.Clear();
+                    renameFileNewName.Clear();
+                    MessageBox.Show("File renamed successfully");
+                }
+                else
+                    MessageBox.Show("No name to rename file too, try again");
+            } //check result
+        }
     }
 }
