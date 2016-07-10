@@ -16,6 +16,8 @@ namespace CS410Project
      */
     class FTPClient : Client
     {
+        private string username;
+        private string password;
         public FTPClient()
             : base()
         {
@@ -28,11 +30,19 @@ namespace CS410Project
         {
 
         }
+
+        public System.Net.NetworkCredential getCredentials()
+        {
+            return new NetworkCredential(username, password);
+        }
+
         //Logs on to the FTP, returns true if success, returns false if error
         public override bool establishConnection(string username, string password,string destination, string currDirectory)
         {
             this.destination = destination;
             this.currDirectory = currDirectory;
+            this.username = username;
+            this.password = password;
             request = (FtpWebRequest)WebRequest.Create(this.destination + this.currDirectory);
             //Request is going to stay alive, until a timeout, or a logout
             request.KeepAlive = true;
@@ -87,6 +97,7 @@ namespace CS410Project
             List<string> results = new List<string>();
             string target = destination + currDirectory;
             request = (FtpWebRequest)WebRequest.Create(target);
+            request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
             {
@@ -120,6 +131,7 @@ namespace CS410Project
             List<string> results = new List<string>();
             string target = destination + currDirectory;
             request = (FtpWebRequest)WebRequest.Create(target);
+            request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
             try
             {
@@ -153,6 +165,7 @@ namespace CS410Project
             List<string> results = new List<string>();
             string target = destination + currDirectory + "/" + targetDirectory + "/";
             request = (FtpWebRequest)WebRequest.Create(target);
+            request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
             {
@@ -175,6 +188,7 @@ namespace CS410Project
         {
             string target = destination + currDirectory + targetFile;
             request = (FtpWebRequest)WebRequest.Create(target);
+            request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             try
             {

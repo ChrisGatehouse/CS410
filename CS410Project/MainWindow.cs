@@ -19,9 +19,7 @@ namespace CS410Project
         public string username = "";
         public string password = "";
         public string destination = "";
-        private bool shiftDown; //represents whether or not the shift key is held down;
-                                //used to differentiate single and multiple file gets
-        private List<string> selected;
+        public string savedName = "";
 
         public Main_Window()
         {
@@ -60,8 +58,7 @@ namespace CS410Project
         private void Login_Click(object sender, EventArgs e)
         {
             client = new FTPClient();
-            loginManager = new Loginout(username, password, destination);
-            if (loginManager.Login(client))
+            if (loginManager.Login(client, username, password, destination))
             {
                 loginManager.EnableTimeoutTimer(Timeout_Event,360);
                 directory = new Directory();
@@ -130,11 +127,66 @@ namespace CS410Project
                 {
                     //this implementation assumes a single selected item; change to list later
                     //in the case of multiple selected items.
-                    String[] toGet = new String[WorkingDirectory.SelectedItems.Count];
-                    WorkingDirectory.SelectedItems.CopyTo(toGet, 0);
-                    getFile temp = new getFile(toGet, "");
+                    getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
                     temp.saveFiles(client);                       
                 }
+            }
+        }
+
+        private void NewConnectionTextbox_TextChanged(object sender, EventArgs e)
+        {
+            savedName = NewConnectionTextbox.Text;
+        }
+
+        private void SaveConnectionsButton_Click(object sender, EventArgs e)
+        {
+            if (savedName != "")
+            {
+                loginManager.saveSessions(savedName, destination, username, password);
+                updateConnectionBox();
+            }
+        }
+
+        private void updateConnectionBox()
+        {
+            SavedConnections.Items.Clear();
+            List<string> connectionList = new List<string>();
+            connectionList = loginManager.getSessionDomains();
+            for (int i = 0; i < connectionList.Count; i++)
+            {
+                SavedConnections.Items.Add(connectionList[i]);
+            }
+            loginManager.writeSessions();
+        }
+
+        private void SavedConnections_DoubleClick(object sender, EventArgs e)
+        {
+            if (SavedConnections.SelectedItem != null)
+            {
+                List<string> savedSession = new List<string>();
+                savedSession = loginManager.loadSessions(SavedConnections.SelectedItem.ToString());
+                destination = savedSession[1];
+                DestinationTextbox.Text = destination;
+                username = savedSession[2];
+                UsernameTextbox.Text = username;
+                password = savedSession[3];
+                PasswordTextbox.Text = password;
+            }
+        }
+
+        private void Main_Window_Load(object sender, EventArgs e)
+        {
+            loginManager.readSessions();
+            updateConnectionBox();
+        }
+
+        private void Remove_Click(object sender, EventArgs e)
+        {
+            if (SavedConnections.SelectedItem != null)
+            {
+                loginManager.deleteSession(SavedConnections.SelectedItem.ToString());
+                updateConnectionBox();
+                loginManager.writeSessions();
             }
         }
     }

@@ -31,14 +31,18 @@ namespace CS410Project
             List<string> directory = new List<string>();
             //Grab the list of files in the current directory
             directory = client.getCurrDetailedDirectory();
-            directory.Sort();
+            //directory.Sort();
             if (directory == null)
             {
                 Console.WriteLine("ERROR: invalid directory");
                 return;
             }
-            workingDir.AddToSubDirectory(client, directory);
-            workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+            else
+            {
+                directory.Sort();
+                workingDir.AddToSubDirectory(client, directory);
+                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+            }
         }
 
 
@@ -95,6 +99,11 @@ namespace CS410Project
         {
             List<string> currConsistency = client.getCurrDetailedDirectory();
             //If the directory we are going to is empty, we don't need to do anything, except clear.
+            if (currConsistency == null)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
             if (currConsistency.Count == 0)
             {
                 workingDir.subdirectory.Clear();
@@ -200,7 +209,7 @@ namespace CS410Project
                 subdirectory = new List<File>();
                 this.parentDir = new Folder("..");
             }
-            public Folder(string permissions, string owner, string group, uint size, string dateCreated, string name, Folder parentDir)
+            public Folder(string permissions, string owner, string group, UInt64 size, string dateCreated, string name, Folder parentDir)
                 : base(permissions, owner, group, size, dateCreated, name)
             {
                 fileinfo.directory = true;
@@ -269,7 +278,7 @@ namespace CS410Project
         {
             public File() { }
             public File(string name) { fileinfo.name = name; }
-            public File(string permissions, string owner, string group, uint size, string dateCreated, string name)
+            public File(string permissions, string owner, string group, UInt64 size, string dateCreated, string name)
             {
                 fileinfo.permissions = permissions;
                 fileinfo.directory = false;
@@ -293,12 +302,12 @@ namespace CS410Project
                 //owner of the file
                 public string owner { get; set; }
                 //The size of a file is saved in bytes
-                public uint size { get; set; }
+                public UInt64 size { get; set; }
                 //date the file was created
                 public string dateCreated { get; set; }
 
             };
-
+           
             /*Parses through a string of unix/windows style directory detail
             *Then returns the struct that will be given to a Folder's addToSubdirectory method
             * Which will pass on the information and use it to determine whether or not
@@ -354,7 +363,8 @@ namespace CS410Project
             {
                 List<FileInfo> output = new List<FileInfo>(new FileInfo[fileData.Count]);
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
-                uint sizeOutput; //used to store converted int value from string
+                UInt64 sizeOutput; //used to store converted int value from string
+                bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
                 for (int i = 0; i < fileData.Count; i++)
@@ -373,7 +383,7 @@ namespace CS410Project
                     temp.permissions = parsed[0];
                     temp.owner = parsed[2];
                     temp.group = parsed[3];
-                    if (UInt32.TryParse(parsed[4], out sizeOutput))
+                    if (UInt64.TryParse(parsed[4], out sizeOutput))
                     {
                         temp.size = sizeOutput;
                     }
@@ -384,7 +394,13 @@ namespace CS410Project
                         Console.WriteLine("ERROR: Could not parse value of size");
                     }
                     temp.dateCreated = parsed[5] + " " + parsed[6] + " " + parsed[7];
-                    temp.name = parsed[8];
+                    foreach (string s in parsed.Skip(8))
+                    {
+                        if (!first)
+                            temp.name += " ";
+                        temp.name += s;
+                        first = false;
+                    }
                     output[i] = temp;
                 }
                 return output;
@@ -394,7 +410,8 @@ namespace CS410Project
             {
                 FileInfo output = new FileInfo();
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
-                uint sizeOutput; //used to store converted int value from string
+                UInt64 sizeOutput; //used to store converted int value from string
+                bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
                 var temp = output;
@@ -411,7 +428,7 @@ namespace CS410Project
                 temp.permissions = parsed[0];
                 temp.owner = parsed[2];
                 temp.group = parsed[3];
-                if (UInt32.TryParse(parsed[4], out sizeOutput))
+                if (UInt64.TryParse(parsed[4], out sizeOutput))
                 {
                     temp.size = sizeOutput;
                 }
@@ -422,7 +439,13 @@ namespace CS410Project
                     Console.WriteLine("ERROR: Could not parse value of size");
                 }
                 temp.dateCreated = parsed[5] + " " + parsed[6] + " " + parsed[7];
-                temp.name = parsed[8];
+                foreach (string s in parsed.Skip(8))
+                {
+                    if (!first)
+                        temp.name += " ";
+                    temp.name += s;
+                    first = false;
+                }
                 output = temp;
                 return output;
             }
