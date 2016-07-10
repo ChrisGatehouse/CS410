@@ -19,6 +19,9 @@ namespace CS410Project
         public string username = "";
         public string password = "";
         public string destination = "";
+        private bool shiftDown; //represents whether or not the shift key is held down;
+                                //used to differentiate single and multiple file gets
+        private List<string> selected;
 
         public Main_Window()
         {
@@ -127,7 +130,9 @@ namespace CS410Project
                 {
                     //this implementation assumes a single selected item; change to list later
                     //in the case of multiple selected items.
-                    getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
+                    String[] toGet = new String[WorkingDirectory.SelectedItems.Count];
+                    WorkingDirectory.SelectedItems.CopyTo(toGet, 0);
+                    getFile temp = new getFile(toGet, "");
                     temp.saveFiles(client);                       
                 }
             }

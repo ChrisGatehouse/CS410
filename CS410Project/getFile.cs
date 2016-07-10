@@ -10,6 +10,7 @@ namespace CS410Project
     {
         private string savePath;
         private List<string> targetFiles;
+        private String[] targetFilesArray;
 
         public getFile(string targetfile, string savepath)
         {
@@ -28,6 +29,11 @@ namespace CS410Project
 
             if (savePath == "")
                 setSavePathToDesktop();
+        }
+
+        public getFile(string[]targetFiles, string savepath)
+        {
+            //targetFiles = targ
         }
 
         public void saveFiles(Client toUse)
