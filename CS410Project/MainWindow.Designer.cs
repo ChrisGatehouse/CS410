@@ -45,6 +45,14 @@
             this.CreateRemoteDir = new System.Windows.Forms.Button();
             this.remoteDirText = new System.Windows.Forms.TextBox();
             this.DeleteFile = new System.Windows.Forms.Button();
+            this.RenameFile = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.RenameFile2 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.renameFileSelected = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.renameFileNewName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ExitButton
@@ -184,7 +192,7 @@
             // 
             // CreateRemoteDir
             // 
-            this.CreateRemoteDir.Location = new System.Drawing.Point(279, 209);
+            this.CreateRemoteDir.Location = new System.Drawing.Point(279, 180);
             this.CreateRemoteDir.Name = "CreateRemoteDir";
             this.CreateRemoteDir.Size = new System.Drawing.Size(106, 23);
             this.CreateRemoteDir.TabIndex = 15;
@@ -194,7 +202,7 @@
             // 
             // remoteDirText
             // 
-            this.remoteDirText.Location = new System.Drawing.Point(391, 211);
+            this.remoteDirText.Location = new System.Drawing.Point(391, 183);
             this.remoteDirText.Name = "remoteDirText";
             this.remoteDirText.Size = new System.Drawing.Size(172, 20);
             this.remoteDirText.TabIndex = 16;
@@ -209,11 +217,73 @@
             this.DeleteFile.UseVisualStyleBackColor = true;
             this.DeleteFile.Click += new System.EventHandler(this.DeleteFile_Click);
             // 
+            // RenameFile
+            // 
+            this.RenameFile.Location = new System.Drawing.Point(458, 12);
+            this.RenameFile.Name = "RenameFile";
+            this.RenameFile.Size = new System.Drawing.Size(75, 23);
+            this.RenameFile.TabIndex = 18;
+            this.RenameFile.Text = "Rename File";
+            this.RenameFile.UseVisualStyleBackColor = true;
+            this.RenameFile.Click += new System.EventHandler(this.RenameFile_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // RenameFile2
+            // 
+            this.RenameFile2.Location = new System.Drawing.Point(279, 236);
+            this.RenameFile2.Name = "RenameFile2";
+            this.RenameFile2.Size = new System.Drawing.Size(106, 23);
+            this.RenameFile2.TabIndex = 19;
+            this.RenameFile2.Text = "Rename File 2";
+            this.RenameFile2.UseVisualStyleBackColor = true;
+            this.RenameFile2.Click += new System.EventHandler(this.RenameFile2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(388, 223);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "File To Rename";
+            // 
+            // renameFileSelected
+            // 
+            this.renameFileSelected.Location = new System.Drawing.Point(391, 236);
+            this.renameFileSelected.Name = "renameFileSelected";
+            this.renameFileSelected.Size = new System.Drawing.Size(172, 20);
+            this.renameFileSelected.TabIndex = 21;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(388, 262);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "New File Name";
+            // 
+            // renameFileNewName
+            // 
+            this.renameFileNewName.Location = new System.Drawing.Point(391, 278);
+            this.renameFileNewName.Name = "renameFileNewName";
+            this.renameFileNewName.Size = new System.Drawing.Size(172, 20);
+            this.renameFileNewName.TabIndex = 23;
+            // 
             // Main_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(595, 386);
+            this.Controls.Add(this.renameFileNewName);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.renameFileSelected);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.RenameFile2);
+            this.Controls.Add(this.RenameFile);
             this.Controls.Add(this.DeleteFile);
             this.Controls.Add(this.remoteDirText);
             this.Controls.Add(this.CreateRemoteDir);
@@ -258,6 +328,14 @@
         private System.Windows.Forms.Button CreateRemoteDir;
         private System.Windows.Forms.TextBox remoteDirText;
         private System.Windows.Forms.Button DeleteFile;
+        private System.Windows.Forms.Button RenameFile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button RenameFile2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox renameFileSelected;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox renameFileNewName;
     }
 }
 
