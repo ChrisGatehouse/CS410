@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
+using System.IO;
+
 
 namespace CS410Project
 {
@@ -188,6 +190,27 @@ namespace CS410Project
                 updateConnectionBox();
                 loginManager.writeSessions();
             }
+        }
+
+        private void PutFile_Click(object sender, EventArgs e)
+        {
+            if (loginManager.LoggedIn)
+            {
+                //not working directoy, local directory item
+                //if (WorkingDirectory.SelectedItem != null)
+                //{}
+            }
+        }
+
+        private void CreateRemoteDir_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(remoteDirText.Text);
+            client.createRemoteDir(remoteDirText.Text);
+        }
+
+        private void DeleteFile_Click(object sender, EventArgs e)
+        {
+            client.deleteRemoteFile(WorkingDirectory.SelectedItem.ToString());
         }
     }
 }
