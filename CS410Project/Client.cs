@@ -33,6 +33,7 @@ namespace CS410Project
         public abstract List<string> getCurrDirectory(); //returns a list with the current directory's files
         public abstract bool isFile(string targetDirectory); //Checks if working dir is a file or not
         public abstract void putFile(string fullPathFilename);
+        public abstract void putMultiple(string[] files);
         protected string username;
         protected string password;
         //Destination of the FTP server

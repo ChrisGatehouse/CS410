@@ -142,6 +142,27 @@ namespace CS410Project
             Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
             response.Close();
         }
+        public override void putMultiple(string[] files)
+        {
+
+            foreach (string filePath in files)
+            {
+                //Get the file name from the full path
+                request = (FtpWebRequest)WebRequest.Create(destination + Path.GetFileName(filePath));
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                //Copy the contents of the file to a byte array
+                byte[] fileContents = File.ReadAllBytes(filePath);
+                request.ContentLength = fileContents.Length;
+                //Upload file to FTP server
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(fileContents, 0, fileContents.Length);
+                requestStream.Close();
+
+                response = (FtpWebResponse)request.GetResponse();
+                Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+                response.Close();
+            }
+        }
 
         //TODO: Add more functionality for the FTP client here
         //Also include the function prototype as an abstract type in the Client base class
