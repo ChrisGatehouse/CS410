@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Windows.Forms;
 
 namespace CS410Project
@@ -209,6 +210,34 @@ namespace CS410Project
                 Console.WriteLine(e.ToString());
                 return false;
             }
+            return true;
+        }
+
+        public override bool createRemoteDir(string newDir)
+        {
+            var request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + newDir);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.MakeDirectory;
+
+            var response = (FtpWebResponse)request.GetResponse();
+            //TODO: Need to check response code.. 2xx should be OK
+
+            //TODO: refresh workingDirectory 
+
+            return true;
+        }
+
+        public override bool deleteRemoteFile(string targetFile)
+        {
+            var request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + targetFile);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+
+            var response = (FtpWebResponse)request.GetResponse();
+            //TODO: Need to check response code.. 2xx should be OK
+
+            //TODO: refresh workingDirectory 
+
             return true;
         }
 

@@ -112,7 +112,7 @@ namespace CS410Project
 
             List<File.FileInfo> fileData = File.parseFileInfo(currConsistency);
             //Sort the two list before performing the algorithm
-            fileData.Sort((x, y) => x.name.CompareTo(y.name));
+            fileData.OrderBy(x => x.name);
             workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
             int i = 0; //marker for currConsistency
             int j = 0; //marker for workingDir
@@ -138,6 +138,7 @@ namespace CS410Project
                     //Add to working directory
                     workingDir.AddToSubDirectory(client, currConsistency[i]);
                     workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                    j++;
                     i++;
                 }
             }
@@ -195,8 +196,7 @@ namespace CS410Project
         //Used to refresh directory in case there was any changes
         public void refreshDirectory(Client client)
         {
-            workingDir.subdirectory.Clear();
-            initializeDirectory(client);
+            updateConsistency(client);
         }
 
         //A folder is a type of file that also contains more files 
@@ -364,11 +364,11 @@ namespace CS410Project
                 List<FileInfo> output = new List<FileInfo>(new FileInfo[fileData.Count]);
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
                 UInt64 sizeOutput; //used to store converted int value from string
-                bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
                 for (int i = 0; i < fileData.Count; i++)
                 {
+                    bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                     var temp = output[i];
                     //Set directory flag 
                     if (fileData[i][0] == 'd')
@@ -411,9 +411,9 @@ namespace CS410Project
                 FileInfo output = new FileInfo();
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
                 UInt64 sizeOutput; //used to store converted int value from string
-                bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                 //Unix style directory details look like:
                 //(File|Directory)(Permissions)[](hardlink *SKIP*)[](owner)[](group)[](size)[](month)[](day)[](year)[](name)
+                bool first = true; // When parsing folder names checks if its not on the first word,if its not then adds a space before hand
                 var temp = output;
                 //Set directory flag 
                 if (fileData[0] == 'd')

@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
+using System.IO;
+
 
 namespace CS410Project
 {
@@ -191,6 +193,65 @@ namespace CS410Project
                 updateConnectionBox();
                 loginManager.writeSessions();
             }
+        }
+
+        private void PutFile_Click(object sender, EventArgs e)
+        {
+            if (loginManager.LoggedIn)
+            {
+                //not working directoy, local directory item
+                //if (WorkingDirectory.SelectedItem != null)
+                //{}
+            }
+        }
+
+        private void CreateRemoteDir_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(remoteDirText.Text);
+            client.createRemoteDir(remoteDirText.Text);
+            directory.refreshDirectory(client);//refresh remote directory
+            populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+        }
+
+        private void DeleteFile_Click(object sender, EventArgs e)
+        {
+            client.deleteRemoteFile(WorkingDirectory.SelectedItem.ToString());
+            directory.refreshDirectory(client);//refresh remote directory
+            populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+        }
+
+        //We can rename a file easily from within a file dialog
+        private void RenameFile_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+            //DialogResult result = folderBrowserDialog1.ShowDialog();
+            //can save the selected file/path here, if we want to use it later
+            string targetFile = openFileDialog1.FileName;
+            if (result == DialogResult.OK) { } //check result
+        }
+
+        private void RenameFile2_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+            string targetFile = openFileDialog1.FileName;
+            renameFileSelected.Text = targetFile;
+            string path = Path.GetDirectoryName(openFileDialog1.FileName);
+            string renamedPathFile = path + "\\" + renameFileNewName.Text;//.ToString();
+            if (result == DialogResult.OK)
+            {
+         
+                //Can clean this up, pop up an inputBox(deprecated) to get the name
+                if (!String.IsNullOrEmpty(renameFileNewName.Text))
+                {
+                    File.Move(targetFile, renamedPathFile);
+                    renameFileSelected.Clear();
+                    renameFileNewName.Clear();
+                    MessageBox.Show("File renamed successfully");
+                    //TODO: when local directory is added, do a refresh here
+                }
+                else
+                    MessageBox.Show("No name to rename file too, try again");
+            } //check result
         }
     }
 }
