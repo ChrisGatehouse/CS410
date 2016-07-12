@@ -89,6 +89,7 @@ namespace CS410Project
                     if (!directory.changeToDirectory(client, index))
                     {
                         //It's a file, not a directory, so just download it
+                        Console.WriteLine();
                         getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
                         temp.saveFiles(client);
                     }
@@ -127,7 +128,9 @@ namespace CS410Project
                 {
                     //this implementation assumes a single selected item; change to list later
                     //in the case of multiple selected items.
-                    getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
+                    String [] Selected = new String[WorkingDirectory.SelectedItems.Count];
+                    WorkingDirectory.SelectedItems.CopyTo(Selected, 0);
+                    getFile temp = new getFile(Selected, "");
                     temp.saveFiles(client);                       
                 }
             }

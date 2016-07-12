@@ -33,24 +33,49 @@ namespace CS410Project
 
         public getFile(string[]targetFiles, string savepath)
         {
-            //targetFiles = targ
+            targetFilesArray = targetFiles;
+            savePath = savepath;
+
+            if (savePath == "")
+                setSavePathToDesktop();
         }
 
         public void saveFiles(Client toUse)
         {
             int failed = 0;
             int succeeded = 0;
-            for (int i = 0; i < targetFiles.Count; ++i)
+            if (targetFilesArray != null)
             {
-                if (toUse.getFile(targetFiles[i], savePath))
+                for (int i = 0; i < targetFilesArray.Length; ++i)
                 {
-                    ++succeeded;
-                }
-                else
-                {
-                    ++failed;
+                    Console.WriteLine(targetFilesArray[i]);
+                    if (toUse.getFile(targetFilesArray[i].TrimStart(' '), savePath))
+                    {
+                        ++succeeded;
+                    }
+                    else
+                    {
+                        ++failed;
+                    }
                 }
             }
+            else if (targetFiles != null)
+            {
+                for (int i = 0; i < targetFiles.Count; ++i)
+                {
+                    if (toUse.getFile(targetFiles[i].TrimStart(' '), savePath))
+                    {
+                        ++succeeded;
+                    }
+                    else
+                    {
+                        ++failed;
+                    }
+                }
+            }
+                
+
+            
             Console.WriteLine(succeeded + " file gets successful");
             Console.WriteLine(failed + " file gets failed.");
         }

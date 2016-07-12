@@ -188,6 +188,7 @@ namespace CS410Project
         {
             string target = destination + currDirectory + targetFile;
             request = (FtpWebRequest)WebRequest.Create(target);
+            Console.WriteLine(target);
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             try
