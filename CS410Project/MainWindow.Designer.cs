@@ -126,7 +126,7 @@
             this.GetFile.Name = "GetFile";
             this.GetFile.Size = new System.Drawing.Size(112, 35);
             this.GetFile.TabIndex = 7;
-            this.GetFile.Text = "Get File";
+            this.GetFile.Text = "Get File(s)";
             this.GetFile.UseVisualStyleBackColor = true;
             this.GetFile.Click += new System.EventHandler(this.getFile_Click);
             // 
