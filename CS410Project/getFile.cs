@@ -49,7 +49,7 @@ namespace CS410Project
                 for (int i = 0; i < targetFilesArray.Length; ++i)
                 {
                     Console.WriteLine(targetFilesArray[i]);
-                    if (toUse.getFile(targetFilesArray[i].TrimStart(' '), savePath))
+                    if (toUse.getFile(targetFilesArray[i], savePath))
                     {
                         ++succeeded;
                     }
@@ -63,7 +63,7 @@ namespace CS410Project
             {
                 for (int i = 0; i < targetFiles.Count; ++i)
                 {
-                    if (toUse.getFile(targetFiles[i].TrimStart(' '), savePath))
+                    if (toUse.getFile(targetFiles[i], savePath))
                     {
                         ++succeeded;
                     }
