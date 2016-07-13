@@ -212,7 +212,7 @@ namespace CS410Project
             }
             return true;
         }
-
+          
         public override bool createRemoteDir(string newDir)
         {
             var request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + newDir);
