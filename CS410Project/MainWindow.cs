@@ -207,17 +207,28 @@ namespace CS410Project
 
         private void CreateRemoteDir_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(remoteDirText.Text);
-            client.createRemoteDir(remoteDirText.Text);
-            directory.refreshDirectory(client);//refresh remote directory
-            populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+            if (string.IsNullOrWhiteSpace(remoteDirText.Text)) { return; }
+
+            if (client.createRemoteDir(remoteDirText.Text))
+            {
+                directory.refreshDirectory(client);//refresh remote directory
+                populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+            }
+            else
+                MessageBox.Show("Directory creation failed", "Error");
         }
 
         private void DeleteFile_Click(object sender, EventArgs e)
         {
-            client.deleteRemoteFile(WorkingDirectory.SelectedItem.ToString());
-            directory.refreshDirectory(client);//refresh remote directory
-            populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+            if (WorkingDirectory.SelectedItem == null) { return; }
+
+            if (client.deleteRemoteFile(WorkingDirectory.SelectedItem.ToString()))
+            {
+                directory.refreshDirectory(client);
+                populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+            }
+            else
+                MessageBox.Show("Delete file failed", "Error");
         }
 
         //We can rename a file easily from within a file dialog
