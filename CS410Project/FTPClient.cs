@@ -219,11 +219,16 @@ namespace CS410Project
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
 
-            var response = (FtpWebResponse)request.GetResponse();
-            //TODO: Need to check response code.. 2xx should be OK
-
-            //TODO: refresh workingDirectory 
-
+            try
+            {
+                var response = (FtpWebResponse)request.GetResponse();
+                //TODO: Need to check response code.. 2xx should be OK
+            }
+            catch// (WebException ex) //Will log the exception later
+            {
+                return false;
+                //MessageBox.Show("Failed to create dir: " + ex);
+            }
             return true;
         }
 
@@ -233,11 +238,16 @@ namespace CS410Project
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.DeleteFile;
 
-            var response = (FtpWebResponse)request.GetResponse();
-            //TODO: Need to check response code.. 2xx should be OK
-
-            //TODO: refresh workingDirectory 
-
+            try
+            {
+                var response = (FtpWebResponse)request.GetResponse();
+                //TODO: Need to check response code.. 2xx should be OK
+            }
+            catch// (WebException ex) //Will log the exception later
+            {
+                return false;
+                //MessageBox.Show("Failed to delete file: " + ex);
+            }
             return true;
         }
 
