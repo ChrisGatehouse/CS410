@@ -251,6 +251,18 @@ namespace CS410Project
             return true;
         }
 
+		public override bool deleteRemoteDir(string targetFile)
+		{
+			var request = (FtpWebRequest)WebRequest.Create (destination + currDirectory + targetFile);
+			request.Credentials = getCredentials ();
+			request.Method = WebRequestMethods.Ftp.RemoveDirectory;
+
+			var response = (FtpWebResponse)request.GetResponse ();
+			response.Close ();
+
+			return true;
+		}
+
         //TODO: Add more functionality for the FTP client here
         //Also include the function prototype as an abstract type in the Client base class
 

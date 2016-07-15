@@ -231,6 +231,13 @@ namespace CS410Project
                 MessageBox.Show("Delete file failed", "Error");
         }
 
+		private void DeleteDir_Click(object sender, EventArgs e)
+		{
+			client.deleteRemoteDir(WorkingDirectory.SelectedItem.ToString());
+			directory.refreshDirectory(client);
+			populateDirectoryBox(directory.getDirectoryStructure());
+		}
+
         //We can rename a file easily from within a file dialog
         private void RenameFile_Click(object sender, EventArgs e)
         {
