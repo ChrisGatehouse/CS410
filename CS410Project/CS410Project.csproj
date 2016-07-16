@@ -48,7 +48,6 @@
     <Compile Include="Client.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="getFile.cs" />
-    <Compile Include="LocalDirectory.cs" />
     <Compile Include="Loginout.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
