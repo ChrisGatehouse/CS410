@@ -35,6 +35,8 @@ namespace CS410Project
         public abstract bool getFile(string targetFile, string savePath); //attempts to get a file from the FTP server. returned boolean denotes success or failure.
         public abstract bool createRemoteDir(string newDir);
         public abstract bool deleteRemoteFile(string targetFile);
+        public abstract void putFile(string fullPathFilename);
+        public abstract void putMultiple(string[] files);
 
         //Destination of the FTP server
         public string destination { get; set; }

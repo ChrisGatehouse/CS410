@@ -250,6 +250,47 @@ namespace CS410Project
             }
             return true;
         }
+        public override void putFile(string fullPathFilename)
+        {
+            //Get the file name from the full path
+            string filename = Path.GetFileName(fullPathFilename);
+            request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + filename);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+            //Copy the contents of the file to a byte array
+            byte[] fileContents = File.ReadAllBytes(fullPathFilename);
+            request.ContentLength = fileContents.Length;
+            //Upload file to FTP server
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(fileContents, 0, fileContents.Length);
+            requestStream.Close();
+
+            response = (FtpWebResponse)request.GetResponse();
+            Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+            response.Close();
+        }
+        public override void putMultiple(string[] files)
+        {
+
+            foreach (string filePath in files)
+            {
+                //Get the file name from the full path
+                request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + Path.GetFileName(filePath));
+                request.Credentials = getCredentials();
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                //Copy the contents of the file to a byte array
+                byte[] fileContents = File.ReadAllBytes(filePath);
+                request.ContentLength = fileContents.Length;
+                //Upload file to FTP server
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(fileContents, 0, fileContents.Length);
+                requestStream.Close();
+
+                response = (FtpWebResponse)request.GetResponse();
+                Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+                response.Close();
+            }
+        }
 
         //TODO: Add more functionality for the FTP client here
         //Also include the function prototype as an abstract type in the Client base class

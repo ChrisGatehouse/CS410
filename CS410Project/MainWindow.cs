@@ -202,6 +202,11 @@ namespace CS410Project
                 //not working directoy, local directory item
                 //if (WorkingDirectory.SelectedItem != null)
                 //{}
+                OpenFileDialog opFilDlg = new OpenFileDialog();
+                if (opFilDlg.ShowDialog() == DialogResult.OK)
+                {
+                    client.putFile(opFilDlg.FileName);
+                }
             }
         }
 
