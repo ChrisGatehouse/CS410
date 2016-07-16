@@ -16,7 +16,7 @@ namespace CS410Project
     public partial class Main_Window : Form
     {
         public Loginout loginManager = new Loginout();
-        public Directory directory = new Directory();
+        public RemoteDirectory directory = new RemoteDirectory();
         public Client client;
         public string username = "";
         public string password = "";
@@ -63,7 +63,7 @@ namespace CS410Project
             if (loginManager.Login(client, username, password, destination))
             {
                 loginManager.EnableTimeoutTimer(Timeout_Event,360);
-                directory = new Directory();
+                directory = new RemoteDirectory();
                 directory.initializeDirectory(client);
                 populateDirectoryBox(directory.getDirectoryStructure());
             } 
