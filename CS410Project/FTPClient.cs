@@ -257,9 +257,15 @@ namespace CS410Project
 			request.Credentials = getCredentials ();
 			request.Method = WebRequestMethods.Ftp.RemoveDirectory;
 
-			var response = (FtpWebResponse)request.GetResponse ();
-			response.Close ();
-
+			try
+			{
+				var response = (FtpWebResponse)request.GetResponse ();
+				response.Close ();
+			}
+			catch
+			{
+				return false;
+			}
 			return true;
 		}
 
