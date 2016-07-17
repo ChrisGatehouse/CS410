@@ -203,9 +203,12 @@ namespace CS410Project
                 //if (WorkingDirectory.SelectedItem != null)
                 //{}
                 OpenFileDialog opFilDlg = new OpenFileDialog();
+                opFilDlg.Multiselect = true;
+
                 if (opFilDlg.ShowDialog() == DialogResult.OK)
                 {
-                    client.putFile(opFilDlg.FileName);
+                    string[] files = opFilDlg.FileNames;
+                    client.putMultiple(files);
                 }
             }
         }
