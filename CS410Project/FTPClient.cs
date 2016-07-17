@@ -17,6 +17,7 @@ namespace CS410Project
      */
     class FTPClient : Client
     {
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
         private string username;
         private string password;
         public FTPClient()
@@ -218,16 +219,16 @@ namespace CS410Project
             var request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + newDir);
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
-
             try
             {
                 var response = (FtpWebResponse)request.GetResponse();
+                //Just catching the exception if there is one
                 //TODO: Need to check response code.. 2xx should be OK
             }
-            catch// (WebException ex) //Will log the exception later
+            catch (WebException ex) //Will log the exception later
             {
+                Log.Error("Failed to create directory" + ex);
                 return false;
-                //MessageBox.Show("Failed to create dir: " + ex);
             }
             return true;
         }
@@ -241,12 +242,13 @@ namespace CS410Project
             try
             {
                 var response = (FtpWebResponse)request.GetResponse();
+                //Just catching the exception if there is one
                 //TODO: Need to check response code.. 2xx should be OK
             }
-            catch// (WebException ex) //Will log the exception later
+            catch (WebException ex) //Will log the exception later
             {
+                Log.Error("Failed to delete file" + ex);
                 return false;
-                //MessageBox.Show("Failed to delete file: " + ex);
             }
             return true;
         }

@@ -8,6 +8,7 @@ namespace CS410Project
 {
     class getFile
     {
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
         private string savePath;
         private List<string> targetFiles;
         private String[] targetFilesArray;
