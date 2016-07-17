@@ -22,7 +22,6 @@ namespace CS410Project
         {
             /*by default, the parent directory of the starting folder is just null*/
             workingDir = new FolderObj("", null);
-            head = workingDir;
         }
 
         //Grabs the contents of the directory of the workingDir
@@ -84,7 +83,7 @@ namespace CS410Project
                 }
                 else
                 {
-                    //Selected object is not a file
+                    //Selected object is not a folder
                     //As of right now, do nothing
                     //However we could return something so it decides to download the file or whatever
                     return false;
@@ -202,8 +201,6 @@ namespace CS410Project
 
         //The current working directory
         private FolderObj workingDir;
-        //The root of the tree keeps track of the top
-        private FolderObj head;
 
     }
 }

@@ -17,7 +17,8 @@ namespace CS410Project
     {
         private static readonly log4net.ILog Log = LogHelper.GetLogger();
         public Loginout loginManager = new Loginout();
-        public RemoteDirectory directory = new RemoteDirectory();
+        public RemoteDirectory remoteDirectory = new RemoteDirectory();
+        public LocalDirectory localDirectory = new LocalDirectory();
         public Client client;
         public string username = "";
         public string password = "";
@@ -27,6 +28,7 @@ namespace CS410Project
         public Main_Window()
         {
             InitializeComponent();
+            populateLocalDirectoryBox(localDirectory.getDirectoryStructure());
         }
 
         private void Exit_Button_Click(object sender, EventArgs e)
@@ -64,9 +66,9 @@ namespace CS410Project
             if (loginManager.Login(client, username, password, destination))
             {
                 loginManager.EnableTimeoutTimer(Timeout_Event,360);
-                directory = new RemoteDirectory();
-                directory.initializeDirectory(client);
-                populateDirectoryBox(directory.getDirectoryStructure());
+                remoteDirectory = new RemoteDirectory();
+                remoteDirectory.initializeDirectory(client);
+                populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
             } 
             else
             {
@@ -78,37 +80,68 @@ namespace CS410Project
         {
             if (loginManager.LoggedIn)
             {
-                directory.changeToParentDirectory(client);
-                populateDirectoryBox(directory.getDirectoryStructure());
+                remoteDirectory.changeToParentDirectory(client);
+                populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
             }
         }
-        private void WorkingDirectory_DoubleClick(object sender, EventArgs e)
+
+        private void LocalParentButton_Click(object sender, EventArgs e)
+        {
+            localDirectory.changeToParentDirectory();
+            populateLocalDirectoryBox(localDirectory.getDirectoryStructure());
+        }
+
+        private void LocalDirectory_DoubleClick(object sender, EventArgs e)
+        {
+           if (LocalDirectory.SelectedItem != null)
+           {
+               string index = LocalDirectory.SelectedItem.ToString();
+               if (!localDirectory.changeToDirectory(index))
+               {
+                 //maybe add uploading here I don't know
+               }
+               populateLocalDirectoryBox(localDirectory.getDirectoryStructure());
+           }
+        }
+        private void RemoteDirectory_DoubleClick(object sender, EventArgs e)
         {
             if (loginManager.LoggedIn)
             {
-                if (WorkingDirectory.SelectedItem != null)
+                if (RemoteDirectory.SelectedItem != null)
                 {
-                    string index = WorkingDirectory.SelectedItem.ToString();
-                    if (!directory.changeToDirectory(client, index))
+                    string index = RemoteDirectory.SelectedItem.ToString();
+                    if (!remoteDirectory.changeToDirectory(client, index))
                     {
                         //It's a file, not a directory, so just download it
                         Console.WriteLine();
-                        getFile temp = new getFile(WorkingDirectory.SelectedItem.ToString(), "");
+                        getFile temp = new getFile(RemoteDirectory.SelectedItem.ToString(), "");
                         temp.saveFiles(client);
                     }
-                    populateDirectoryBox(directory.getDirectoryStructure());
+                    populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
                 }
             }
         }
         //This method populates the listbox to contain the current working directory of the FTP server
-        private void populateDirectoryBox(List<string> input)
+        private void populateRemoteDirectoryBox(List<string> input)
         {
             //Wipe out the box before adding items
-            WorkingDirectory.Items.Clear();
+            RemoteDirectory.Items.Clear();
             //Add items one by one from the directory's structure
             for (int i = 0;i < input.Count;i++)
             {
-                WorkingDirectory.Items.Add(input[i]);
+                RemoteDirectory.Items.Add(input[i]);
+            }
+        }
+
+        //This method populates the listbox to contain the current working directory of the FTP server
+        private void populateLocalDirectoryBox(List<string> input)
+        {
+            //Wipe out the box before adding items
+            LocalDirectory.Items.Clear();
+            //Add items one by one from the directory's structure
+            for (int i = 0; i < input.Count; i++)
+            {
+                LocalDirectory.Items.Add(input[i]);
             }
         }
 
@@ -127,12 +160,12 @@ namespace CS410Project
         {
             if (loginManager.LoggedIn)
             {
-                if (WorkingDirectory.SelectedItem != null)
+                if (RemoteDirectory.SelectedItem != null)
                 {
                     //this implementation assumes a single selected item; change to list later
                     //in the case of multiple selected items.
-                    String [] Selected = new String[WorkingDirectory.SelectedItems.Count];
-                    WorkingDirectory.SelectedItems.CopyTo(Selected, 0);
+                    String [] Selected = new String[RemoteDirectory.SelectedItems.Count];
+                    RemoteDirectory.SelectedItems.CopyTo(Selected, 0);
                     getFile temp = new getFile(Selected, "");
                     temp.saveFiles(client);                       
                 }
@@ -220,8 +253,8 @@ namespace CS410Project
 
             if (client.createRemoteDir(remoteDirText.Text))
             {
-                directory.refreshDirectory(client);//refresh remote directory
-                populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+                remoteDirectory.refreshDirectory(client);//refresh remote directory
+                populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());//refresh workingDirectory view
             }
             else
                 MessageBox.Show("Directory creation failed", "Error");
@@ -229,12 +262,12 @@ namespace CS410Project
 
         private void DeleteFile_Click(object sender, EventArgs e)
         {
-            if (WorkingDirectory.SelectedItem == null) { return; }
+            if (RemoteDirectory.SelectedItem == null) { return; }
 
-            if (client.deleteRemoteFile(WorkingDirectory.SelectedItem.ToString()))
+            if (client.deleteRemoteFile(RemoteDirectory.SelectedItem.ToString()))
             {
-                directory.refreshDirectory(client);
-                populateDirectoryBox(directory.getDirectoryStructure());//refresh workingDirectory view
+                remoteDirectory.refreshDirectory(client);
+                populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());//refresh workingDirectory view
             }
             else
                 MessageBox.Show("Delete file failed", "Error");
