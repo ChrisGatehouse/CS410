@@ -16,6 +16,7 @@ namespace CS410Project
 
     public class RemoteDirectory
     {
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
         //Default Constructor
         public RemoteDirectory()
         {

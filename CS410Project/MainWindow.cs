@@ -15,6 +15,7 @@ namespace CS410Project
 {
     public partial class Main_Window : Form
     {
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
         public Loginout loginManager = new Loginout();
         public RemoteDirectory directory = new RemoteDirectory();
         public Client client;

@@ -10,7 +10,8 @@ namespace CS410Project
         //This object represents folders on the server
         public class FolderObj : FileObj
         {
-            public FolderObj(string name)
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
+        public FolderObj(string name)
                 : base(name)
             {
                 subdirectory = new List<FileObj>();
