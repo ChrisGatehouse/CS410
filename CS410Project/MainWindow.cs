@@ -243,6 +243,8 @@ namespace CS410Project
                 {
                     string[] files = opFilDlg.FileNames;
                     client.putMultiple(files);
+                    remoteDirectory.refreshDirectory(client);
+                    populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
                 }
             }
         }
