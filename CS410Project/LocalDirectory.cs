@@ -1,6 +1,4 @@
-﻿//Main Contributor: Mohammed Inoue
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -230,7 +228,6 @@ namespace CS410Project
                 if (dinfo.Exists)
                 {
                     //remove at end
-                    if (path.Count >1)
                     path.RemoveAt(path.Count - 1);
                     //checks existing structure so it doesn't have to keep rebuilding the structure from scratch if it was already built
                     //save a temp of the current working directory
