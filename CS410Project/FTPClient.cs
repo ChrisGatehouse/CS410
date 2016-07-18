@@ -63,6 +63,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Problem connecting, output error to console and return false
+                Log.Error("Cannot connect to FTP Server", err);
                 Console.WriteLine(err.Status.ToString());
                 MessageBox.Show("Cannot connect to FTP server", "Uh-Oh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
@@ -83,6 +84,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Problem connecting, output error to console and return false
+                Log.Error("Cannot logg off from FTP Server", err);
                 Console.WriteLine(err.Status.ToString());
                 MessageBox.Show("Cannot log off from FTP server", "Uh-Oh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
@@ -109,6 +111,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Not a valid target, so returning an empty list
+                Log.Error("Not a valid target", err);
                 Console.WriteLine(err.ToString());
                 return null;
             }
@@ -143,6 +146,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Not a valid target, so returning an empty list
+                Log.Error("Not a valid target", err);
                 Console.WriteLine(err.ToString());
                 return null;
             }
@@ -177,6 +181,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Target is a file, not a folder, returning false
+                Log.Error("Targeted file not directory", err);
                 Console.WriteLine(err.ToString());
                 return false;
             }
@@ -208,6 +213,7 @@ namespace CS410Project
             catch (WebException e)
             {
                 //Target file and/or destination are erroneous
+                Log.Error("Error getting file", e);
                 Console.WriteLine(e.ToString());
                 return false;
             }
@@ -222,12 +228,12 @@ namespace CS410Project
             try
             {
                 var response = (FtpWebResponse)request.GetResponse();
-                //Just catching the exception if there is one
+                Log.Info("Directory created " + response.StatusDescription);
                 //TODO: Need to check response code.. 2xx should be OK
             }
-            catch (WebException ex) //Will log the exception later
+            catch (WebException ex)
             {
-                Log.Error("Failed to create directory" + ex);
+                Log.Error("Failed to create directory" , ex);
                 return false;
             }
             return true;
@@ -242,16 +248,17 @@ namespace CS410Project
             try
             {
                 var response = (FtpWebResponse)request.GetResponse();
-                //Just catching the exception if there is one
+                Log.Info("File deleted " + response.StatusDescription);
                 //TODO: Need to check response code.. 2xx should be OK
             }
-            catch (WebException ex) //Will log the exception later
+            catch (WebException ex)
             {
-                Log.Error("Failed to delete file" + ex);
+                Log.Error("Failed to delete file" , ex);
                 return false;
             }
             return true;
         }
+
         public override void putFile(string fullPathFilename)
         {
             //Get the file name from the full path
@@ -268,6 +275,7 @@ namespace CS410Project
             requestStream.Close();
 
             response = (FtpWebResponse)request.GetResponse();
+            Log.Info("Upload File Complete, status " + response.StatusDescription);
             Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
             response.Close();
         }
@@ -289,6 +297,7 @@ namespace CS410Project
                 requestStream.Close();
 
                 response = (FtpWebResponse)request.GetResponse();
+                Log.Info("Upload File(s) Complete, status " + response.StatusDescription);
                 Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
                 response.Close();
             }
