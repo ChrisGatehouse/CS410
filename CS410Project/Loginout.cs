@@ -18,6 +18,7 @@ namespace CS410Project
      */
     public class Loginout
     {
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
         private string username;
         private string password;
         private string destination;
