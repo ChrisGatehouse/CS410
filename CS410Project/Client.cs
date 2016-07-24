@@ -27,6 +27,7 @@ namespace CS410Project
         //For each functionality, the FTP client needs a new method
         //Call the new object that performs that functionality
         //TODO:list directory, login, logoff etc as virtual functions to add definitions to in FTPClient
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
         public abstract bool establishConnection(string username, string password, string destination, string currDirectory); //performs the initial/test connection
         public abstract bool eliminateConnection();  //Disconnects from FTP server by setting keep alive off and then doing a dummy command
         public abstract List<string> getCurrDirectory(); //returns a list with the current directory's files(OBSOLETE)
@@ -35,6 +36,8 @@ namespace CS410Project
         public abstract bool getFile(string targetFile, string savePath); //attempts to get a file from the FTP server. returned boolean denotes success or failure.
         public abstract bool createRemoteDir(string newDir);
         public abstract bool deleteRemoteFile(string targetFile);
+        public abstract void putFile(string fullPathFilename);
+        public abstract void putMultiple(string[] files);
 
         //Destination of the FTP server
         public string destination { get; set; }

@@ -17,6 +17,7 @@ namespace CS410Project
      */
     class FTPClient : Client
     {
+        private static readonly log4net.ILog Log = LogHelper.GetLogger();
         private string username;
         private string password;
         public FTPClient()
@@ -62,6 +63,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Problem connecting, output error to console and return false
+                Log.Error("Cannot connect to FTP Server", err);
                 Console.WriteLine(err.Status.ToString());
                 MessageBox.Show("Cannot connect to FTP server", "Uh-Oh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
@@ -82,6 +84,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Problem connecting, output error to console and return false
+                Log.Error("Cannot logg off from FTP Server", err);
                 Console.WriteLine(err.Status.ToString());
                 MessageBox.Show("Cannot log off from FTP server", "Uh-Oh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
@@ -108,6 +111,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Not a valid target, so returning an empty list
+                Log.Error("Not a valid target", err);
                 Console.WriteLine(err.ToString());
                 return null;
             }
@@ -142,6 +146,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Not a valid target, so returning an empty list
+                Log.Error("Not a valid target", err);
                 Console.WriteLine(err.ToString());
                 return null;
             }
@@ -176,6 +181,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Target is a file, not a folder, returning false
+                Log.Error("Targeted file not directory", err);
                 Console.WriteLine(err.ToString());
                 return false;
             }
@@ -207,6 +213,7 @@ namespace CS410Project
             catch (WebException e)
             {
                 //Target file and/or destination are erroneous
+                Log.Error("Error getting file", e);
                 Console.WriteLine(e.ToString());
                 return false;
             }
@@ -218,12 +225,17 @@ namespace CS410Project
             var request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + newDir);
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
-
-            var response = (FtpWebResponse)request.GetResponse();
-            //TODO: Need to check response code.. 2xx should be OK
-
-            //TODO: refresh workingDirectory 
-
+            try
+            {
+                var response = (FtpWebResponse)request.GetResponse();
+                Log.Info("Directory created " + response.StatusDescription);
+                //TODO: Need to check response code.. 2xx should be OK
+            }
+            catch (WebException ex)
+            {
+                Log.Error("Failed to create directory" , ex);
+                return false;
+            }
             return true;
         }
 
@@ -233,12 +245,62 @@ namespace CS410Project
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.DeleteFile;
 
-            var response = (FtpWebResponse)request.GetResponse();
-            //TODO: Need to check response code.. 2xx should be OK
-
-            //TODO: refresh workingDirectory 
-
+            try
+            {
+                var response = (FtpWebResponse)request.GetResponse();
+                Log.Info("File deleted " + response.StatusDescription);
+                //TODO: Need to check response code.. 2xx should be OK
+            }
+            catch (WebException ex)
+            {
+                Log.Error("Failed to delete file" , ex);
+                return false;
+            }
             return true;
+        }
+
+        public override void putFile(string fullPathFilename)
+        {
+            //Get the file name from the full path
+            string filename = Path.GetFileName(fullPathFilename);
+            request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + filename);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+            //Copy the contents of the file to a byte array
+            byte[] fileContents = File.ReadAllBytes(fullPathFilename);
+            request.ContentLength = fileContents.Length;
+            //Upload file to FTP server
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(fileContents, 0, fileContents.Length);
+            requestStream.Close();
+
+            response = (FtpWebResponse)request.GetResponse();
+            Log.Info("Upload File Complete, status " + response.StatusDescription);
+            Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+            response.Close();
+        }
+        public override void putMultiple(string[] files)
+        {
+
+            foreach (string filePath in files)
+            {
+                //Get the file name from the full path
+                request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + Path.GetFileName(filePath));
+                request.Credentials = getCredentials();
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                //Copy the contents of the file to a byte array
+                byte[] fileContents = File.ReadAllBytes(filePath);
+                request.ContentLength = fileContents.Length;
+                //Upload file to FTP server
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(fileContents, 0, fileContents.Length);
+                requestStream.Close();
+
+                response = (FtpWebResponse)request.GetResponse();
+                Log.Info("Upload File(s) Complete, status " + response.StatusDescription);
+                Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+                response.Close();
+            }
         }
 
         //TODO: Add more functionality for the FTP client here
