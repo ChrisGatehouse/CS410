@@ -298,7 +298,16 @@ namespace CS410Project
                 //Can clean this up, pop up an inputBox(deprecated) to get the name
                 if (!String.IsNullOrEmpty(renameFileNewName.Text))
                 {
-                    File.Move(targetFile, renamedPathFile);
+                    try
+                    {
+                        File.Move(targetFile, renamedPathFile);
+                    }
+                    catch(Exception d)
+                    {
+                        Console.WriteLine("The process failed: {0}", d.ToString());
+                        MessageBox.Show("Rename error occured");
+                        return;
+                    }
                     renameFileSelected.Clear();
                     renameFileNewName.Clear();
                     MessageBox.Show("File renamed successfully");
