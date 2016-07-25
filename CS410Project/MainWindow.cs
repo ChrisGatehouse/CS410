@@ -26,6 +26,8 @@ namespace CS410Project
             InitializeComponent();
             underConstruction.Load("http://i.imgur.com/A5dbxGN.png");
             populateLocalDirectoryBox(localDirectory.getDirectoryStructure());
+            List<Control> thisWindow = getControls(this);
+            thisWindow.ForEach(x => x.Font = CS410Project.Properties.Settings.Default.SysFont);
         }
 
 
