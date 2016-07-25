@@ -26,8 +26,7 @@ namespace CS410Project
             InitializeComponent();
             loginManager.readSessions();
             updateConnectionBox();
-            List<Control> thisWindow = getControls(this);
-            thisWindow.ForEach(x => x.Font = CS410Project.Properties.Settings.Default.SysFont);
+            SettingsController.initializeSettings(this);
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -111,24 +110,6 @@ namespace CS410Project
                 updateConnectionBox();
                 loginManager.writeSessions();
             }
-        }
-
-        //Grabs all components of a given window
-        private List<Control> getControls(Control window)
-        {
-            List<Control> output = new List<Control>();
-            foreach (Control c in window.Controls)
-            {
-                if (c.Controls.Count > 0)
-                {
-                    output = getControls(c);
-                }
-                else
-                {
-                    output.Add(c);
-                }
-            }
-            return output;
         }
     }
 }

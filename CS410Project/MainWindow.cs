@@ -26,6 +26,7 @@ namespace CS410Project
             InitializeComponent();
             underConstruction.Load("http://i.imgur.com/A5dbxGN.png");
             populateLocalDirectoryBox(localDirectory.getDirectoryStructure());
+            SettingsController.initializeSettings(this);
         }
 
 

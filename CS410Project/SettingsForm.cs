@@ -15,6 +15,7 @@ namespace CS410Project
         public SettingsForm()
         {
             InitializeComponent();
+            SettingsController.initializeSettings(this);
         }
 
         private void fontColorButton_Click(object sender, EventArgs e)
