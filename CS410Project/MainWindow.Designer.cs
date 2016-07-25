@@ -50,10 +50,10 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.underConstruction = new System.Windows.Forms.PictureBox();
             this.fontWindow = new System.Windows.Forms.FontDialog();
-            this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.underConstruction)).BeginInit();
             this.SuspendLayout();
@@ -241,6 +241,13 @@
             this.changeFontToolStripMenuItem.Text = "Change Font";
             this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
             // 
+            // changeColorToolStripMenuItem
+            // 
+            this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
+            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeColorToolStripMenuItem.Text = "Change Color";
+            this.changeColorToolStripMenuItem.Click += new System.EventHandler(this.changeColorToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -255,12 +262,6 @@
             this.underConstruction.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.underConstruction.TabIndex = 27;
             this.underConstruction.TabStop = false;
-            // 
-            // changeColorToolStripMenuItem
-            // 
-            this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
-            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.changeColorToolStripMenuItem.Text = "Change Color";
             // 
             // MainWindow
             // 

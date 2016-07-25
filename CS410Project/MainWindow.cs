@@ -238,5 +238,11 @@ namespace CS410Project
             }
         }
 
+        private void changeColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.ShowDialog(this);
+        }
+
     }
 }
