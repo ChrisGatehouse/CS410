@@ -53,6 +53,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.underConstruction = new System.Windows.Forms.PictureBox();
             this.fontWindow = new System.Windows.Forms.FontDialog();
+            this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.underConstruction)).BeginInit();
             this.SuspendLayout();
@@ -227,7 +228,8 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changeFontToolStripMenuItem});
+            this.changeFontToolStripMenuItem,
+            this.changeColorToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -235,7 +237,7 @@
             // changeFontToolStripMenuItem
             // 
             this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
-            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.changeFontToolStripMenuItem.Text = "Change Font";
             this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
             // 
@@ -253,6 +255,12 @@
             this.underConstruction.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.underConstruction.TabIndex = 27;
             this.underConstruction.TabStop = false;
+            // 
+            // changeColorToolStripMenuItem
+            // 
+            this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
+            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeColorToolStripMenuItem.Text = "Change Color";
             // 
             // MainWindow
             // 
@@ -315,6 +323,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.PictureBox underConstruction;
         private System.Windows.Forms.FontDialog fontWindow;
+        private System.Windows.Forms.ToolStripMenuItem changeColorToolStripMenuItem;
     }
 }
 

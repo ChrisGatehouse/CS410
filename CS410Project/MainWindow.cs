@@ -26,8 +26,6 @@ namespace CS410Project
             InitializeComponent();
             underConstruction.Load("http://i.imgur.com/A5dbxGN.png");
             populateLocalDirectoryBox(localDirectory.getDirectoryStructure());
-            List<Control> thisWindow = getControls(this);
-            thisWindow.ForEach(x => x.Font = CS410Project.Properties.Settings.Default.SysFont);
         }
 
 
@@ -235,29 +233,10 @@ namespace CS410Project
                 Font font = fontWindow.Font;
                 CS410Project.Properties.Settings.Default.SysFont = font;
                 CS410Project.Properties.Settings.Default.Save();
-                List<Control> thisWindow = getControls(this);
-                thisWindow.ForEach(x => x.Font = font);
-                List<Control> ParentWindow = getControls(this.Owner);
-                ParentWindow.ForEach(x => x.Font = font);
+                List<Control> allWindows = SettingsController.getAllControls(this);
+                allWindows.ForEach(x => x.Font = font);
             }
         }
 
-        //Grabs all components of a given window
-        private List<Control> getControls(Control window)
-        {
-            List<Control> output = new List<Control>();
-            foreach (Control c in window.Controls)
-            {
-                if (c.Controls.Count > 0)
-                {
-                    output = getControls(c);
-                }
-                else
-                {
-                    output.Add(c);
-                }
-            }
-            return output;
-        }
     }
 }

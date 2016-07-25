@@ -43,6 +43,8 @@
             this.passwordLabel = new System.Windows.Forms.Label();
             this.serverLabel = new System.Windows.Forms.Label();
             this.removeButton = new System.Windows.Forms.Button();
+            this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolbar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,6 +131,9 @@
             // 
             // viewToolStripMenuItem
             // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeFontToolStripMenuItem,
+            this.changeColorsToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -176,6 +181,18 @@
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
             // 
+            // changeFontToolStripMenuItem
+            // 
+            this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeFontToolStripMenuItem.Text = "Change Font";
+            // 
+            // changeColorsToolStripMenuItem
+            // 
+            this.changeColorsToolStripMenuItem.Name = "changeColorsToolStripMenuItem";
+            this.changeColorsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeColorsToolStripMenuItem.Text = "Change Colors";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,5 +236,7 @@
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.Label serverLabel;
         private System.Windows.Forms.Button removeButton;
+        private System.Windows.Forms.ToolStripMenuItem changeFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeColorsToolStripMenuItem;
     }
 }
