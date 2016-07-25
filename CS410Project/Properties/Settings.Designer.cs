@@ -88,5 +88,16 @@ namespace CS410Project.Properties {
                 this["FileviewerColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color TextboxColor {
+            get {
+                return ((global::System.Drawing.Color)(this["TextboxColor"]));
+            }
+            set {
+                this["TextboxColor"] = value;
+            }
+        }
     }
 }

@@ -70,10 +70,24 @@ namespace CS410Project
             }
         }
 
+        private void textboxColorButton_Click(object sender, EventArgs e)
+        {
+            DialogResult toolbarColorResult = textboxColorDiag.ShowDialog();
+            if (toolbarColorResult == DialogResult.OK)
+            {
+                Color color = textboxColorDiag.Color;
+                CS410Project.Properties.Settings.Default.TextboxColor = color;
+                CS410Project.Properties.Settings.Default.Save();
+                List<Control> allWindows = SettingsController.getAllTextboxControls(this);
+                allWindows.ForEach(x => x.BackColor = color);
+            }
+        }
+
         private void confirmButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
 
     }
 }

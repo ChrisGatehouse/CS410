@@ -20,5 +20,8 @@
     <Setting Name="FileviewerColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="TextboxColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

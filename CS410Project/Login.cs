@@ -111,5 +111,24 @@ namespace CS410Project
                 loginManager.writeSessions();
             }
         }
+
+        private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult fontdialog = fontWindow.ShowDialog();
+            if (fontdialog == DialogResult.OK)
+            {
+                Font font = fontWindow.Font;
+                CS410Project.Properties.Settings.Default.SysFont = font;
+                CS410Project.Properties.Settings.Default.Save();
+                List<Control> allWindows = SettingsController.getAllControls(this);
+                allWindows.ForEach(x => x.Font = font);
+            }
+        }
+
+        private void changeColorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.ShowDialog(this);
+        }
     }
 }

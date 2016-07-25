@@ -37,11 +37,13 @@
             this.buttonColorDiag = new System.Windows.Forms.ColorDialog();
             this.backgroundColorDiag = new System.Windows.Forms.ColorDialog();
             this.toolbarColorDiag = new System.Windows.Forms.ColorDialog();
+            this.textboxColorButton = new System.Windows.Forms.Button();
+            this.textboxColorDiag = new System.Windows.Forms.ColorDialog();
             this.SuspendLayout();
             // 
             // fontColorButton
             // 
-            this.fontColorButton.Location = new System.Drawing.Point(12, 139);
+            this.fontColorButton.Location = new System.Drawing.Point(12, 93);
             this.fontColorButton.Name = "fontColorButton";
             this.fontColorButton.Size = new System.Drawing.Size(109, 40);
             this.fontColorButton.TabIndex = 0;
@@ -89,11 +91,22 @@
             this.confirmButton.UseVisualStyleBackColor = true;
             this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
             // 
+            // textboxColorButton
+            // 
+            this.textboxColorButton.Location = new System.Drawing.Point(12, 139);
+            this.textboxColorButton.Name = "textboxColorButton";
+            this.textboxColorButton.Size = new System.Drawing.Size(109, 40);
+            this.textboxColorButton.TabIndex = 5;
+            this.textboxColorButton.Text = "Textbox Color";
+            this.textboxColorButton.UseVisualStyleBackColor = true;
+            this.textboxColorButton.Click += new System.EventHandler(this.textboxColorButton_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(219, 401);
+            this.Controls.Add(this.textboxColorButton);
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.ToolbarColorButton);
             this.Controls.Add(this.backgroundColorButton);
@@ -116,5 +129,7 @@
         private System.Windows.Forms.ColorDialog buttonColorDiag;
         private System.Windows.Forms.ColorDialog backgroundColorDiag;
         private System.Windows.Forms.ColorDialog toolbarColorDiag;
+        private System.Windows.Forms.Button textboxColorButton;
+        private System.Windows.Forms.ColorDialog textboxColorDiag;
     }
 }

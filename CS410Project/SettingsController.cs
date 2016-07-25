@@ -16,13 +16,14 @@ namespace CS410Project
             thisWindowFont.ForEach(x => x.Font = CS410Project.Properties.Settings.Default.SysFont);
             List<Control> thisWindowButtons = SettingsController.getButtonControls(window);
             thisWindowButtons.ForEach(x => x.BackColor = CS410Project.Properties.Settings.Default.ButtonColor);
-            List<Control> thisWindowFontColor = SettingsController.getControls(window);
-            thisWindowFontColor.ForEach(x => x.ForeColor = CS410Project.Properties.Settings.Default.FontColor);
             List<Control> thisWindowMenuStrip = SettingsController.getMenuStripControls(window);
             thisWindowMenuStrip.ForEach(x => x.BackColor = CS410Project.Properties.Settings.Default.ToolbarColor);
             List<Control> thisWindow = SettingsController.getBackgroundControls(window);
             thisWindow.ForEach(x => x.BackColor = CS410Project.Properties.Settings.Default.BackgroundColor);
-
+            List<Control> thisTextbox = SettingsController.getTextboxControls(window);
+            thisTextbox.ForEach(x => x.BackColor = CS410Project.Properties.Settings.Default.TextboxColor);
+            List<Control> thisWindowFontColor = SettingsController.getControls(window);
+            thisWindowFontColor.ForEach(x => x.ForeColor = CS410Project.Properties.Settings.Default.FontColor);
         }
 
         //Grabs a list of all MenuStrips for all parent windows
@@ -34,6 +35,23 @@ namespace CS410Project
                 output.AddRange(getAllBackgroundControls(window.Owner));
             }
             output.Add(window);
+            return output;
+        }
+        //Grabs a list of all Textbox for all parent windows
+        public static List<Control> getAllTextboxControls(Form window)
+        {
+            List<Control> output = new List<Control>();
+            if (window.Owner != null)
+            {
+                output.AddRange(getAllTextboxControls(window.Owner));
+            }
+            foreach (Control c in window.Controls)
+            {
+                if (c.GetType() == typeof(TextBox))
+                {
+                    output.Add(c);
+                }
+            }
             return output;
         }
         //Grabs a list of all MenuStrips for all parent windows
@@ -84,14 +102,14 @@ namespace CS410Project
             }
             return output;
         }
-        //Grabs a list of all MenuStrips for all parent windows
+        //Grabs a list of all MenuStrips for a given window
         public static List<Control> getBackgroundControls(Form window)
         {
             List<Control> output = new List<Control>();
             output.Add(window);
             return output;
         }
-        //Grabs a list of all MenuStrips for all parent windows
+        //Grabs a list of all MenuStrips for a given window
         public static List<Control> getMenuStripControls(Form window)
         {
             List<Control> output = new List<Control>();
@@ -104,13 +122,26 @@ namespace CS410Project
             }
             return output;
         }
-        //Grabs a list of all buttons for all parent windows
+        //Grabs a list of all buttons for a given window
         public static List<Control> getButtonControls(Form window)
         {
             List<Control> output = new List<Control>();
             foreach (Control c in window.Controls)
             {
                 if (c.GetType() == typeof(Button))
+                {
+                    output.Add(c);
+                }
+            }
+            return output;
+        }
+        //Grabs a list of all Textbox for a given window
+        public static List<Control> getTextboxControls(Form window)
+        {
+            List<Control> output = new List<Control>();
+            foreach (Control c in window.Controls)
+            {
+                if (c.GetType() == typeof(TextBox))
                 {
                     output.Add(c);
                 }

@@ -38,13 +38,14 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usernameLabel = new System.Windows.Forms.Label();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.serverLabel = new System.Windows.Forms.Label();
             this.removeButton = new System.Windows.Forms.Button();
-            this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fontWindow = new System.Windows.Forms.FontDialog();
             this.toolbar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,12 +86,12 @@
             // 
             // savedConnectionsBox
             // 
+            this.savedConnectionsBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.savedConnectionsBox.FormattingEnabled = true;
             this.savedConnectionsBox.Location = new System.Drawing.Point(105, 323);
             this.savedConnectionsBox.Name = "savedConnectionsBox";
             this.savedConnectionsBox.Size = new System.Drawing.Size(155, 21);
             this.savedConnectionsBox.TabIndex = 4;
-            this.savedConnectionsBox.Text = "Saved Connections";
             this.savedConnectionsBox.SelectedIndexChanged += new System.EventHandler(this.savedConnectionsBox_SelectedIndexChanged);
             this.savedConnectionsBox.TextChanged += new System.EventHandler(this.savedConnectionsBox_TextChanged);
             // 
@@ -138,6 +139,20 @@
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
             // 
+            // changeFontToolStripMenuItem
+            // 
+            this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeFontToolStripMenuItem.Text = "Change Font";
+            this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
+            // 
+            // changeColorsToolStripMenuItem
+            // 
+            this.changeColorsToolStripMenuItem.Name = "changeColorsToolStripMenuItem";
+            this.changeColorsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeColorsToolStripMenuItem.Text = "Change Colors";
+            this.changeColorsToolStripMenuItem.Click += new System.EventHandler(this.changeColorsToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -180,18 +195,6 @@
             this.removeButton.Text = "Remove";
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
-            // 
-            // changeFontToolStripMenuItem
-            // 
-            this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
-            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.changeFontToolStripMenuItem.Text = "Change Font";
-            // 
-            // changeColorsToolStripMenuItem
-            // 
-            this.changeColorsToolStripMenuItem.Name = "changeColorsToolStripMenuItem";
-            this.changeColorsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.changeColorsToolStripMenuItem.Text = "Change Colors";
             // 
             // Login
             // 
@@ -238,5 +241,6 @@
         private System.Windows.Forms.Button removeButton;
         private System.Windows.Forms.ToolStripMenuItem changeFontToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeColorsToolStripMenuItem;
+        private System.Windows.Forms.FontDialog fontWindow;
     }
 }
