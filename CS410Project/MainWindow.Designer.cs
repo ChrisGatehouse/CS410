@@ -1,6 +1,6 @@
 ﻿namespace CS410Project
 {
-    partial class Main_Window
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.LoginButton = new System.Windows.Forms.Button();
-            this.UsernameTextbox = new System.Windows.Forms.TextBox();
-            this.PasswordTextbox = new System.Windows.Forms.TextBox();
-            this.DestinationTextbox = new System.Windows.Forms.TextBox();
             this.RemoteDirectory = new System.Windows.Forms.ListBox();
             this.RemoteParentButton = new System.Windows.Forms.Button();
-            this.GetFile = new System.Windows.Forms.Button();
-            this.SavedConnections = new System.Windows.Forms.ListBox();
-            this.SaveConnectionsButton = new System.Windows.Forms.Button();
-            this.NewConnectionTextbox = new System.Windows.Forms.TextBox();
-            this.Remove = new System.Windows.Forms.Button();
             this.PutFile = new System.Windows.Forms.Button();
             this.CreateRemoteDir = new System.Windows.Forms.Button();
             this.remoteDirText = new System.Windows.Forms.TextBox();
@@ -54,144 +44,44 @@
             this.renameFileNewName = new System.Windows.Forms.TextBox();
             this.LocalDirectory = new System.Windows.Forms.ListBox();
             this.LocalParentButton = new System.Windows.Forms.Button();
+            this.GetFile = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.underConstruction = new System.Windows.Forms.PictureBox();
+            this.fontWindow = new System.Windows.Forms.FontDialog();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.underConstruction)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ExitButton
-            // 
-            this.ExitButton.Location = new System.Drawing.Point(86, 540);
-            this.ExitButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(152, 35);
-            this.ExitButton.TabIndex = 0;
-            this.ExitButton.Text = "Time to Bounce";
-            this.ExitButton.UseVisualStyleBackColor = true;
-            this.ExitButton.Click += new System.EventHandler(this.Exit_Button_Click);
-            // 
-            // LoginButton
-            // 
-            this.LoginButton.Location = new System.Drawing.Point(105, 143);
-            this.LoginButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.LoginButton.Name = "LoginButton";
-            this.LoginButton.Size = new System.Drawing.Size(112, 35);
-            this.LoginButton.TabIndex = 1;
-            this.LoginButton.Text = "Log in";
-            this.LoginButton.UseVisualStyleBackColor = true;
-            this.LoginButton.Click += new System.EventHandler(this.Login_Click);
-            // 
-            // UsernameTextbox
-            // 
-            this.UsernameTextbox.Location = new System.Drawing.Point(86, 23);
-            this.UsernameTextbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.UsernameTextbox.Name = "UsernameTextbox";
-            this.UsernameTextbox.Size = new System.Drawing.Size(148, 26);
-            this.UsernameTextbox.TabIndex = 2;
-            this.UsernameTextbox.Text = "Username";
-            this.UsernameTextbox.TextChanged += new System.EventHandler(this.Username_TextChanged);
-            // 
-            // PasswordTextbox
-            // 
-            this.PasswordTextbox.Location = new System.Drawing.Point(87, 63);
-            this.PasswordTextbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.PasswordTextbox.Name = "PasswordTextbox";
-            this.PasswordTextbox.PasswordChar = '*';
-            this.PasswordTextbox.Size = new System.Drawing.Size(148, 26);
-            this.PasswordTextbox.TabIndex = 3;
-            this.PasswordTextbox.Text = "Password";
-            this.PasswordTextbox.TextChanged += new System.EventHandler(this.Password_TextChanged);
-            // 
-            // DestinationTextbox
-            // 
-            this.DestinationTextbox.Location = new System.Drawing.Point(86, 103);
-            this.DestinationTextbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.DestinationTextbox.Name = "DestinationTextbox";
-            this.DestinationTextbox.Size = new System.Drawing.Size(148, 26);
-            this.DestinationTextbox.TabIndex = 4;
-            this.DestinationTextbox.Text = "Destination";
-            this.DestinationTextbox.TextChanged += new System.EventHandler(this.Destination_TextChanged);
             // 
             // RemoteDirectory
             // 
             this.RemoteDirectory.FormattingEnabled = true;
-            this.RemoteDirectory.ItemHeight = 20;
-            this.RemoteDirectory.Location = new System.Drawing.Point(418, 55);
-            this.RemoteDirectory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.RemoteDirectory.Location = new System.Drawing.Point(279, 70);
             this.RemoteDirectory.Name = "RemoteDirectory";
             this.RemoteDirectory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.RemoteDirectory.Size = new System.Drawing.Size(424, 204);
+            this.RemoteDirectory.Size = new System.Drawing.Size(284, 134);
             this.RemoteDirectory.TabIndex = 5;
             this.RemoteDirectory.DoubleClick += new System.EventHandler(this.RemoteDirectory_DoubleClick);
             // 
             // RemoteParentButton
             // 
-            this.RemoteParentButton.Location = new System.Drawing.Point(418, 18);
-            this.RemoteParentButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.RemoteParentButton.Location = new System.Drawing.Point(279, 41);
             this.RemoteParentButton.Name = "RemoteParentButton";
-            this.RemoteParentButton.Size = new System.Drawing.Size(138, 35);
+            this.RemoteParentButton.Size = new System.Drawing.Size(92, 23);
             this.RemoteParentButton.TabIndex = 6;
             this.RemoteParentButton.Text = "Parent Directory";
             this.RemoteParentButton.UseVisualStyleBackColor = true;
             this.RemoteParentButton.Click += new System.EventHandler(this.ParentButton_Click);
             // 
-            // GetFile
-            // 
-            this.GetFile.Location = new System.Drawing.Point(105, 188);
-            this.GetFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.GetFile.Name = "GetFile";
-            this.GetFile.Size = new System.Drawing.Size(112, 35);
-            this.GetFile.TabIndex = 7;
-            this.GetFile.Text = "Get File";
-            this.GetFile.UseVisualStyleBackColor = true;
-            this.GetFile.Click += new System.EventHandler(this.getFile_Click);
-            // 
-            // SavedConnections
-            // 
-            this.SavedConnections.FormattingEnabled = true;
-            this.SavedConnections.ItemHeight = 20;
-            this.SavedConnections.Location = new System.Drawing.Point(38, 277);
-            this.SavedConnections.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.SavedConnections.Name = "SavedConnections";
-            this.SavedConnections.Size = new System.Drawing.Size(248, 144);
-            this.SavedConnections.TabIndex = 9;
-            this.SavedConnections.DoubleClick += new System.EventHandler(this.SavedConnections_DoubleClick);
-            // 
-            // SaveConnectionsButton
-            // 
-            this.SaveConnectionsButton.Location = new System.Drawing.Point(38, 432);
-            this.SaveConnectionsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.SaveConnectionsButton.Name = "SaveConnectionsButton";
-            this.SaveConnectionsButton.Size = new System.Drawing.Size(104, 35);
-            this.SaveConnectionsButton.TabIndex = 10;
-            this.SaveConnectionsButton.Text = "Save";
-            this.SaveConnectionsButton.UseVisualStyleBackColor = true;
-            this.SaveConnectionsButton.Click += new System.EventHandler(this.SaveConnectionsButton_Click);
-            // 
-            // NewConnectionTextbox
-            // 
-            this.NewConnectionTextbox.Location = new System.Drawing.Point(150, 437);
-            this.NewConnectionTextbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.NewConnectionTextbox.Name = "NewConnectionTextbox";
-            this.NewConnectionTextbox.Size = new System.Drawing.Size(136, 26);
-            this.NewConnectionTextbox.TabIndex = 11;
-            this.NewConnectionTextbox.Text = "New Connection";
-            this.NewConnectionTextbox.TextChanged += new System.EventHandler(this.NewConnectionTextbox_TextChanged);
-            // 
-            // Remove
-            // 
-            this.Remove.Location = new System.Drawing.Point(38, 477);
-            this.Remove.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Remove.Name = "Remove";
-            this.Remove.Size = new System.Drawing.Size(104, 35);
-            this.Remove.TabIndex = 12;
-            this.Remove.Text = "Remove";
-            this.Remove.UseVisualStyleBackColor = true;
-            this.Remove.Click += new System.EventHandler(this.Remove_Click);
-            // 
             // PutFile
             // 
-            this.PutFile.Location = new System.Drawing.Point(226, 188);
-            this.PutFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.PutFile.Location = new System.Drawing.Point(189, 41);
             this.PutFile.Name = "PutFile";
-            this.PutFile.Size = new System.Drawing.Size(112, 35);
+            this.PutFile.Size = new System.Drawing.Size(75, 23);
             this.PutFile.TabIndex = 13;
             this.PutFile.Text = "Put File";
             this.PutFile.UseVisualStyleBackColor = true;
@@ -199,10 +89,9 @@
             // 
             // CreateRemoteDir
             // 
-            this.CreateRemoteDir.Location = new System.Drawing.Point(854, 23);
-            this.CreateRemoteDir.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.CreateRemoteDir.Location = new System.Drawing.Point(569, 41);
             this.CreateRemoteDir.Name = "CreateRemoteDir";
-            this.CreateRemoteDir.Size = new System.Drawing.Size(159, 35);
+            this.CreateRemoteDir.Size = new System.Drawing.Size(106, 23);
             this.CreateRemoteDir.TabIndex = 15;
             this.CreateRemoteDir.Text = "Create Remote Dir";
             this.CreateRemoteDir.UseVisualStyleBackColor = true;
@@ -210,18 +99,16 @@
             // 
             // remoteDirText
             // 
-            this.remoteDirText.Location = new System.Drawing.Point(854, 63);
-            this.remoteDirText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.remoteDirText.Location = new System.Drawing.Point(569, 88);
             this.remoteDirText.Name = "remoteDirText";
-            this.remoteDirText.Size = new System.Drawing.Size(256, 26);
+            this.remoteDirText.Size = new System.Drawing.Size(172, 20);
             this.remoteDirText.TabIndex = 16;
             // 
             // DeleteFile
             // 
-            this.DeleteFile.Location = new System.Drawing.Point(566, 18);
-            this.DeleteFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DeleteFile.Location = new System.Drawing.Point(377, 41);
             this.DeleteFile.Name = "DeleteFile";
-            this.DeleteFile.Size = new System.Drawing.Size(112, 35);
+            this.DeleteFile.Size = new System.Drawing.Size(75, 23);
             this.DeleteFile.TabIndex = 17;
             this.DeleteFile.Text = "Delete File";
             this.DeleteFile.UseVisualStyleBackColor = true;
@@ -229,10 +116,9 @@
             // 
             // RenameFile
             // 
-            this.RenameFile.Location = new System.Drawing.Point(687, 18);
-            this.RenameFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.RenameFile.Location = new System.Drawing.Point(458, 41);
             this.RenameFile.Name = "RenameFile";
-            this.RenameFile.Size = new System.Drawing.Size(112, 35);
+            this.RenameFile.Size = new System.Drawing.Size(75, 23);
             this.RenameFile.TabIndex = 18;
             this.RenameFile.Text = "Rename File";
             this.RenameFile.UseVisualStyleBackColor = true;
@@ -244,10 +130,9 @@
             // 
             // RenameFile2
             // 
-            this.RenameFile2.Location = new System.Drawing.Point(854, 298);
-            this.RenameFile2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.RenameFile2.Location = new System.Drawing.Point(569, 194);
             this.RenameFile2.Name = "RenameFile2";
-            this.RenameFile2.Size = new System.Drawing.Size(159, 35);
+            this.RenameFile2.Size = new System.Drawing.Size(106, 23);
             this.RenameFile2.TabIndex = 19;
             this.RenameFile2.Text = "Rename File 2";
             this.RenameFile2.UseVisualStyleBackColor = true;
@@ -256,66 +141,125 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(862, 338);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(575, 220);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 20);
+            this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 20;
             this.label1.Text = "File To Rename";
             // 
             // renameFileSelected
             // 
-            this.renameFileSelected.Location = new System.Drawing.Point(854, 363);
-            this.renameFileSelected.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.renameFileSelected.Location = new System.Drawing.Point(569, 236);
             this.renameFileSelected.Name = "renameFileSelected";
-            this.renameFileSelected.Size = new System.Drawing.Size(256, 26);
+            this.renameFileSelected.Size = new System.Drawing.Size(172, 20);
             this.renameFileSelected.TabIndex = 21;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(862, 403);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(575, 262);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 20);
+            this.label2.Size = new System.Drawing.Size(79, 13);
             this.label2.TabIndex = 22;
             this.label2.Text = "New File Name";
             // 
             // renameFileNewName
             // 
-            this.renameFileNewName.Location = new System.Drawing.Point(854, 432);
-            this.renameFileNewName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.renameFileNewName.Location = new System.Drawing.Point(569, 281);
             this.renameFileNewName.Name = "renameFileNewName";
-            this.renameFileNewName.Size = new System.Drawing.Size(256, 26);
+            this.renameFileNewName.Size = new System.Drawing.Size(172, 20);
             this.renameFileNewName.TabIndex = 23;
             // 
             // LocalDirectory
             // 
             this.LocalDirectory.FormattingEnabled = true;
-            this.LocalDirectory.ItemHeight = 20;
-            this.LocalDirectory.Location = new System.Drawing.Point(418, 338);
-            this.LocalDirectory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.LocalDirectory.Location = new System.Drawing.Point(279, 247);
             this.LocalDirectory.Name = "LocalDirectory";
-            this.LocalDirectory.Size = new System.Drawing.Size(424, 224);
+            this.LocalDirectory.Size = new System.Drawing.Size(284, 147);
             this.LocalDirectory.TabIndex = 24;
             this.LocalDirectory.DoubleClick += new System.EventHandler(this.LocalDirectory_DoubleClick);
             // 
             // LocalParentButton
             // 
-            this.LocalParentButton.Location = new System.Drawing.Point(418, 298);
-            this.LocalParentButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.LocalParentButton.Location = new System.Drawing.Point(279, 210);
             this.LocalParentButton.Name = "LocalParentButton";
-            this.LocalParentButton.Size = new System.Drawing.Size(152, 35);
+            this.LocalParentButton.Size = new System.Drawing.Size(101, 23);
             this.LocalParentButton.TabIndex = 25;
             this.LocalParentButton.Text = "Parent Directory";
             this.LocalParentButton.UseVisualStyleBackColor = true;
             this.LocalParentButton.Click += new System.EventHandler(this.LocalParentButton_Click);
             // 
-            // Main_Window
+            // GetFile
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.GetFile.Location = new System.Drawing.Point(189, 70);
+            this.GetFile.Name = "GetFile";
+            this.GetFile.Size = new System.Drawing.Size(75, 23);
+            this.GetFile.TabIndex = 7;
+            this.GetFile.Text = "Get File";
+            this.GetFile.UseVisualStyleBackColor = true;
+            this.GetFile.Click += new System.EventHandler(this.getFile_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(843, 24);
+            this.menuStrip1.TabIndex = 26;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeFontToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // changeFontToolStripMenuItem
+            // 
+            this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.changeFontToolStripMenuItem.Text = "Change Font";
+            this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // underConstruction
+            // 
+            this.underConstruction.Location = new System.Drawing.Point(12, 148);
+            this.underConstruction.Name = "underConstruction";
+            this.underConstruction.Size = new System.Drawing.Size(249, 246);
+            this.underConstruction.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.underConstruction.TabIndex = 27;
+            this.underConstruction.TabStop = false;
+            // 
+            // MainWindow
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 625);
+            this.ClientSize = new System.Drawing.Size(843, 406);
+            this.Controls.Add(this.underConstruction);
             this.Controls.Add(this.LocalParentButton);
             this.Controls.Add(this.LocalDirectory);
             this.Controls.Add(this.renameFileNewName);
@@ -328,22 +272,17 @@
             this.Controls.Add(this.remoteDirText);
             this.Controls.Add(this.CreateRemoteDir);
             this.Controls.Add(this.PutFile);
-            this.Controls.Add(this.Remove);
-            this.Controls.Add(this.NewConnectionTextbox);
-            this.Controls.Add(this.SaveConnectionsButton);
-            this.Controls.Add(this.SavedConnections);
             this.Controls.Add(this.GetFile);
             this.Controls.Add(this.RemoteParentButton);
             this.Controls.Add(this.RemoteDirectory);
-            this.Controls.Add(this.DestinationTextbox);
-            this.Controls.Add(this.PasswordTextbox);
-            this.Controls.Add(this.UsernameTextbox);
-            this.Controls.Add(this.LoginButton);
-            this.Controls.Add(this.ExitButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "Main_Window";
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "MainWindow";
             this.Text = "The best FTP client ever made";
-            this.Load += new System.EventHandler(this.Main_Window_Load);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.underConstruction)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,18 +290,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.Button LoginButton;
-        private System.Windows.Forms.TextBox UsernameTextbox;
-        private System.Windows.Forms.TextBox PasswordTextbox;
-        private System.Windows.Forms.TextBox DestinationTextbox;
         private System.Windows.Forms.ListBox RemoteDirectory;
         private System.Windows.Forms.Button RemoteParentButton;
-        private System.Windows.Forms.Button GetFile;
-        private System.Windows.Forms.ListBox SavedConnections;
-        private System.Windows.Forms.Button SaveConnectionsButton;
-        private System.Windows.Forms.TextBox NewConnectionTextbox;
-        private System.Windows.Forms.Button Remove;
         private System.Windows.Forms.Button PutFile;
         private System.Windows.Forms.Button CreateRemoteDir;
         private System.Windows.Forms.TextBox remoteDirText;
@@ -377,6 +306,15 @@
         private System.Windows.Forms.TextBox renameFileNewName;
         private System.Windows.Forms.ListBox LocalDirectory;
         private System.Windows.Forms.Button LocalParentButton;
+        private System.Windows.Forms.Button GetFile;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.PictureBox underConstruction;
+        private System.Windows.Forms.FontDialog fontWindow;
     }
 }
 
