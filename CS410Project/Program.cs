@@ -21,7 +21,7 @@ namespace CS410Project
             //log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main_Window());
+            Application.Run(new Login());
             
         }
     }
