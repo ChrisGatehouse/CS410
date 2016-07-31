@@ -43,6 +43,7 @@ namespace CS410Project
         public abstract void putFile(string filePath, BackgroundWorker backgroundWorker1);
         public abstract void renameRemoteFile(string currentFileName, string newFileName);
 
+
         //Destination of the FTP server
         public string destination { get; set; }
         /*CurrDirectory will function as what gets appended to the destination to

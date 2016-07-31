@@ -2,6 +2,7 @@
 //Secondary Contributer: Miles Sanguinetti
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -39,7 +40,7 @@ namespace CS410Project
         }
 
         //Logs on to the FTP, returns true if success, returns false if error
-        public override bool establishConnection(string username, string password,string destination, string currDirectory)
+        public override bool establishConnection(string username, string password, string destination, string currDirectory)
         {
             this.destination = destination;
             this.currDirectory = currDirectory;
@@ -191,8 +192,9 @@ namespace CS410Project
         }
 
         //attempts to get a file from the FTP server. returned boolean denotes success or failure.
-        public override bool getFile(string targetFile, string savePath)
+        public override bool getFile(string targetFile, string savePath, BackgroundWorker backgroundWorker1)
         {
+            /*
             string target = destination + currDirectory + targetFile;
             request = (FtpWebRequest)WebRequest.Create(target);
             Console.WriteLine(target);
@@ -218,6 +220,69 @@ namespace CS410Project
                 return false;
             }
             return true;
+            */
+            string target = destination + currDirectory + targetFile;
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(target);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.GetFileSize;
+            request.Proxy = null;
+
+            long fileSize; // this is the key for ReportProgress
+            try
+            {
+                using (WebResponse resp = request.GetResponse())
+                {
+                    fileSize = resp.ContentLength;
+                }
+            }
+            catch (WebException e)
+            {
+                //Target file and/or destination are erroneous
+                Log.Error("Error getting file", e);
+                Console.WriteLine(e.ToString());
+                MessageBox.Show("Cannot download directory");
+                return false;
+            }
+            try
+            {
+                request = (FtpWebRequest)WebRequest.Create(target);
+                request.Credentials = getCredentials();
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                using (FtpWebResponse responseFileDownload = (FtpWebResponse)request.GetResponse())
+                using (Stream responseStream = responseFileDownload.GetResponseStream())
+                using (FileStream writeStream = new FileStream(savePath + "\\" + targetFile, FileMode.Create))
+                {
+
+                    int Length = 2048;
+                    Byte[] buffer = new Byte[Length];
+                    int bytesRead = responseStream.Read(buffer, 0, Length);
+                    int bytes = 0;
+
+                    while (bytesRead > 0)
+                    {
+                        writeStream.Write(buffer, 0, bytesRead);
+                        bytesRead = responseStream.Read(buffer, 0, Length);
+                        bytes += bytesRead;// don't forget to increment bytesRead !
+                        int totalSize = (int)(fileSize / 1024); // Kbytes
+                        if (totalSize == 0)
+                        {
+                            writeStream.Write(buffer, 0, bytesRead);
+
+                            backgroundWorker1.ReportProgress(100);
+                            return true;
+                        }
+                        backgroundWorker1.ReportProgress((bytes / 1024) * 100 / totalSize, totalSize);
+                    }
+                }
+            }
+            catch (WebException e)
+            {
+                //Target file and/or destination are erroneous
+                Log.Error("Error getting file", e);
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+            return true;
         }
 
         public override bool createRemoteDir(string newDir)
@@ -233,7 +298,7 @@ namespace CS410Project
             }
             catch (WebException ex)
             {
-                Log.Error("Failed to create directory" , ex);
+                Log.Error("Failed to create directory", ex);
                 return false;
             }
             return true;
@@ -253,29 +318,29 @@ namespace CS410Project
             }
             catch (WebException ex)
             {
-                Log.Error("Failed to delete file" , ex);
+                Log.Error("Failed to delete file", ex);
                 return false;
             }
             return true;
         }
 
-		public override bool deleteRemoteDir(string targetFile)
-		{
-			var request = (FtpWebRequest)WebRequest.Create (destination + currDirectory + targetFile);
-			request.Credentials = getCredentials ();
-			request.Method = WebRequestMethods.Ftp.RemoveDirectory;
+        public override bool deleteRemoteDir(string targetFile)
+        {
+            var request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + targetFile);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.RemoveDirectory;
 
-			try
-			{
-				var response = (FtpWebResponse)request.GetResponse ();
-				response.Close ();
-			}
-			catch
-			{
-				return false;
-			}
-			return true;
-		}
+            try
+            {
+                var response = (FtpWebResponse)request.GetResponse();
+                response.Close();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
 
         public override void putFile(string fullPathFilename)
         {
@@ -296,6 +361,41 @@ namespace CS410Project
             Log.Info("Upload File Complete, status " + response.StatusDescription);
             Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
             response.Close();
+        }
+        public override void putFile(string filePath, BackgroundWorker backgroundWorker1)
+        {
+
+            //Get the file name from the full path
+            string filename = Path.GetFileName(filePath);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + filename);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+            //Copy the contents of the file to a byte array
+            byte[] fileContents = File.ReadAllBytes(filePath);
+            request.ContentLength = fileContents.Length;
+
+            var inputStream = File.OpenRead(filePath);
+            var requestStream = request.GetRequestStream();
+
+            var buffer = fileContents;
+            int totalReadBytesCount = 0;
+            int readBytesCount;
+            while ((readBytesCount = inputStream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                requestStream.Write(fileContents, 0, readBytesCount);
+                totalReadBytesCount += readBytesCount;
+                var progress = totalReadBytesCount * 100.0 / inputStream.Length;
+                backgroundWorker1.ReportProgress((int)progress);
+            }
+            inputStream.Close();
+            requestStream.Close();
+
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            Log.Info("Upload File Complete, status " + response.StatusDescription);
+            Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
+            response.Close();
+
         }
         public override void putMultiple(string[] files)
         {
@@ -320,7 +420,16 @@ namespace CS410Project
                 response.Close();
             }
         }
+        public override void renameRemoteFile(string currentFileName, string newFileName)
+        {
+            request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + currentFileName);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.Rename;
+            request.RenameTo = newFileName;
+            response = (FtpWebResponse)request.GetResponse();
+            response.Close();
 
+        }
         //TODO: Add more functionality for the FTP client here
         //Also include the function prototype as an abstract type in the Client base class
 

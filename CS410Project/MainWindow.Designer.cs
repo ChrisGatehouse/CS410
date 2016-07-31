@@ -270,6 +270,7 @@
             this.LocalParentDirectory.TabIndex = 33;
             this.LocalParentDirectory.Text = "Parent Directory";
             this.LocalParentDirectory.UseVisualStyleBackColor = true;
+            this.LocalParentDirectory.Click += new System.EventHandler(this.LocalParentDirectory_Click);
             // 
             // LocalNewFile
             // 
