@@ -335,6 +335,7 @@
             this.LocalSearchBox.Name = "LocalSearchBox";
             this.LocalSearchBox.Size = new System.Drawing.Size(172, 20);
             this.LocalSearchBox.TabIndex = 39;
+            this.LocalSearchBox.TextChanged += new System.EventHandler(this.LocalSearchBox_TextChanged);
             // 
             // LocalSearchButton
             // 

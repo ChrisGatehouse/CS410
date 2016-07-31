@@ -501,6 +501,12 @@ namespace CS410Project
         private void LocalSearchButton_Click(object sender, EventArgs e)
         {
             string inputSearch = LocalSearchBox.Text;
+            localDirectory.searchLocalDirectory(inputSearch);
+        }
+
+        private void LocalSearchBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
