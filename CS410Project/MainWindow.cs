@@ -197,10 +197,10 @@ namespace CS410Project
                 remoteDirectory.refreshDirectory(client);
                 populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());//refresh workingDirectory view
             }
-            else if (client.deleteRemoteDir(WorkingDirectory.SelectedItem.ToString()))
+            else if (client.deleteRemoteDir(RemoteDirectory.SelectedItem.ToString()))
             {
-                directory.refreshDirectory(client);
-                populateDirectoryBox(directory.getDirectoryStructure());
+                remoteDirectory.refreshDirectory(client);
+                populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
             }
             else
                 MessageBox.Show("Delete failed", "Error");
@@ -324,6 +324,7 @@ namespace CS410Project
         }
 
         public DialogResult InputBox(string title, string promptText, ref string value)
+
         {
             Form form = new Form();
             form.Font = CS410Project.Properties.Settings.Default.SysFont;
@@ -342,7 +343,6 @@ namespace CS410Project
             buttonCancel.Text = "Cancel";
             buttonOk.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
-
             label.SetBounds(9, 20, 372, 13);
             textBox.SetBounds(12, 36, 372, 20);
             buttonOk.SetBounds(228, 72, 75, 23);
@@ -452,6 +452,7 @@ namespace CS410Project
             }
         }
 
+
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
@@ -478,9 +479,7 @@ namespace CS410Project
             {
                 client.putFile(filePath, backgroundWorker1);
             }
-
         }
-
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblStatus.Text = $"{e.ProgressPercentage} %";
@@ -500,4 +499,3 @@ namespace CS410Project
         }
     }
 }
-
