@@ -19,7 +19,9 @@ namespace CS410Project
             path = new List<string>();
             parseLocalDirectory();
             /*by default, the parent directory of the starting folder is just null*/
-            workingDir = new FolderObj(path.Last(), null);
+            DirectoryInfo dinfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+            workingDir = new FolderObj("","","",0,dinfo.CreationTime.ToString(),dinfo.Name,getPath(), null);
+
             initializeDirectory();
         }
 
@@ -45,12 +47,12 @@ namespace CS410Project
             foreach(string folders in Directory.GetDirectories(currDir))
             {
                 currDirInfo = new DirectoryInfo(folders);
-                workingDir.subdirectory.Add(new FolderObj(" ", "", "", 0, currDirInfo.CreationTime.ToString(), currDirInfo.Name, workingDir));
+                workingDir.subdirectory.Add(new FolderObj(" ", "", "", 0, currDirInfo.CreationTime.ToString(), currDirInfo.Name, getPath(), workingDir));
             }
             foreach (string files in Directory.GetFiles(currDir))
             {
                 currFile = new FileInfo(files);
-                workingDir.subdirectory.Add(new FileObj(currFile.IsReadOnly.ToString(), "", "", (UInt64)currFile.Length, currFile.CreationTime.ToString(), currFile.Name));
+                workingDir.subdirectory.Add(new FileObj(currFile.IsReadOnly.ToString(), "", "", (UInt64)currFile.Length, currFile.CreationTime.ToString(), currFile.Name, getPath()));
             }
             workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
         }
@@ -68,9 +70,11 @@ namespace CS410Project
 
         public List<string> searchLocalDirectory(string searchKey)
         {
+            List<FileObj> visited = new List<FileObj>();
             List<string> output = new List<string>();
             Queue<FolderObj> queue = new Queue<FolderObj>();
             workingDir.setMarked(true);
+            visited.Add(workingDir);
             queue.Enqueue(workingDir);
             FolderObj currDir;
             while(queue.Count != 0)
@@ -80,16 +84,21 @@ namespace CS410Project
                 {
                     if (currDir.subdirectory[i].fileinfo.name.ToLower() == searchKey.ToLower())
                     {
-                        string temp = getPath();
+                        string temp = currDir.subdirectory[i].fileinfo.path;
                         temp += searchKey;
                         output.Add(temp);
                     }
-                    if (currDir.subdirectory[i].fileinfo.directory && currDir.subdirectory[i].getMarked())
+                    if (currDir.subdirectory[i].fileinfo.directory && !currDir.subdirectory[i].getMarked())
                     {
                         currDir.subdirectory[i].setMarked(true);
+                        visited.Add((FolderObj)currDir.subdirectory[i]);
                         queue.Enqueue((FolderObj)currDir.subdirectory[i]);
                     }
                 }
+            }
+            for(int i = 0; i < visited.Count; i++)
+            {
+                visited[i].setMarked(false);
             }
             return output;
         }
@@ -159,12 +168,12 @@ namespace CS410Project
             foreach (string folders in Directory.GetDirectories(getPath()))
             {
                 currDir = new DirectoryInfo(folders);
-                fileData.Add(new FolderObj(" ", "", "", 0, currDir.CreationTime.ToString(), currDir.Name, null));
+                fileData.Add(new FolderObj(" ", "", "", 0, currDir.CreationTime.ToString(), currDir.Name, getPath(), null));
             }
             foreach (string files in Directory.GetFiles(getPath()))
             {
                 currFile = new FileInfo(files);
-                fileData.Add(new FileObj(currFile.IsReadOnly.ToString(), "", "", (UInt64)currFile.Length, currFile.CreationTime.ToString(), currFile.Name));
+                fileData.Add(new FileObj(currFile.IsReadOnly.ToString(), "", "", (UInt64)currFile.Length, currFile.CreationTime.ToString(), currFile.Name, getPath()));
             }
 
             //If the directory we are going to is empty, we don't need to do anything, except clear.
@@ -205,11 +214,11 @@ namespace CS410Project
                     //Add to working directory
                     if (fileData[i].fileinfo.directory)
                     {
-                        workingDir.subdirectory.Add(new FolderObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, workingDir));
+                        workingDir.subdirectory.Add(new FolderObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath(), workingDir));
                     }
                     else
                     {
-                        workingDir.subdirectory.Add(new FileObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name));
+                        workingDir.subdirectory.Add(new FileObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath()));
                     }
                     workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                     j++;
@@ -228,18 +237,17 @@ namespace CS410Project
                 //Add to working directory
                 if (fileData[i].fileinfo.directory)
                 {
-                    workingDir.subdirectory.Add(new FolderObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, workingDir));
+                    workingDir.subdirectory.Add(new FolderObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath(), workingDir));
                 }
                 else
                 {
-                    workingDir.subdirectory.Add(new FileObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name));
+                    workingDir.subdirectory.Add(new FileObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath()));
                 }
                 workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                 i++;
             }
         }
 
-        //This function changes the currDirectory of the Client 
         //To the parent directory, (if it exist)
         public void changeToParentDirectory()
         {
@@ -257,12 +265,18 @@ namespace CS410Project
 
                 if (dinfo.Exists)
                 {
+
                     //remove at end
                     if (path.Count > 1)
                     path.RemoveAt(path.Count - 1);
+
                     //checks existing structure so it doesn't have to keep rebuilding the structure from scratch if it was already built
                     //save a temp of the current working directory
-                    workingDir.subdirectory.Clear();
+
+                    FolderObj parent = new FolderObj("", "", "", 0, dinfo.CreationTime.ToString(), dinfo.Name, getPath(), null);
+                    workingDir.parentDir = parent;
+                    parent.subdirectory.Add(workingDir);
+                    workingDir = workingDir.parentDir;
                     updateConsistency();
 
                 }
