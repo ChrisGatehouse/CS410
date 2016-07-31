@@ -66,6 +66,34 @@ namespace CS410Project
             return output;
         }
 
+        public List<string> searchLocalDirectory(string searchKey)
+        {
+            List<string> output = new List<string>();
+            Queue<FolderObj> queue = new Queue<FolderObj>();
+            workingDir.setMarked(true);
+            queue.Enqueue(workingDir);
+            FolderObj currDir;
+            while(queue.Count != 0)
+            {
+                currDir = queue.Dequeue();
+                for (int i = 0; i < currDir.subdirectory.Count; i++)
+                {
+                    if (currDir.subdirectory[i].fileinfo.name.ToLower() == searchKey.ToLower())
+                    {
+                        string temp = getPath();
+                        temp += searchKey;
+                        output.Add(temp);
+                    }
+                    if (currDir.subdirectory[i].fileinfo.directory && currDir.subdirectory[i].getMarked())
+                    {
+                        currDir.subdirectory[i].setMarked(true);
+                        queue.Enqueue((FolderObj)currDir.subdirectory[i]);
+                    }
+                }
+            }
+            return output;
+        }
+
 
         //This function changes the currDirectory of the Client
         //To a new one, and initializes new folders to be created

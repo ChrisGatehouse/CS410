@@ -76,6 +76,16 @@ namespace CS410Project
                     subdirectory.Add(new FolderObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name, this));
                 }
             }
+            public void setMarked(bool value)
+            {
+                marked = value;
+            }
+
+            public bool getMarked()
+            {
+                return marked;
+            }
+            public bool marked = false; //used when searching directories
             public List<FileObj> subdirectory;
             //Folders need to remember their parents ;_;
             //By default its the root directory
@@ -275,6 +285,15 @@ namespace CS410Project
             public int fileDirectoryStyle(string fileData)
             {
                 return 0; //TODO: Implement this later, for now just return Unix
+            }
+
+            public void setMarked(bool value)
+            {
+
+            }
+            public bool getMarked()
+            {
+                return false;
             }
         }
 }

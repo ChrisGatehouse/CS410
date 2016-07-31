@@ -52,7 +52,7 @@ namespace CS410Project
             }
         }
 
-        private void LocalParentButton_Click(object sender, EventArgs e)
+        private void LocalParentDirectory_Click(object sender, EventArgs e)
         {
             localDirectory.changeToParentDirectory();
             populateLocalDirectoryBox(localDirectory.getDirectoryStructure());
@@ -82,7 +82,7 @@ namespace CS410Project
                         //It's a file, not a directory, so just download it
                         Console.WriteLine();
                         getFile temp = new getFile(RemoteDirectory.SelectedItem.ToString(), "");
-                        temp.saveFiles(client, backgroundWorker1);
+                        temp.saveFiles(client, backWorkProgBar);
                     }
                     populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
                 }
@@ -123,7 +123,7 @@ namespace CS410Project
                     String[] Selected = new String[RemoteDirectory.SelectedItems.Count];
                     RemoteDirectory.SelectedItems.CopyTo(Selected, 0);
                     getFile temp = new getFile(Selected, "");
-                    temp.saveFiles(client, backgroundWorker1);
+                    temp.saveFiles(client, backWorkProgBar);
                 }
             }
         }
@@ -137,9 +137,9 @@ namespace CS410Project
                 if (opFilDlg.ShowDialog() == DialogResult.OK)
                 {
                     files = opFilDlg.FileNames;
-                    if (!backgroundWorker1.IsBusy)
+                    if (!backWorkProgBar.IsBusy)
                     {
-                        backgroundWorker1.RunWorkerAsync();
+                        backWorkProgBar.RunWorkerAsync();
                     }
                     else
                     {
@@ -477,20 +477,20 @@ namespace CS410Project
         {
             foreach (string filePath in files)
             {
-                client.putFile(filePath, backgroundWorker1);
+                client.putFile(filePath, backWorkProgBar);
             }
         }
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            lblStatus.Text = $"{e.ProgressPercentage} %";
-            progressBar1.Value = e.ProgressPercentage;
-            progressBar1.Update();
+            lblStatus.Text = "{e.ProgressPercentage} %";
+            progressBar.Value = e.ProgressPercentage;
+            progressBar.Update();
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             lblStatus.Text = "Complete";
-            backgroundWorker1.Dispose();
+            backWorkProgBar.Dispose();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -498,9 +498,9 @@ namespace CS410Project
 
         }
 
-        private void LocalParentDirectory_Click(object sender, EventArgs e)
+        private void LocalSearchButton_Click(object sender, EventArgs e)
         {
-
+            string inputSearch = LocalSearchBox.Text;
         }
     }
 }
