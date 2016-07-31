@@ -497,5 +497,10 @@ namespace CS410Project
         {
 
         }
+
+        private void LocalSearchButton_Click(object sender, EventArgs e)
+        {
+            string inputSearch = LocalSearchBox.Text;
+        }
     }
 }

@@ -59,6 +59,8 @@
             this.backWorkProgBar = new System.ComponentModel.BackgroundWorker();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.LocalSearchBox = new System.Windows.Forms.TextBox();
+            this.LocalSearchButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -327,11 +329,30 @@
             this.lblStatus.Text = "0%";
             this.lblStatus.Click += new System.EventHandler(this.label1_Click);
             // 
+            // LocalSearchBox
+            // 
+            this.LocalSearchBox.Location = new System.Drawing.Point(510, 379);
+            this.LocalSearchBox.Name = "LocalSearchBox";
+            this.LocalSearchBox.Size = new System.Drawing.Size(172, 20);
+            this.LocalSearchBox.TabIndex = 39;
+            // 
+            // LocalSearchButton
+            // 
+            this.LocalSearchButton.Location = new System.Drawing.Point(688, 379);
+            this.LocalSearchButton.Name = "LocalSearchButton";
+            this.LocalSearchButton.Size = new System.Drawing.Size(75, 23);
+            this.LocalSearchButton.TabIndex = 40;
+            this.LocalSearchButton.Text = "Search";
+            this.LocalSearchButton.UseVisualStyleBackColor = true;
+            this.LocalSearchButton.Click += new System.EventHandler(this.LocalSearchButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 406);
+            this.Controls.Add(this.LocalSearchButton);
+            this.Controls.Add(this.LocalSearchBox);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.CreateLocalDirButton);
@@ -397,6 +418,8 @@
         private System.ComponentModel.BackgroundWorker backWorkProgBar;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.TextBox LocalSearchBox;
+        private System.Windows.Forms.Button LocalSearchButton;
     }
 }
 
