@@ -69,7 +69,7 @@
             // 
             // LoginButton
             // 
-            this.LoginButton.Location = new System.Drawing.Point(105, 143);
+            this.LoginButton.Location = new System.Drawing.Point(105, 156);
             this.LoginButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(112, 35);
@@ -134,7 +134,7 @@
             // 
             // GetFile
             // 
-            this.GetFile.Location = new System.Drawing.Point(105, 188);
+            this.GetFile.Location = new System.Drawing.Point(105, 214);
             this.GetFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.GetFile.Name = "GetFile";
             this.GetFile.Size = new System.Drawing.Size(112, 35);
@@ -188,7 +188,7 @@
             // 
             // PutFile
             // 
-            this.PutFile.Location = new System.Drawing.Point(226, 188);
+            this.PutFile.Location = new System.Drawing.Point(226, 214);
             this.PutFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PutFile.Name = "PutFile";
             this.PutFile.Size = new System.Drawing.Size(112, 35);
