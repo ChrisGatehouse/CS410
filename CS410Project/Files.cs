@@ -15,10 +15,10 @@ namespace CS410Project
                 : base(name)
             {
                 subdirectory = new List<FileObj>();
-                this.parentDir = new FolderObj("..");
+            this.parentDir = null;
             }
-            public FolderObj(string permissions, string owner, string group, UInt64 size, string dateCreated, string name, FolderObj parentDir)
-                : base(permissions, owner, group, size, dateCreated, name)
+            public FolderObj(string permissions, string owner, string group, UInt64 size, string dateCreated, string name, string path, FolderObj parentDir)
+                : base(permissions, owner, group, size, dateCreated, name, path)
             {
                 fileinfo.directory = true;
                 subdirectory = new List<FileObj>();
@@ -47,11 +47,11 @@ namespace CS410Project
                     *when it was treated like a folder so we know its a file.*/
                     if (!result)
                     {
-                        subdirectory.Add(new FileObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name));
+                        subdirectory.Add(new FileObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, fileData[i].path));
                     }
                     else
                     {
-                        subdirectory.Add(new FolderObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, this));
+                        subdirectory.Add(new FolderObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, fileData[i].path, this));
                     }
                 }
             }
@@ -69,13 +69,24 @@ namespace CS410Project
                 *when it was treated like a folder so we know its a file.*/
                 if (!result)
                 {
-                    subdirectory.Add(new FileObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name));
+                    subdirectory.Add(new FileObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name, fileData.path));
                 }
                 else
                 {
-                    subdirectory.Add(new FolderObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name, this));
+                    subdirectory.Add(new FolderObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name, fileData.path, this));
                 }
             }
+            public override void setMarked(bool value)
+            {
+                marked = value;
+            }
+
+            public override bool getMarked()
+            {
+                return marked;
+            }
+            
+            public bool marked = false; //used when searching directories
             public List<FileObj> subdirectory;
             //Folders need to remember their parents ;_;
             //By default its the root directory
@@ -86,7 +97,7 @@ namespace CS410Project
         {
             public FileObj() { }
             public FileObj(string name) { fileinfo.name = name; }
-            public FileObj(string permissions, string owner, string group, UInt64 size, string dateCreated, string name)
+            public FileObj(string permissions, string owner, string group, UInt64 size, string dateCreated, string name, string path)
             {
                 fileinfo.permissions = permissions;
                 fileinfo.directory = false;
@@ -95,6 +106,10 @@ namespace CS410Project
                 fileinfo.size = size;
                 fileinfo.dateCreated = dateCreated;
                 fileinfo.name = name;
+                fileinfo.path = path;
+
+            
+
             }
             public FileInfo fileinfo = new FileInfo();
             public struct FileInfo
@@ -113,7 +128,7 @@ namespace CS410Project
                 public UInt64 size { get; set; }
                 //date the file was created
                 public string dateCreated { get; set; }
-
+                public string path { get; set; }
             };
            
             /*Parses through a string of unix/windows style directory detail
@@ -275,6 +290,15 @@ namespace CS410Project
             public int fileDirectoryStyle(string fileData)
             {
                 return 0; //TODO: Implement this later, for now just return Unix
+            }
+
+            public virtual void setMarked(bool value)
+            {
+
+            }
+            public virtual bool getMarked()
+            {
+                return false;
             }
         }
 }

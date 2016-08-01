@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace CS410Project
                 setSavePathToDesktop();
         }
 
-        public getFile(string[]targetFiles, string savepath)
+        public getFile(string[] targetFiles, string savepath)
         {
             targetFilesArray = targetFiles;
             savePath = savepath;
@@ -41,7 +42,7 @@ namespace CS410Project
                 setSavePathToDesktop();
         }
 
-        public void saveFiles(Client toUse)
+        public void saveFiles(Client toUse, BackgroundWorker backgroundWorker1)
         {
             int failed = 0;
             int succeeded = 0;
@@ -50,7 +51,7 @@ namespace CS410Project
                 for (int i = 0; i < targetFilesArray.Length; ++i)
                 {
                     Console.WriteLine(targetFilesArray[i]);
-                    if (toUse.getFile(targetFilesArray[i], savePath))
+                    if (toUse.getFile(targetFilesArray[i], savePath, backgroundWorker1))
                     {
                         ++succeeded;
                     }
@@ -64,7 +65,7 @@ namespace CS410Project
             {
                 for (int i = 0; i < targetFiles.Count; ++i)
                 {
-                    if (toUse.getFile(targetFiles[i], savePath))
+                    if (toUse.getFile(targetFiles[i], savePath, backgroundWorker1))
                     {
                         ++succeeded;
                     }
@@ -74,9 +75,9 @@ namespace CS410Project
                     }
                 }
             }
-                
 
-            
+
+
             Console.WriteLine(succeeded + " file gets successful");
             Console.WriteLine(failed + " file gets failed.");
         }

@@ -8,22 +8,95 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CS410Project.Properties
-{
-
-
+namespace CS410Project.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Font SysFont {
+            get {
+                return ((global::System.Drawing.Font)(this["SysFont"]));
+            }
+            set {
+                this["SysFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color FontColor {
+            get {
+                return ((global::System.Drawing.Color)(this["FontColor"]));
+            }
+            set {
+                this["FontColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color BackgroundColor {
+            get {
+                return ((global::System.Drawing.Color)(this["BackgroundColor"]));
+            }
+            set {
+                this["BackgroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color ButtonColor {
+            get {
+                return ((global::System.Drawing.Color)(this["ButtonColor"]));
+            }
+            set {
+                this["ButtonColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color ToolbarColor {
+            get {
+                return ((global::System.Drawing.Color)(this["ToolbarColor"]));
+            }
+            set {
+                this["ToolbarColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color FileviewerColor {
+            get {
+                return ((global::System.Drawing.Color)(this["FileviewerColor"]));
+            }
+            set {
+                this["FileviewerColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color TextboxColor {
+            get {
+                return ((global::System.Drawing.Color)(this["TextboxColor"]));
+            }
+            set {
+                this["TextboxColor"] = value;
             }
         }
     }
