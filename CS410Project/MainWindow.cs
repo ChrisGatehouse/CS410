@@ -460,7 +460,21 @@ namespace CS410Project
 
         private void CreateLocalDir_Click(object sender, EventArgs e)
         {
+            string value = "Enter directory name";
+            if (InputBox("New directory", "New directory name:", ref value) == DialogResult.OK)
+            {
+                string localDirText = value;
 
+                if (string.IsNullOrWhiteSpace(localDirText)) { return; }
+
+                if (localDirectory.createLocalDirectory(localDirText))
+                {
+                    localDirectory.refreshDirectory();
+                    populateLocalDirectoryBox(localDirectory.getDirectoryStructure());//refresh workingDirectory view with addition of new directory
+                }
+                else
+                    MessageBox.Show("A directory with that name already exists.", "Error");
+            }
         }
 
         private void fontWindow_Apply(object sender, EventArgs e)
@@ -506,6 +520,42 @@ namespace CS410Project
 
         private void LocalSearchBox_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void LocalRenameFileButton_Click(object sender, EventArgs e)
+        {
+            if (LocalDirectory.SelectedItem == null)
+            {
+                return;
+            }
+            else
+            {
+                string current = LocalDirectory.SelectedItem.ToString();
+                string value = "Enter new file name";
+
+                if (InputBox("Rename File", "New file name:", ref value) == DialogResult.OK)
+                {
+                    if (string.IsNullOrWhiteSpace(value)) { return; }
+                    /*
+                    string path = Path.GetDirectoryName(client.currDirectory);
+                    string targetFile = path + "\\" + current;
+                    string renamedPathFile = path + "\\" + value;
+                    */
+                    Exception returnValue;
+                    returnValue = localDirectory.renameLocalFile(current, value);
+                    if(returnValue == null) //success case with no exceptions
+                    {
+                        MessageBox.Show("File renamed successfully");
+                    }
+                    else //failure case with some exception
+                    {
+                        MessageBox.Show("Error: " + returnValue.Message);
+                    }
+                    localDirectory.refreshDirectory();
+                    populateLocalDirectoryBox(localDirectory.getDirectoryStructure());//refresh workingDirectory view with renamed file.
+                }
+            }
 
         }
     }
