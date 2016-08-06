@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RemoteDirectory = new System.Windows.Forms.ListBox();
             this.RemoteParentButton = new System.Windows.Forms.Button();
             this.PutFileButton = new System.Windows.Forms.Button();
@@ -424,6 +425,7 @@
             this.Controls.Add(this.RemoteParentButton);
             this.Controls.Add(this.RemoteDirectory);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
             this.Text = "The best FTP client ever made";
