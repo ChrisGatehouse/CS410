@@ -293,6 +293,34 @@ namespace CS410Project
             updateConsistency();
         }
 
+        //creates a new directory in the current folder with the passed string as its name.
+        public Boolean createLocalDirectory(String name)
+        {
+            if (!System.IO.File.Exists(getPath()+name))
+            {
+                System.IO.Directory.CreateDirectory(getPath()+name);
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Folder creation failed.");
+                return false;
+            }
+        }
+
+        public Exception renameLocalFile(String oldname, String newname)
+        {
+            try
+            {
+                System.IO.File.Move(getPath()+oldname, getPath()+newname);
+                return null;
+            }
+            catch(Exception e)
+            {
+                return e;
+            }
+        }
+
         //The current working directory
         private FolderObj workingDir;
         //Current path
