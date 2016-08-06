@@ -276,7 +276,7 @@ namespace CS410Project
                 return domainList;
         }
 
-        //This funcction takes in a string and applies a bitwise operation on each character to encrypt it
+        //This function takes in a string and applies a bitwise operation on each character to encrypt it
         //Doing so will also decrypt encrypted strings so it works both ways, super nice
         private string encryptdecrypt(string secretToEveryone)
         {

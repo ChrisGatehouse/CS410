@@ -540,5 +540,16 @@ namespace CS410Project
         {
             System.Diagnostics.Process.Start("https://github.com/ChrisGatehouse/CS410");
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loginManager.Logout(client);
+            Close();
+        }
     }
 }
