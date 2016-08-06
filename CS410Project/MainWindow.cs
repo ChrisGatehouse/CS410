@@ -463,7 +463,7 @@ namespace CS410Project
         }
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            lblStatus.Text = $"{e.ProgressPercentage} %";
+            lblStatus.Text = "${e.ProgressPercentage} %";
             progressBar.Value = e.ProgressPercentage;
             progressBar.Update();
         }
@@ -529,6 +529,16 @@ namespace CS410Project
         private void backWorkGetProg_DoWork(object sender, DoWorkEventArgs e)
         {
             temp.saveFiles(client, backWorkGetProg);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This is a project for Portland State University CS410 Agile Software development. \nThis project was developed by:\nBen Lawrence\nChris Gatehouse\nJonathan Hasbun\nMiles Sanguinetti\nMohammed Inoue", "About", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void githubReadmeOpensWebBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/ChrisGatehouse/CS410");
         }
     }
 }

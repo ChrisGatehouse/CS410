@@ -62,6 +62,8 @@
             this.LocalSearchBox = new System.Windows.Forms.TextBox();
             this.LocalSearchButton = new System.Windows.Forms.Button();
             this.backWorkGetProg = new System.ComponentModel.BackgroundWorker();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.githubReadmeOpensWebBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -189,19 +191,22 @@
             // changeFontToolStripMenuItem
             // 
             this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
-            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.changeFontToolStripMenuItem.Text = "Change Font";
             this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
             // 
             // changeColorToolStripMenuItem
             // 
             this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
-            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.changeColorToolStripMenuItem.Text = "Change Color";
             this.changeColorToolStripMenuItem.Click += new System.EventHandler(this.changeColorToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.githubReadmeOpensWebBrowserToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -358,6 +363,20 @@
             this.backWorkGetProg.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backWorkGetProg.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // githubReadmeOpensWebBrowserToolStripMenuItem
+            // 
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Name = "githubReadmeOpensWebBrowserToolStripMenuItem";
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Text = "Github Readme (Opens Web Browser)";
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Click += new System.EventHandler(this.githubReadmeOpensWebBrowserToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +452,8 @@
         private System.Windows.Forms.TextBox LocalSearchBox;
         private System.Windows.Forms.Button LocalSearchButton;
         private System.ComponentModel.BackgroundWorker backWorkGetProg;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem githubReadmeOpensWebBrowserToolStripMenuItem;
     }
 }
 
