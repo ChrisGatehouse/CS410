@@ -22,6 +22,7 @@ namespace CS410Project
         public LocalDirectory localDirectory = new LocalDirectory();
         public Client client;
         string[] files;
+        getFile temp;
 
         public MainWindow()
         {
@@ -81,8 +82,15 @@ namespace CS410Project
                     {
                         //It's a file, not a directory, so just download it
                         Console.WriteLine();
-                        getFile temp = new getFile(RemoteDirectory.SelectedItem.ToString(), "");
-                        temp.saveFiles(client, backWorkProgBar);
+                        temp = new getFile(RemoteDirectory.SelectedItem.ToString(), "");
+                        if (!backWorkGetProg.IsBusy)
+                        {
+                            backWorkGetProg.RunWorkerAsync();
+                        }
+                        else
+                        {
+                            MessageBox.Show("An upload or download is currently in progress");
+                        }
                     }
                     populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
                 }
@@ -122,8 +130,15 @@ namespace CS410Project
                     //in the case of multiple selected items.
                     String[] Selected = new String[RemoteDirectory.SelectedItems.Count];
                     RemoteDirectory.SelectedItems.CopyTo(Selected, 0);
-                    getFile temp = new getFile(Selected, "");
-                    temp.saveFiles(client, backWorkProgBar);
+                    temp = new getFile(Selected, "");
+                    if (!backWorkGetProg.IsBusy)
+                    {
+                        backWorkGetProg.RunWorkerAsync();
+                    }
+                    else
+                    {
+                        MessageBox.Show("An upload or download is currently in progress");
+                    }
                 }
             }
         }
@@ -143,30 +158,12 @@ namespace CS410Project
                     }
                     else
                     {
-                        MessageBox.Show("BackgroundWorker is busy");
+                        MessageBox.Show("An upload or download is currently in progress");
                     }
                     remoteDirectory.refreshDirectory(client);
                     populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
                 }
             }
-            /*
-            if (loginManager.LoggedIn)
-            {
-                //not working directoy, local directory item
-                //if (WorkingDirectory.SelectedItem != null)
-                //{}
-                OpenFileDialog opFilDlg = new OpenFileDialog();
-                opFilDlg.Multiselect = true;
-
-                if (opFilDlg.ShowDialog() == DialogResult.OK)
-                {
-                    string[] files = opFilDlg.FileNames;
-                    client.putMultiple(files);
-                    remoteDirectory.refreshDirectory(client);
-                    populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
-                }
-            }
-            */
         }
 
         private void CreateRemoteDir_Click(object sender, EventArgs e)
@@ -416,37 +413,6 @@ namespace CS410Project
                     MessageBox.Show("File " + value + " created ");
                 }
                 client.putFile(value);
-                /*
-                using (FileStream fs = File.Create("poo.jpeg"))
-                {
-                    Byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file.");
-                    fs.Write(info, 0, info.Length);
-
-                }
-                */
-                /*
-                string[] poo = { "poo.jpeg" };
-
-                if (File.Exists("ftp://abyss.mynetgear.com/files/" + "poo.jpeg"))
-                {
-                    MessageBox.Show("File 'testFile' Exist ");
-                }
-                else
-                {
-                    /* using (FileStream fs = File.Create("poo.jpeg"))
-                        {
-                            Byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file.");
-                            fs.Write(info, 0, info.Length);
-
-                        }
-                        
-
-                    FileStream fs = File.Create("poo.jpeg");
-                    fs.Close();
-                    MessageBox.Show("File 'testFile' created ");
-                }
-                client.putMultiple(poo);
-                */
                 remoteDirectory.refreshDirectory(client);
                 populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
             }
@@ -491,12 +457,13 @@ namespace CS410Project
         {
             foreach (string filePath in files)
             {
+                backWorkProgBar.ReportProgress(0);
                 client.putFile(filePath, backWorkProgBar);
             }
         }
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            lblStatus.Text = "{e.ProgressPercentage} %";
+            lblStatus.Text = "${e.ProgressPercentage} %";
             progressBar.Value = e.ProgressPercentage;
             progressBar.Update();
         }
@@ -557,6 +524,32 @@ namespace CS410Project
                 }
             }
 
+        }
+
+        private void backWorkGetProg_DoWork(object sender, DoWorkEventArgs e)
+        {
+            temp.saveFiles(client, backWorkGetProg);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This is a project for Portland State University CS410 Agile Software development. \nThis project was developed by:\nBen Lawrence\nChris Gatehouse\nJonathan Hasbun\nMiles Sanguinetti\nMohammed Inoue", "About", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void githubReadmeOpensWebBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/ChrisGatehouse/CS410");
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loginManager.Logout(client);
+            Close();
         }
     }
 }

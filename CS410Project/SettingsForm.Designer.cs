@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.fontColorButton = new System.Windows.Forms.Button();
             this.buttonColorButton = new System.Windows.Forms.Button();
             this.backgroundColorButton = new System.Windows.Forms.Button();
@@ -112,6 +113,7 @@
             this.Controls.Add(this.backgroundColorButton);
             this.Controls.Add(this.buttonColorButton);
             this.Controls.Add(this.fontColorButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsForm";
             this.Text = "SettingsForm";
             this.ResumeLayout(false);
