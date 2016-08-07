@@ -191,6 +191,35 @@ namespace CS410Project
             return true;
         }
 
+		public override bool getFile(string targetFile, string savePath)
+		{
+			string target = destination + currDirectory + targetFile;
+			request = (FtpWebRequest)WebRequest.Create(target);
+			Console.WriteLine(target);
+			request.Credentials = getCredentials();
+			request.Method = WebRequestMethods.Ftp.DownloadFile;
+			try
+			{
+				//Check if the target file exists on the server
+				response = (FtpWebResponse)request.GetResponse();
+				Stream responseDownloadStream = response.GetResponseStream();
+
+				//Console.WriteLine(savePath);
+				var fileStream = File.Create(savePath + "\\" + targetFile);
+				//responseDownloadStream.Seek(0, SeekOrigin.Begin);
+				responseDownloadStream.CopyTo(fileStream);
+				fileStream.Close();
+			}
+			catch (WebException e)
+			{
+				//Target file and/or destination are erroneous
+				Log.Error("Error getting file", e);
+				Console.WriteLine(e.ToString());
+				return false;
+			}
+			return true;
+		}
+
         //attempts to get a file from the FTP server. returned boolean denotes success or failure.
         public override bool getFile(string targetFile, string savePath, BackgroundWorker backgroundWorker1)
         {
@@ -334,9 +363,11 @@ namespace CS410Project
             {
                 var response = (FtpWebResponse)request.GetResponse();
                 response.Close();
+				Log.Info("Directory deleted " + response.StatusDescription);
             }
-            catch
+			catch (WebException ex)
             {
+				Log.Error("Failed to delete directory", ex);
                 return false;
             }
             return true;

@@ -34,7 +34,8 @@ namespace CS410Project
         public abstract List<string> getCurrDirectory(); //returns a list with the current directory's files(OBSOLETE)
         public abstract List<string> getCurrDetailedDirectory(); //returns a list with the current directory's files with extra details
         public abstract bool isFile(string targetDirectory); //Checks if working dir is a file or not (VERY SLOW, USE WITH CAUTION)
-        public abstract bool getFile(string targetFile, string savePath, BackgroundWorker backgroundWorker1); //attempts to get a file from the FTP server. returned boolean denotes success or failure.
+		public abstract bool getFile(string targetFile, string savePath);
+		public abstract bool getFile(string targetFile, string savePath, BackgroundWorker backgroundWorker1); //attempts to get a file from the FTP server. returned boolean denotes success or failure.
         public abstract bool createRemoteDir(string newDir);
         public abstract bool deleteRemoteFile(string targetFile);
         public abstract bool deleteRemoteDir(string targetFile);

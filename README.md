@@ -1,5 +1,4 @@
-## Dragon FTP 
-### The Best FTP Client Ever Made!
+## Dragon FTP - The Best FTP Client Ever Made!
 ---
 
 ### Table of Contents
@@ -14,6 +13,7 @@
 ---
 ### <a name="requirements">Requirements</a>
 1. Windows
+2. .Net 4.5
 
 ---
 ### <a name="installation-instructions">Installation Instructions</a>
