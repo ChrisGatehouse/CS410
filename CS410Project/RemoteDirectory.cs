@@ -40,7 +40,7 @@ namespace CS410Project
             else
             {
                 directory.Sort();
-                workingDir.AddToSubDirectory(client, directory);
+                workingDir.AddToSubDirectory(directory);
                 workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
             }
         }
@@ -94,7 +94,6 @@ namespace CS410Project
         * then compares the names of every file on the server's directory with what it has 
          * saved, If there is something new not added, it will add it, if thing has been removed
         * it will remove it*/
-        //NOTE: This needs to be more throughly tested once we have upload/delete implemented
         public void updateConsistency(Client client)
         {
             List<string> currConsistency = client.getCurrDetailedDirectory();
@@ -112,7 +111,7 @@ namespace CS410Project
 
             List<FileObj.FileInfo> fileData = FileObj.parseFileInfo(currConsistency);
             //Sort the two list before performing the algorithm
-            fileData.OrderBy(x => x.name);
+            fileData.Sort((x, y) => x.name.CompareTo(y.name));
             workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
             int i = 0; //marker for currConsistency
             int j = 0; //marker for workingDir
@@ -136,7 +135,7 @@ namespace CS410Project
                 else if (string.Compare(fileData[i].name, workingDir.subdirectory[j].fileinfo.name) < 0)
                 {
                     //Add to working directory
-                    workingDir.AddToSubDirectory(client, currConsistency[i]);
+                    workingDir.AddToSubDirectory(fileData[i]);
                     workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                     j++;
                     i++;
@@ -152,7 +151,7 @@ namespace CS410Project
             while (i < fileData.Count)
             {
                 //Add to working directory
-                workingDir.AddToSubDirectory(client, currConsistency[i]);
+                workingDir.AddToSubDirectory(fileData[i]);
                 workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                 i++;
             }

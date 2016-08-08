@@ -30,7 +30,7 @@ namespace CS410Project
                 subdirectory = new List<FileObj>();
                 this.parentDir = parentDir;
             }
-            public void AddToSubDirectory(Client client, List<string> newFiles)
+            public void AddToSubDirectory(List<string> newFiles)
             {
                 //Hold result of the subdirectory
                 bool result;
@@ -43,8 +43,7 @@ namespace CS410Project
                 for (int i = 0; i < fileData.Count; i++)
                 {
                     result = fileData[i].directory;
-                    /*If result is false, then the FTP gave an error
-                    *when it was treated like a folder so we know its a file.*/
+                    //If result is false, then we know its a file
                     if (!result)
                     {
                         subdirectory.Add(new FileObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, fileData[i].path));
@@ -55,7 +54,22 @@ namespace CS410Project
                     }
                 }
             }
-            public void AddToSubDirectory(Client client, string newFile)
+            public void AddToSubDirectory(FileInfo fileData)
+            {
+                //Hold result of the subdirectory
+                bool result;
+                result = fileData.directory;
+                //If result is false, then we know its a file
+                if (!result)
+                {
+                    subdirectory.Add(new FileObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name, fileData.path));
+                }
+                else
+                {
+                    subdirectory.Add(new FolderObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name, fileData.path, this));
+                }
+            }
+            public void AddToSubDirectory(string newFile)
             {
                 //Hold result of the subdirectory
                 bool result;
@@ -65,8 +79,7 @@ namespace CS410Project
                 }
                 FileInfo fileData = parseFileInfo(newFile);
                 result = fileData.directory;
-                /*If result is false, then the FTP gave an error
-                *when it was treated like a folder so we know its a file.*/
+                //If result is false, then we know its a file
                 if (!result)
                 {
                     subdirectory.Add(new FileObj(fileData.permissions, fileData.owner, fileData.group, fileData.size, fileData.dateCreated, fileData.name, fileData.path));

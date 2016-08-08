@@ -155,8 +155,7 @@ namespace CS410Project
         * then compares the names of every file on the server's directory with what it has 
          * saved, If there is something new not added, it will add it, if thing has been removed
         * it will remove it*/
-        //NOTE: This needs to be more throughly tested once we have upload/delete implemented
-        public void updateConsistency()
+        private void updateConsistency()
         {
 
             List<FileObj> fileData = new List<FileObj>();
@@ -188,7 +187,7 @@ namespace CS410Project
                 return;
             }
             //Sort the two list before performing the algorithm
-            fileData.OrderBy(x => x.fileinfo.name);
+            fileData.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
             workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
             int i = 0; //marker for currConsistency
             int j = 0; //marker for workingDir
@@ -212,14 +211,7 @@ namespace CS410Project
                 else if (string.Compare(fileData[i].fileinfo.name, workingDir.subdirectory[j].fileinfo.name) < 0)
                 {
                     //Add to working directory
-                    if (fileData[i].fileinfo.directory)
-                    {
-                        workingDir.subdirectory.Add(new FolderObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath(), workingDir));
-                    }
-                    else
-                    {
-                        workingDir.subdirectory.Add(new FileObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath()));
-                    }
+                    workingDir.AddToSubDirectory(fileData[i].fileinfo);
                     workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                     j++;
                     i++;
@@ -235,14 +227,7 @@ namespace CS410Project
             while (i < fileData.Count)
             {
                 //Add to working directory
-                if (fileData[i].fileinfo.directory)
-                {
-                    workingDir.subdirectory.Add(new FolderObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath(), workingDir));
-                }
-                else
-                {
-                    workingDir.subdirectory.Add(new FileObj(fileData[i].fileinfo.permissions, "", "", fileData[i].fileinfo.size, fileData[i].fileinfo.dateCreated, fileData[i].fileinfo.name, getPath()));
-                }
+                workingDir.AddToSubDirectory(fileData[i].fileinfo);
                 workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                 i++;
             }
