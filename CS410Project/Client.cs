@@ -36,6 +36,7 @@ namespace CS410Project
         public abstract bool isFile(string targetDirectory); //Checks if working dir is a file or not (VERY SLOW, USE WITH CAUTION)
 		public abstract bool getFile(string targetFile, string savePath);
 		public abstract bool getFile(string targetFile, string savePath, BackgroundWorker backgroundWorker1); //attempts to get a file from the FTP server. returned boolean denotes success or failure.
+        public abstract bool RestartDownloadFromServer(string fileName, Uri serverUri, long offset);
         public abstract bool createRemoteDir(string newDir);
         public abstract bool deleteRemoteFile(string targetFile);
         public abstract bool deleteRemoteDir(string targetFile);
