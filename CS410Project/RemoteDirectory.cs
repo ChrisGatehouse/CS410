@@ -130,7 +130,9 @@ namespace CS410Project
                 {
                     //remove working directory's jth entry
                     workingDir.subdirectory.RemoveAt(j);
+                    workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                     j++;
+                    i++;
                 }
                 else if (string.Compare(fileData[i].name, workingDir.subdirectory[j].fileinfo.name) < 0)
                 {
@@ -146,6 +148,7 @@ namespace CS410Project
                 //remove remaining items
                 //remove working directory's jth entry
                 workingDir.subdirectory.RemoveAt(j);
+                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
                 j++;
             }
             while (i < fileData.Count)
