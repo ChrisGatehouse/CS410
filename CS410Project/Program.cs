@@ -31,6 +31,7 @@ namespace CS410Project
 			bool graphical = false;
 			string download = null;
 			string upload = null;
+			string path = "";
 
 			// Options - Definitions.
 			var p = new OptionSet() {
@@ -42,10 +43,12 @@ namespace CS410Project
 					v => version = v != null },
 				{ "g|graphical", "initializes the graphical user interface.",
 					v => graphical = v != null },
-				{ "d|download=", "download a {file} from the server.",
+				{ "d|download=", "download a {FILE} from the server.",
 					v => download = v },
-				{ "u|upload=", "upload a {file} to the server.",
+				{ "u|upload=", "upload a {FILE} to the server.",
 					v => upload = v },
+				{ "p|path=", "specify a {PATH} to download/upload files to\n(must end in \"\\\").",
+					v => path = v },
 			};
 
 			// Parse options, throw error otherwise.
@@ -76,14 +79,14 @@ namespace CS410Project
 
 
 			// Check for existing credentials, otherwise create them.
-			string path = ".cred";
+			string filePath = ".cred";
 			string server = null;
 			string user = null;
 			string pass = null;
 
-			if (!File.Exists(path))
+			if (!File.Exists(filePath))
 			{
-				StreamWriter credentials = File.CreateText(path);
+				StreamWriter credentials = File.CreateText(filePath);
 
 				Console.WriteLine("Enter FTP url (e.g. ftp://serverurl): ");
 				server = Console.ReadLine();
@@ -100,7 +103,7 @@ namespace CS410Project
 			}
 			else
 			{
-				StreamReader credentials = File.OpenText(path);
+				StreamReader credentials = File.OpenText(filePath);
 
 				server = credentials.ReadLine();
 				user = credentials.ReadLine();
@@ -136,8 +139,8 @@ namespace CS410Project
 
 				if (verbose > 0)
 					Console.WriteLine("*** downloading file: {0}", download);
-				
-				getFile fileHandler = new getFile(download, "/home/alestin/Documents/CS410/CS410Project/bin/Debug");
+
+				getFile fileHandler = new getFile(download, path);
 				fileHandler.saveFiles(client, success);
 
 				if (verbose > 0 && success)
@@ -146,6 +149,13 @@ namespace CS410Project
 					Console.WriteLine("*** file failed to download...");
 			}
 			if (upload != null) {
+				if (verbose > 0)
+					Console.WriteLine("*** uploading file: {0}", upload);
+				
+				client.putFile(upload, path);
+
+				if (verbose > 0)
+					Console.WriteLine("*** file successfully uploaded...");
 			}
         }
     }

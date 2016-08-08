@@ -40,6 +40,7 @@ namespace CS410Project
         public abstract bool deleteRemoteFile(string targetFile);
         public abstract bool deleteRemoteDir(string targetFile);
         public abstract void putFile(string fullPathFilename);
+		public abstract void putFile(string filename, string path);
         public abstract void putFile(string filePath, BackgroundWorker backgroundWorker1);
         public abstract void renameRemoteFile(string currentFileName, string newFileName);
 
