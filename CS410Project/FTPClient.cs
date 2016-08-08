@@ -222,6 +222,15 @@ namespace CS410Project
         //attempts to get a file from the FTP server. returned boolean denotes success or failure.
         public override bool getFile(string targetFile, string savePath, BackgroundWorker backgroundWorker1)
         {
+            long offset = 0;
+            string target = destination + currDirectory + targetFile;
+            string test = savePath + "\\" + targetFile;
+            if (File.Exists(test))
+            {
+                FileInfo fInfo = new FileInfo(test);
+                offset = fInfo.Length;
+                MessageBox.Show("File already exists");
+            }
             /*
             string target = destination + currDirectory + targetFile;
             request = (FtpWebRequest)WebRequest.Create(target);
@@ -249,7 +258,7 @@ namespace CS410Project
             }
             return true;
             */
-            string target = destination + currDirectory + targetFile;
+            //string target = destination + currDirectory + targetFile;
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(target);
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.GetFileSize;
@@ -278,30 +287,37 @@ namespace CS410Project
                 request.Method = WebRequestMethods.Ftp.DownloadFile;
                 using (FtpWebResponse responseFileDownload = (FtpWebResponse)request.GetResponse())
                 using (Stream responseStream = responseFileDownload.GetResponseStream())
-                using (FileStream writeStream = new FileStream(savePath + "\\" + targetFile, FileMode.Create))
-                {
-
-                    int Length = 2048;
-                    Byte[] buffer = new Byte[Length];
-                    int bytesRead = responseStream.Read(buffer, 0, Length);
-                    int bytes = 0;
-
-                    while (bytesRead > 0)
+                    if (offset == 0)
                     {
-                        writeStream.Write(buffer, 0, bytesRead);
-                        bytesRead = responseStream.Read(buffer, 0, Length);
-                        bytes += bytesRead;// don't forget to increment bytesRead !
-                        int totalSize = (int)(fileSize / 1024); // Kbytes
-                        if (totalSize == 0)
+                        using (FileStream writeStream = new FileStream(savePath + "\\" + targetFile, FileMode.Create))
                         {
-                            writeStream.Write(buffer, 0, bytesRead);
+                            int Length = 2048;
+                            Byte[] buffer = new Byte[Length];
+                            int bytesRead = responseStream.Read(buffer, 0, Length);
+                            int bytes = 0;
 
-                            backgroundWorker1.ReportProgress(100);
-                            return true;
+                            while (bytesRead > 0)
+                            {
+                                writeStream.Write(buffer, 0, bytesRead);
+                                bytesRead = responseStream.Read(buffer, 0, Length);
+                                bytes += bytesRead; // don't forget to increment bytesRead !
+                                int totalSize = (int) (fileSize/1024); // Kbytes
+                                if (totalSize == 0)
+                                {
+                                    writeStream.Write(buffer, 0, bytesRead);
+
+                                    backgroundWorker1.ReportProgress(100);
+                                    return true;
+                                }
+                                backgroundWorker1.ReportProgress((bytes/1024)*100/totalSize, totalSize);
+                            }
                         }
-                        backgroundWorker1.ReportProgress((bytes / 1024) * 100 / totalSize, totalSize);
                     }
-                }
+                    else
+                    {
+                        Uri url2 = new Uri(target);
+                        RestartDownloadFromServer(test, url2, offset);
+                    }
             }
             catch (WebException e)
             {
@@ -310,6 +326,51 @@ namespace CS410Project
                 Console.WriteLine(e.ToString());
                 return false;
             }
+            return true;
+        }
+
+        public override bool RestartDownloadFromServer(string fileName, Uri serverUri, long offset)
+        {
+            if (serverUri.Scheme != Uri.UriSchemeFtp)
+            {
+                return false;
+            }
+            // Get the object used to communicate with the server.
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+            request.Credentials = getCredentials();
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+            request.ContentOffset = offset;
+            request.UseBinary = true;
+            FtpWebResponse response = null;
+            try
+            {
+                response = (FtpWebResponse)request.GetResponse();
+            }
+            catch (WebException e)
+            {
+                Console.WriteLine(e.Status);
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            var localfileStream = new FileStream(fileName, FileMode.Append, FileAccess.Write);
+            var bw = new BinaryWriter(localfileStream);
+            
+            Stream responseStream = response.GetResponseStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = responseStream.Read(buffer, 0, 1024);
+            while (bytesRead != 0)
+            {
+                bw.Write(buffer, 0, bytesRead);
+                bytesRead = responseStream.Read(buffer, 0, 1024);
+            }
+            //switch these to using so we don't have to worry about closing them
+            bw.Close();
+            localfileStream.Close();
+            response.Close();
+
+            Log.Info("Download restart - status: " + response.StatusDescription);
+            Console.WriteLine("Download restart - status: {0}", response.StatusDescription);
             return true;
         }
 
@@ -412,41 +473,57 @@ namespace CS410Project
 			Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
 			response.Close();
 		}
+
+
         public override void putFile(string filePath, BackgroundWorker backgroundWorker1)
         {
-
             //Get the file name from the full path
             string filename = Path.GetFileName(filePath);
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + filename);
             request.Credentials = getCredentials();
+            request.UseBinary = true;
             request.Method = WebRequestMethods.Ftp.UploadFile;
+
             //Copy the contents of the file to a byte array
             byte[] fileContents = File.ReadAllBytes(filePath);
             request.ContentLength = fileContents.Length;
 
-            var inputStream = File.OpenRead(filePath);
-            var requestStream = request.GetRequestStream();
-
-            var buffer = fileContents;
-            int totalReadBytesCount = 0;
-            int readBytesCount;
-            while ((readBytesCount = inputStream.Read(buffer, 0, buffer.Length)) > 0)
+            using (Stream requestStream = request.GetRequestStream())
             {
-                requestStream.Write(fileContents, 0, readBytesCount);
-                totalReadBytesCount += readBytesCount;
-                var progress = totalReadBytesCount * 100.0 / inputStream.Length;
-                backgroundWorker1.ReportProgress((int)progress);
+                using (FileStream inputStream = File.OpenRead(filePath))
+                {
+                    //Set the buffersize to 2kb
+                    int BufferSize = 2048;
+                    var buffer = new byte[BufferSize];
+
+                    var fileSize = fileContents.Length;
+                    var totalSize = (fileSize / 1024);
+
+                    long SentBytes = 0;
+                    int BytesRead = inputStream.Read(buffer, 0, BufferSize);
+                    while (BytesRead > 0)
+                    {
+                        try
+                        {
+                            requestStream.Write(buffer, 0, BytesRead);
+                            SentBytes += BytesRead;
+                            backgroundWorker1.ReportProgress(((int)SentBytes / 1024) * 100 / totalSize, totalSize);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Error("Upload Error", e);
+                        }
+                        BytesRead = inputStream.Read(buffer, 0, BufferSize);
+                    }
+                }
             }
-            inputStream.Close();
-            requestStream.Close();
-
-
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             Log.Info("Upload File Complete, status " + response.StatusDescription);
             Console.WriteLine("Upload File Complete, status {0}", response.StatusDescription);
             response.Close();
-
         }
+
+
         public override void renameRemoteFile(string currentFileName, string newFileName)
         {
             request = (FtpWebRequest)WebRequest.Create(destination + currDirectory + currentFileName);

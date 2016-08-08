@@ -468,7 +468,7 @@ namespace CS410Project
         }
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            lblStatus.Text = "${e.ProgressPercentage} %";
+            lblStatus.Text = e.ProgressPercentage + "%";
             progressBar.Value = e.ProgressPercentage;
             progressBar.Update();
         }
