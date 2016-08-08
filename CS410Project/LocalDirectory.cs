@@ -80,8 +80,10 @@ namespace CS410Project
             while(queue.Count != 0)
             {
                 currDir = queue.Dequeue();
+                updateConsistency(currDir, currDir.fileinfo.path);
                 for (int i = 0; i < currDir.subdirectory.Count; i++)
                 {
+                    
                     if (currDir.subdirectory[i].fileinfo.name.ToLower() == searchKey.ToLower())
                     {
                         string temp = currDir.subdirectory[i].fileinfo.path;
@@ -150,6 +152,89 @@ namespace CS410Project
             }
             return output;
         }
+        /*Update consistency is going to look through current version of its subdirectory
+        * then compares the names of every file on the server's directory with what it has 
+        * saved, If there is something new not added, it will add it, if thing has been removed
+        * it will remove it*/
+        private void updateConsistency(FolderObj workingDir, string currentPath)
+        {
+
+            List<FileObj> fileData = new List<FileObj>();
+            FileInfo currFile;
+            DirectoryInfo currDir;
+
+            foreach (string folders in Directory.GetDirectories(currentPath))
+            {
+                currDir = new DirectoryInfo(folders);
+                fileData.Add(new FolderObj(" ", "", "", 0, currDir.CreationTime.ToString(), currDir.Name, currentPath + currDir.Name + "/", null));
+            }
+            foreach (string files in Directory.GetFiles(currentPath))
+            {
+                currFile = new FileInfo(files);
+                fileData.Add(new FileObj(currFile.IsReadOnly.ToString(), "", "", (UInt64)currFile.Length, currFile.CreationTime.ToString(), currFile.Name, currentPath));
+            }
+
+            //If the directory we are going to is empty, we don't need to do anything, except clear.
+            if (fileData == null)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
+            if (fileData.Count == 0)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
+            //Sort the two list before performing the algorithm
+            fileData.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+            workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+            int i = 0; //marker for currConsistency
+            int j = 0; //marker for workingDir
+
+            //The idea with this algorithm is to traverse both list simultaneously and 
+            //find any disparities
+            while (i < fileData.Count && j < workingDir.subdirectory.Count)
+            {
+                if (string.Compare(fileData[i].fileinfo.name, workingDir.subdirectory[j].fileinfo.name) == 0)
+                {
+                    //Item exist in both list, so skip it
+                    i++;
+                    j++;
+                }
+                else if (string.Compare(fileData[i].fileinfo.name, workingDir.subdirectory[j].fileinfo.name) > 0)
+                {
+                    //remove working directory's jth entry
+                    workingDir.subdirectory.RemoveAt(j);
+                    workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                    j++;
+                    i++;
+                }
+                else if (string.Compare(fileData[i].fileinfo.name, workingDir.subdirectory[j].fileinfo.name) < 0)
+                {
+                    //Add to working directory
+                    workingDir.AddToSubDirectory(fileData[i].fileinfo);
+                    workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                    j++;
+                    i++;
+                }
+            }
+            while (j < workingDir.subdirectory.Count)
+            {
+                //remove remaining items
+                //remove working directory's jth entry
+                workingDir.subdirectory.RemoveAt(j);
+                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                j++;
+                i++;
+            }
+            while (i < fileData.Count)
+            {
+                //Add to working directory
+                workingDir.AddToSubDirectory(fileData[i].fileinfo);
+                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                i++;
+            }
+        }
 
         /*Update consistency is going to look through current version of its subdirectory
         * then compares the names of every file on the server's directory with what it has 
@@ -161,13 +246,11 @@ namespace CS410Project
             List<FileObj> fileData = new List<FileObj>();
             FileInfo currFile;
             DirectoryInfo currDir;
-            //create fileData for current local directory
-            string currWorkingDir = getPath();
 
             foreach (string folders in Directory.GetDirectories(getPath()))
             {
                 currDir = new DirectoryInfo(folders);
-                fileData.Add(new FolderObj(" ", "", "", 0, currDir.CreationTime.ToString(), currDir.Name, getPath(), null));
+                fileData.Add(new FolderObj(" ", "", "", 0, currDir.CreationTime.ToString(), currDir.Name, getPath() + currDir.Name + "/", null));
             }
             foreach (string files in Directory.GetFiles(getPath()))
             {
