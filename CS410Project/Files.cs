@@ -30,7 +30,7 @@ namespace CS410Project
                 subdirectory = new List<FileObj>();
                 this.parentDir = parentDir;
             }
-            public void AddToSubDirectory(List<string> newFiles)
+            public void AddToSubDirectory(Client client, List<string> newFiles)
             {
                 //Hold result of the subdirectory
                 bool result;
@@ -38,7 +38,8 @@ namespace CS410Project
                 {
                     return;
                 }
-                List<FileInfo> fileData = parseFileInfo(newFiles);
+                string currentPath = client.currDirectory;
+                List<FileInfo> fileData = parseFileInfo(newFiles, currentPath);
                 //Figure out which files are folders/files
                 for (int i = 0; i < fileData.Count; i++)
                 {
@@ -46,11 +47,11 @@ namespace CS410Project
                     //If result is false, then we know its a file
                     if (!result)
                     {
-                        subdirectory.Add(new FileObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, fileData[i].path));
+                        subdirectory.Add(new FileObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, currentPath));
                     }
                     else
                     {
-                        subdirectory.Add(new FolderObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, fileData[i].path, this));
+                        subdirectory.Add(new FolderObj(fileData[i].permissions, fileData[i].owner, fileData[i].group, fileData[i].size, fileData[i].dateCreated, fileData[i].name, currentPath, this));
                     }
                 }
             }
@@ -175,7 +176,7 @@ namespace CS410Project
              * to make a folder object or a file object
              * NOTE: For now I will only deal with unix style directory listing
              * Windows style will be implemented later once unix style is working*/
-            public static List<FileInfo> parseFileInfo(List<string> fileData)
+            public static List<FileInfo> parseFileInfo(List<string> fileData, string path)
             {
                 FileObj nonStatic = new FileObj();
                 List<FileInfo> output = new List<FileInfo>();
@@ -183,7 +184,7 @@ namespace CS410Project
                 switch (style)
                 {
                     case 0: //UNIX STYLE
-                        output = nonStatic.parseUnixInfo(fileData);
+                        output = nonStatic.parseUnixInfo(fileData, path);
                         break;
                     case 1: //WINDOWS STYLE
                         output = nonStatic.parseWindowsInfo(fileData);
@@ -195,7 +196,7 @@ namespace CS410Project
                 return output;
             }
             //Parses unix style file information
-            public List<FileInfo> parseUnixInfo(List<string> fileData)
+            public List<FileInfo> parseUnixInfo(List<string> fileData,string path)
             {
                 List<FileInfo> output = new List<FileInfo>(new FileInfo[fileData.Count]);
                 char[] delimiterchars = { ' ', '\t' }; //characters to skip past
@@ -237,6 +238,7 @@ namespace CS410Project
                         temp.name += s;
                         first = false;
                     }
+                    temp.path = path + temp.name + "/";
                     output[i] = temp;
                 }
                 return output;

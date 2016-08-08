@@ -41,11 +41,15 @@
             this.GetFile = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.githubReadmeOpensWebBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontWindow = new System.Windows.Forms.FontDialog();
             this.RemoteLabel = new System.Windows.Forms.Label();
             this.RemoteTree = new System.Windows.Forms.ListBox();
@@ -63,10 +67,8 @@
             this.LocalSearchBox = new System.Windows.Forms.TextBox();
             this.LocalSearchButton = new System.Windows.Forms.Button();
             this.backWorkGetProg = new System.ComponentModel.BackgroundWorker();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.githubReadmeOpensWebBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoteSearchBox = new System.Windows.Forms.TextBox();
+            this.RemoteSearchButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -179,6 +181,20 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // logOutToolStripMenuItem
+            // 
+            this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
+            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.logOutToolStripMenuItem.Text = "Log out";
+            this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
@@ -197,14 +213,14 @@
             // changeFontToolStripMenuItem
             // 
             this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
-            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.changeFontToolStripMenuItem.Text = "Change Font";
             this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
             // 
             // changeColorToolStripMenuItem
             // 
             this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
-            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.changeColorToolStripMenuItem.Text = "Change Color";
             this.changeColorToolStripMenuItem.Click += new System.EventHandler(this.changeColorToolStripMenuItem_Click);
             // 
@@ -216,6 +232,20 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // githubReadmeOpensWebBrowserToolStripMenuItem
+            // 
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Name = "githubReadmeOpensWebBrowserToolStripMenuItem";
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Text = "Github Readme (Opens Web Browser)";
+            this.githubReadmeOpensWebBrowserToolStripMenuItem.Click += new System.EventHandler(this.githubReadmeOpensWebBrowserToolStripMenuItem_Click);
             // 
             // fontWindow
             // 
@@ -369,39 +399,30 @@
             this.backWorkGetProg.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backWorkGetProg.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // aboutToolStripMenuItem
+            // RemoteSearchBox
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.RemoteSearchBox.Location = new System.Drawing.Point(511, 43);
+            this.RemoteSearchBox.Name = "RemoteSearchBox";
+            this.RemoteSearchBox.Size = new System.Drawing.Size(171, 20);
+            this.RemoteSearchBox.TabIndex = 41;
             // 
-            // githubReadmeOpensWebBrowserToolStripMenuItem
+            // RemoteSearchButton
             // 
-            this.githubReadmeOpensWebBrowserToolStripMenuItem.Name = "githubReadmeOpensWebBrowserToolStripMenuItem";
-            this.githubReadmeOpensWebBrowserToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
-            this.githubReadmeOpensWebBrowserToolStripMenuItem.Text = "Github Readme (Opens Web Browser)";
-            this.githubReadmeOpensWebBrowserToolStripMenuItem.Click += new System.EventHandler(this.githubReadmeOpensWebBrowserToolStripMenuItem_Click);
-            // 
-            // logOutToolStripMenuItem
-            // 
-            this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.logOutToolStripMenuItem.Text = "Log out";
-            this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.RemoteSearchButton.Location = new System.Drawing.Point(688, 43);
+            this.RemoteSearchButton.Name = "RemoteSearchButton";
+            this.RemoteSearchButton.Size = new System.Drawing.Size(75, 23);
+            this.RemoteSearchButton.TabIndex = 42;
+            this.RemoteSearchButton.Text = "Search";
+            this.RemoteSearchButton.UseVisualStyleBackColor = true;
+            this.RemoteSearchButton.Click += new System.EventHandler(this.RemoteSearchButton_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 406);
+            this.Controls.Add(this.RemoteSearchButton);
+            this.Controls.Add(this.RemoteSearchBox);
             this.Controls.Add(this.LocalSearchButton);
             this.Controls.Add(this.LocalSearchBox);
             this.Controls.Add(this.lblStatus);
@@ -477,6 +498,8 @@
         private System.Windows.Forms.ToolStripMenuItem githubReadmeOpensWebBrowserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logOutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.TextBox RemoteSearchBox;
+        private System.Windows.Forms.Button RemoteSearchButton;
     }
 }
 

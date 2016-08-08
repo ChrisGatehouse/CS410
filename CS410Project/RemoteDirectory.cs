@@ -40,7 +40,7 @@ namespace CS410Project
             else
             {
                 directory.Sort();
-                workingDir.AddToSubDirectory(directory);
+                workingDir.AddToSubDirectory(client, directory);
                 workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
             }
         }
@@ -56,6 +56,42 @@ namespace CS410Project
             return output;
         }
 
+        public List<string> searchRemoteDirectory(Client client, string searchKey)
+        {
+            List<FileObj> visited = new List<FileObj>();
+            List<string> output = new List<string>();
+            Queue<FolderObj> queue = new Queue<FolderObj>();
+            workingDir.setMarked(true);
+            visited.Add(workingDir);
+            queue.Enqueue(workingDir);
+            FolderObj currDir;
+            while (queue.Count != 0)
+            {
+                currDir = queue.Dequeue();
+                updateConsistency(client, currDir, currDir.fileinfo.path);
+                for (int i = 0; i < currDir.subdirectory.Count; i++)
+                {
+
+                    if (currDir.subdirectory[i].fileinfo.name.ToLower() == searchKey.ToLower())
+                    {
+                        string temp = currDir.subdirectory[i].fileinfo.path;
+                        temp += searchKey;
+                        output.Add(temp);
+                    }
+                    if (currDir.subdirectory[i].fileinfo.directory && !currDir.subdirectory[i].getMarked())
+                    {
+                        currDir.subdirectory[i].setMarked(true);
+                        visited.Add((FolderObj)currDir.subdirectory[i]);
+                        queue.Enqueue((FolderObj)currDir.subdirectory[i]);
+                    }
+                }
+            }
+            for (int i = 0; i < visited.Count; i++)
+            {
+                visited[i].setMarked(false);
+            }
+            return output;
+        }
 
         //This function changes the currDirectory of the Client
         //To a new one, and initializes new folders to be created
@@ -91,6 +127,78 @@ namespace CS410Project
             }
         }
         /*Update consistency is going to look through current version of its subdirectory
+* then compares the names of every file on the server's directory with what it has 
+ * saved, If there is something new not added, it will add it, if thing has been removed
+* it will remove it*/
+        public void updateConsistency(Client client, FolderObj workingDir, string currPath)
+        {
+            string tempPath = client.currDirectory;
+            client.currDirectory = currPath;
+            List<string> currConsistency = client.getCurrDetailedDirectory();
+            //If the directory we are going to is empty, we don't need to do anything, except clear.
+            if (currConsistency == null)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
+            if (currConsistency.Count == 0)
+            {
+                workingDir.subdirectory.Clear();
+                return;
+            }
+
+            List<FileObj.FileInfo> fileData = FileObj.parseFileInfo(currConsistency, client.currDirectory);
+            //Sort the two list before performing the algorithm
+            fileData.Sort((x, y) => x.name.CompareTo(y.name));
+            workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+            int i = 0; //marker for currConsistency
+            int j = 0; //marker for workingDir
+
+            //The idea with this algorithm is to traverse both list simultaneously and 
+            //find any disparities
+            while (i < currConsistency.Count && j < workingDir.subdirectory.Count)
+            {
+                if (string.Compare(fileData[i].name, workingDir.subdirectory[j].fileinfo.name) == 0)
+                {
+                    //Item exist in both list, so skip it
+                    i++;
+                    j++;
+                }
+                else if (string.Compare(fileData[i].name, workingDir.subdirectory[j].fileinfo.name) > 0)
+                {
+                    //remove working directory's jth entry
+                    workingDir.subdirectory.RemoveAt(j);
+                    workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                    j++;
+                    i++;
+                }
+                else if (string.Compare(fileData[i].name, workingDir.subdirectory[j].fileinfo.name) < 0)
+                {
+                    //Add to working directory
+                    workingDir.AddToSubDirectory(fileData[i]);
+                    workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                    j++;
+                    i++;
+                }
+            }
+            while (j < workingDir.subdirectory.Count)
+            {
+                //remove remaining items
+                //remove working directory's jth entry
+                workingDir.subdirectory.RemoveAt(j);
+                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                j++;
+            }
+            while (i < fileData.Count)
+            {
+                //Add to working directory
+                workingDir.AddToSubDirectory(fileData[i]);
+                workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));
+                i++;
+            }
+            client.currDirectory = tempPath;
+        }
+        /*Update consistency is going to look through current version of its subdirectory
         * then compares the names of every file on the server's directory with what it has 
          * saved, If there is something new not added, it will add it, if thing has been removed
         * it will remove it*/
@@ -109,7 +217,7 @@ namespace CS410Project
                 return;
             }
 
-            List<FileObj.FileInfo> fileData = FileObj.parseFileInfo(currConsistency);
+            List<FileObj.FileInfo> fileData = FileObj.parseFileInfo(currConsistency, client.currDirectory);
             //Sort the two list before performing the algorithm
             fileData.Sort((x, y) => x.name.CompareTo(y.name));
             workingDir.subdirectory.Sort((x, y) => x.fileinfo.name.CompareTo(y.fileinfo.name));

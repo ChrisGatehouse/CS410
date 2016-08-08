@@ -551,5 +551,11 @@ namespace CS410Project
             loginManager.Logout(client);
             Close();
         }
+
+        private void RemoteSearchButton_Click(object sender, EventArgs e)
+        {
+            string inputSearch = RemoteSearchBox.Text;
+            remoteDirectory.searchRemoteDirectory(client, inputSearch);
+        }
     }
 }
