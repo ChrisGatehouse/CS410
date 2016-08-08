@@ -76,6 +76,7 @@ namespace CS410Project
         //Gets rid of connection
         public override bool eliminateConnection()
         {
+            request = (FtpWebRequest)WebRequest.Create(this.destination);
             request.KeepAlive = false;
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             try
@@ -85,9 +86,7 @@ namespace CS410Project
             catch (WebException err)
             {
                 //Problem connecting, output error to console and return false
-                Log.Error("Cannot logg off from FTP Server", err);
                 Console.WriteLine(err.Status.ToString());
-                MessageBox.Show("Cannot log off from FTP server", "Uh-Oh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             //Connection is valid, return true

@@ -23,6 +23,7 @@ namespace CS410Project
         public Client client;
         string[] files;
         getFile temp;
+        bool hidden = false; //boolean value whether or not the owner window is hidden or not
 
         public MainWindow()
         {
@@ -33,9 +34,14 @@ namespace CS410Project
 
 
 
-        private void Exit_Button_Click(object sender, EventArgs e)
+        private void MainWindow_Exit(object sender, FormClosingEventArgs e)
         {
-            this.Close();
+            if (hidden)
+            {
+                Owner.Show();
+                hidden = !hidden;
+            }
+            Close();
         }
 
         private void Timeout_Event(object sender, EventArgs e)
@@ -288,7 +294,6 @@ namespace CS410Project
             remoteDirectory.initializeDirectory(client);
             populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
         }
-
 
         //Toolbar for change Font
         private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -548,6 +553,11 @@ namespace CS410Project
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (hidden)
+            {
+                Owner.Show();
+                hidden = !hidden;
+            }
             loginManager.Logout(client);
             Close();
         }
@@ -556,6 +566,20 @@ namespace CS410Project
         {
             string inputSearch = RemoteSearchBox.Text;
             remoteDirectory.searchRemoteDirectory(client, inputSearch);
+        }
+
+        private void hideLogInWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!hidden)
+            {
+                Owner.Hide();
+                hidden = !hidden;
+            }
+            else
+            {
+                Owner.Show();
+                hidden = !hidden;
+            }
         }
     }
 }

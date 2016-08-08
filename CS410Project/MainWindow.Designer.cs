@@ -69,6 +69,7 @@
             this.backWorkGetProg = new System.ComponentModel.BackgroundWorker();
             this.RemoteSearchBox = new System.Windows.Forms.TextBox();
             this.RemoteSearchButton = new System.Windows.Forms.Button();
+            this.hideLogInWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -205,7 +206,8 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeFontToolStripMenuItem,
-            this.changeColorToolStripMenuItem});
+            this.changeColorToolStripMenuItem,
+            this.hideLogInWindowToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -213,14 +215,14 @@
             // changeFontToolStripMenuItem
             // 
             this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
-            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.changeFontToolStripMenuItem.Text = "Change Font";
             this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
             // 
             // changeColorToolStripMenuItem
             // 
             this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
-            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.changeColorToolStripMenuItem.Text = "Change Color";
             this.changeColorToolStripMenuItem.Click += new System.EventHandler(this.changeColorToolStripMenuItem_Click);
             // 
@@ -416,6 +418,13 @@
             this.RemoteSearchButton.UseVisualStyleBackColor = true;
             this.RemoteSearchButton.Click += new System.EventHandler(this.RemoteSearchButton_Click);
             // 
+            // hideLogInWindowToolStripMenuItem
+            // 
+            this.hideLogInWindowToolStripMenuItem.Name = "hideLogInWindowToolStripMenuItem";
+            this.hideLogInWindowToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.hideLogInWindowToolStripMenuItem.Text = "Hide/Show Log In Window";
+            this.hideLogInWindowToolStripMenuItem.Click += new System.EventHandler(this.hideLogInWindowToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -451,6 +460,7 @@
             this.Name = "MainWindow";
             this.Text = "The best FTP client ever made";
             this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_Exit);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -500,6 +510,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.TextBox RemoteSearchBox;
         private System.Windows.Forms.Button RemoteSearchButton;
+        private System.Windows.Forms.ToolStripMenuItem hideLogInWindowToolStripMenuItem;
     }
 }
 
