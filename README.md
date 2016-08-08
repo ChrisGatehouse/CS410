@@ -29,13 +29,12 @@ from its launcher icon.
 
 When you first launch the GUI you will be prompted to login via the login
 screen.
-
-![Login Screen Image](https://github.com/ChrisGatehouse/CS410/images/login-screen.png "Login Screen")
+![Login Screen Image](https://github.com/ChrisGatehouse/CS410/blob/master/images/login-screen.png "Login Screen")
 
 Once you've logged in, the main screen appears and is populated with the remote
 servers directory and the local directory.
 
-![Application Screen Image](https://github.com/ChrisGatehous/CS410/images/app-screen.png "Application Screen")
+![Application Screen Image](https://github.com/ChrisGatehous/CS410/blob/master/images/app-screen.png "Application Screen")
 
 #### CLI
 The CLI provides a quick alternative to the GUI for uploading and dowloading
