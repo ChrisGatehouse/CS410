@@ -231,34 +231,7 @@ namespace CS410Project
                 offset = fInfo.Length;
                 MessageBox.Show("File already exists");
             }
-            /*
-            string target = destination + currDirectory + targetFile;
-            request = (FtpWebRequest)WebRequest.Create(target);
-            Console.WriteLine(target);
-            request.Credentials = getCredentials();
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-            try
-            {
-                //Check if the target file exists on the server
-                response = (FtpWebResponse)request.GetResponse();
-                Stream responseDownloadStream = response.GetResponseStream();
-               
-                //Console.WriteLine(savePath);
-                var fileStream = File.Create(savePath + "\\" + targetFile);
-                //responseDownloadStream.Seek(0, SeekOrigin.Begin);
-                responseDownloadStream.CopyTo(fileStream);
-                fileStream.Close();
-            }
-            catch (WebException e)
-            {
-                //Target file and/or destination are erroneous
-                Log.Error("Error getting file", e);
-                Console.WriteLine(e.ToString());
-                return false;
-            }
-            return true;
-            */
-            //string target = destination + currDirectory + targetFile;
+           
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(target);
             request.Credentials = getCredentials();
             request.Method = WebRequestMethods.Ftp.GetFileSize;

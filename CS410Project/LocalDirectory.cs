@@ -18,7 +18,6 @@ namespace CS410Project
         {
             path = new List<string>();
             parseLocalDirectory();
-            /*by default, the parent directory of the starting folder is just null*/
             DirectoryInfo dinfo = new DirectoryInfo(Directory.GetCurrentDirectory());
             workingDir = new FolderObj("","","",0,dinfo.CreationTime.ToString(),dinfo.Name,getPath(), null);
 
@@ -153,9 +152,9 @@ namespace CS410Project
             return output;
         }
         /*Update consistency is going to look through current version of its subdirectory
-        * then compares the names of every file on the server's directory with what it has 
-        * saved, If there is something new not added, it will add it, if thing has been removed
-        * it will remove it*/
+        * then compares the names of every file on the local machines's directory with what it has 
+        * saved at the location given by currentPath, If there is something new not added, it will add it, 
+         * if thing has been removed it will remove it*/
         private void updateConsistency(FolderObj workingDir, string currentPath)
         {
 
@@ -237,7 +236,7 @@ namespace CS410Project
         }
 
         /*Update consistency is going to look through current version of its subdirectory
-        * then compares the names of every file on the server's directory with what it has 
+        * then compares the names of every file on the local machines's directory with what it has 
          * saved, If there is something new not added, it will add it, if thing has been removed
         * it will remove it*/
         private void updateConsistency()

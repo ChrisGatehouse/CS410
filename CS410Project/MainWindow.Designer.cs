@@ -81,7 +81,6 @@
             this.RemoteDirectory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.RemoteDirectory.Size = new System.Drawing.Size(544, 134);
             this.RemoteDirectory.TabIndex = 5;
-            this.RemoteDirectory.SelectedIndexChanged += new System.EventHandler(this.RemoteDirectory_SelectedIndexChanged_1);
             this.RemoteDirectory.DoubleClick += new System.EventHandler(this.RemoteDirectory_DoubleClick);
             // 
             // RemoteParentButton
@@ -171,7 +170,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(843, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -249,10 +247,6 @@
             this.githubReadmeOpensWebBrowserToolStripMenuItem.Text = "Github Readme (Opens Web Browser)";
             this.githubReadmeOpensWebBrowserToolStripMenuItem.Click += new System.EventHandler(this.githubReadmeOpensWebBrowserToolStripMenuItem_Click);
             // 
-            // fontWindow
-            // 
-            this.fontWindow.Apply += new System.EventHandler(this.fontWindow_Apply);
-            // 
             // RemoteLabel
             // 
             this.RemoteLabel.AutoSize = true;
@@ -261,7 +255,6 @@
             this.RemoteLabel.Size = new System.Drawing.Size(44, 13);
             this.RemoteLabel.TabIndex = 27;
             this.RemoteLabel.Text = "Remote";
-            this.RemoteLabel.Click += new System.EventHandler(this.label3_Click);
             // 
             // RemoteTree
             // 
@@ -270,7 +263,6 @@
             this.RemoteTree.Name = "RemoteTree";
             this.RemoteTree.Size = new System.Drawing.Size(132, 134);
             this.RemoteTree.TabIndex = 28;
-            this.RemoteTree.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // LocalTree
             // 
@@ -279,7 +271,6 @@
             this.LocalTree.Name = "LocalTree";
             this.LocalTree.Size = new System.Drawing.Size(132, 134);
             this.LocalTree.TabIndex = 29;
-            this.LocalTree.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // DiffButton
             // 
@@ -327,7 +318,6 @@
             this.LocalNewFileButton.TabIndex = 34;
             this.LocalNewFileButton.Text = "New File";
             this.LocalNewFileButton.UseVisualStyleBackColor = true;
-            this.LocalNewFileButton.Click += new System.EventHandler(this.LocalNewFile_Click);
             // 
             // LocalRenameFileButton
             // 
@@ -363,7 +353,6 @@
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(186, 23);
             this.progressBar.TabIndex = 37;
-            this.progressBar.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // lblStatus
             // 
@@ -373,7 +362,6 @@
             this.lblStatus.Size = new System.Drawing.Size(21, 13);
             this.lblStatus.TabIndex = 38;
             this.lblStatus.Text = "0%";
-            this.lblStatus.Click += new System.EventHandler(this.label1_Click);
             // 
             // LocalSearchBox
             // 
@@ -381,7 +369,6 @@
             this.LocalSearchBox.Name = "LocalSearchBox";
             this.LocalSearchBox.Size = new System.Drawing.Size(172, 20);
             this.LocalSearchBox.TabIndex = 39;
-            this.LocalSearchBox.TextChanged += new System.EventHandler(this.LocalSearchBox_TextChanged);
             // 
             // LocalSearchButton
             // 

@@ -31,7 +31,6 @@ namespace CS410Project
             List<string> directory = new List<string>();
             //Grab the list of files in the current directory
             directory = client.getCurrDetailedDirectory();
-            //directory.Sort();
             if (directory == null)
             {
                 Console.WriteLine("ERROR: invalid directory");
@@ -127,9 +126,9 @@ namespace CS410Project
             }
         }
         /*Update consistency is going to look through current version of its subdirectory
-* then compares the names of every file on the server's directory with what it has 
- * saved, If there is something new not added, it will add it, if thing has been removed
-* it will remove it*/
+        * then compares the names of every file on the server's directory with what it has 
+        * passed in as a currPath, If there is something new not added, it will add it, if thing 
+         * has been removed it will remove it*/
         public void updateConsistency(Client client, FolderObj workingDir, string currPath)
         {
             string tempPath = client.currDirectory;
@@ -281,7 +280,6 @@ namespace CS410Project
             }
             else
             {
-                //TODO: fix edge cases with this
                 if (client.isFile(".."))
                 {
                     //Append new directory name, and then move

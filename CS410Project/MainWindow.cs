@@ -223,17 +223,9 @@ namespace CS410Project
 
                 if (InputBox("Rename File", "New file name:", ref value) == DialogResult.OK)
                 {
-                    if (string.IsNullOrWhiteSpace(value)) { return; }
-                    /*
-                    string path = Path.GetDirectoryName(client.currDirectory);
-                    string targetFile = path + "\\" + current;
-                    string renamedPathFile = path + "\\" + value;
-                    */
+                    if (string.IsNullOrWhiteSpace(value)) { return; }           
                     try
                     {
-                        /*
-                        File.Move(targetFile, renamedPathFile);
-                        */
                         client.renameRemoteFile(current, value);
 
                     }
@@ -251,40 +243,6 @@ namespace CS410Project
                 }
             }
 
-        }
-
-        //Local Rename
-        private void RenameFile2_Click(object sender, EventArgs e)
-        {/*
-            DialogResult result = openFileDialog1.ShowDialog();
-            string targetFile = openFileDialog1.FileName;
-            renameFileSelected.Text = targetFile;
-            string path = Path.GetDirectoryName(openFileDialog1.FileName);
-            string renamedPathFile = path + "\\" + renameFileNewName.Text;//.ToString();
-            if (result == DialogResult.OK)
-            {
-
-                //Can clean this up, pop up an inputBox(deprecated) to get the name
-                if (!String.IsNullOrEmpty(renameFileNewName.Text))
-                {
-                    try
-                    {
-                        File.Move(targetFile, renamedPathFile);
-                    }
-                    catch (Exception d)
-                    {
-                        Console.WriteLine("The process failed: {0}", d.ToString());
-                        MessageBox.Show("Rename error occured");
-                        return;
-                    }
-                    renameFileSelected.Clear();
-                    renameFileNewName.Clear();
-                    MessageBox.Show("File renamed successfully");
-                    //TODO: when local directory is added, do a refresh here
-                }
-                else
-                    MessageBox.Show("No name to rename file too, try again");
-            } //check result*/
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -313,16 +271,6 @@ namespace CS410Project
         {
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.ShowDialog(this);
-        }
-
-        private void RemoteDirectory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LocalDirectory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         public DialogResult InputBox(string title, string promptText, ref string value)
@@ -370,41 +318,6 @@ namespace CS410Project
             return dialogResult;
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void RemoteDirectory_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void remoteDirText_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LocalNewFile_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void RemoteNewFile_Click(object sender, EventArgs e)
         {
 
@@ -421,12 +334,6 @@ namespace CS410Project
                 remoteDirectory.refreshDirectory(client);
                 populateRemoteDirectoryBox(remoteDirectory.getDirectoryStructure());
             }
-        }
-
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
 
         private void CreateLocalDir_Click(object sender, EventArgs e)
@@ -446,16 +353,6 @@ namespace CS410Project
                 else
                     MessageBox.Show("A directory with that name already exists.", "Error");
             }
-        }
-
-        private void fontWindow_Apply(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progressBar1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -479,20 +376,10 @@ namespace CS410Project
             backWorkProgBar.Dispose();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void LocalSearchButton_Click(object sender, EventArgs e)
         {
             string inputSearch = LocalSearchBox.Text;
             localDirectory.searchLocalDirectory(inputSearch);
-        }
-
-        private void LocalSearchBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void LocalRenameFileButton_Click(object sender, EventArgs e)
@@ -509,11 +396,6 @@ namespace CS410Project
                 if (InputBox("Rename File", "New file name:", ref value) == DialogResult.OK)
                 {
                     if (string.IsNullOrWhiteSpace(value)) { return; }
-                    /*
-                    string path = Path.GetDirectoryName(client.currDirectory);
-                    string targetFile = path + "\\" + current;
-                    string renamedPathFile = path + "\\" + value;
-                    */
                     Exception returnValue;
                     returnValue = localDirectory.renameLocalFile(current, value);
                     if(returnValue == null) //success case with no exceptions
